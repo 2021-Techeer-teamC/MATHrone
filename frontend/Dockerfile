@@ -11,3 +11,10 @@ COPY . /app
 
 # 이미지가 빌드 될때 실행
 RUN npm install
+
+
+#
+#https://iagreebut.tistory.com/153?category=777928
+#https://leonkong.cc/posts/dockerizing-react-app.html
+#https://github.com/litsynp/docker-example
+#https://gitlab.com/yalco/practice-docker
