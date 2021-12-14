@@ -39,6 +39,12 @@ export default function BookPage() {
     setOpen(newOpen); //변경된 배열을 open배열에 복사해서 상태를 변경
   };
 
+  const [selected, setSelected] = React.useState("전체");
+
+  const clickBook = (value) => () => {
+    setSelected(value);
+  };
+
   return (
     <div>
       <SearchBar></SearchBar>
@@ -47,7 +53,7 @@ export default function BookPage() {
           <div class="item" />
           <div class="item">
             <span style={{ minWidth: 120, float: "left" }}>
-              EBS({itemData.length})
+              {selected}({itemData.length})
             </span>
             <FormControl sx={{ minWidth: 120, float: "right" }}>
               <NativeSelect
@@ -72,14 +78,17 @@ export default function BookPage() {
               {bookData.map((value) => (
                 <>
                   <ListItemButton onClick={handleClick(value.id)}>
-                    <ListItemText primary={value.publisher} />
+                    <ListItemText
+                      primary={value.publisher}
+                      onClick={clickBook(value.publisher)}
+                    />
                     {open[value.id] ? <ExpandLess /> : <ExpandMore />}
                   </ListItemButton>
                   <Collapse in={open[value.id]} timeout="auto" unmountOnExit>
                     <List component="div" disablePadding>
                       {value.books.map((b) => (
                         <ListItemButton sx={{ pl: 4 }}>
-                          <ListItemText primary={b} />
+                          <ListItemText primary={b} onClick={clickBook(b)} />
                         </ListItemButton>
                       ))}
                     </List>
