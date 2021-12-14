@@ -75,6 +75,9 @@ export default function BookPage() {
               component="nav"
               aria-labelledby="nested-list-subheader"
             >
+              <ListItemButton>
+                <ListItemText primary="전체" />
+              </ListItemButton>
               {bookData.map((value) => (
                 <>
                   <ListItemButton onClick={handleClick(value.id)}>
