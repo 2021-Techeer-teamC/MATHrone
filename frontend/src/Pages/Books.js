@@ -35,8 +35,8 @@ export default function BookPage() {
       <Container>
         <div class="container">
           <div class="item">A</div>
-          <div class="item" style={{ float: "right" }}>
-            <FormControl sx={{ minWidth: 120 }}>
+          <div class="item">
+            <FormControl sx={{ minWidth: 120, float: "right" }}>
               <NativeSelect
                 defaultValue={"latest"}
                 inputProps={{
