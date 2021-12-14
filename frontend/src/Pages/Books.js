@@ -88,6 +88,26 @@ export default function BookPage() {
               </Collapse>
             </List>
           </div>
+          <div class="item">
+            <div style={{ float: "right" }}>
+              <FormControl sx={{ minWidth: 120 }}>
+                <NativeSelect
+                  defaultValue={"latest"}
+                  inputProps={{
+                    name: "category",
+                    id: "uncontrolled-native",
+                  }}
+                >
+                  <option value={"latest"}>최신순</option>
+                  <option value={"star"}>인기순</option>
+                  <option value={"difficulty"}>난이도순</option>
+                </NativeSelect>
+              </FormControl>
+            </div>
+            <div>
+              <Paper></Paper>
+            </div>
+          </div>
         </div>
       </Container>
     </div>
