@@ -90,7 +90,7 @@ export default function BookPage() {
           <div class="item" />
           <div class="item">
             <span style={{ minWidth: 120, float: "left" }}>
-              {selected}({itemData.length})
+              {selected}({result.length})
             </span>
             <FormControl sx={{ minWidth: 120, float: "right" }}>
               <NativeSelect
