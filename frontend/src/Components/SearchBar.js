@@ -10,7 +10,7 @@ import Header from "./Header";
 
 function SearchBar() {
   return (
-    <div>
+    <div style={{ margin: 20, padding: 20 }}>
       <Box
         component="form"
         sx={{
@@ -19,6 +19,7 @@ function SearchBar() {
         noValidate
         autoComplete="off"
       >
+        {" "}
         <FormControl sx={{ m: 1, minWidth: 120 }}>
           <NativeSelect
             defaultValue={"none"}
