@@ -39,10 +39,32 @@ export default function BookPage() {
     setOpen(newOpen); //변경된 배열을 open배열에 복사해서 상태를 변경
   };
 
+  //분류 선택
   const [selected, setSelected] = React.useState("전체");
 
   const clickBook = (value) => () => {
     setSelected(value);
+  };
+
+  //정렬기준
+  const selectSort = (event) => {
+    const select = event.target.value;
+
+    console.log(select);
+
+    if (select === "star") {
+      console.log("인기순 정렬");
+      itemData.sort(function (a, b) {
+        return b.like - a.like; //인기 많은것부터
+      });
+    } else if (select === "difficulty") {
+      console.log("난이도순 정렬");
+      itemData.sort(function (a, b) {
+        return b.difficulty - a.difficulty; //난이도 높은 것 부터
+      });
+    }
+
+    console.log(itemData);
   };
 
   return (
@@ -57,13 +79,13 @@ export default function BookPage() {
             </span>
             <FormControl sx={{ minWidth: 120, float: "right" }}>
               <NativeSelect
-                defaultValue={"latest"}
+                defaultValue={"star"}
                 inputProps={{
                   name: "category",
                   id: "uncontrolled-native",
                 }}
+                onChange={selectSort}
               >
-                <option value={"latest"}>최신순</option>
                 <option value={"star"}>인기순</option>
                 <option value={"difficulty"}>난이도순</option>
               </NativeSelect>
@@ -76,7 +98,7 @@ export default function BookPage() {
               aria-labelledby="nested-list-subheader"
             >
               <ListItemButton>
-                <ListItemText primary="전체" />
+                <ListItemText primary="전체" onClick={clickBook("전체")} />
               </ListItemButton>
               {bookData.map((value) => (
                 <>
@@ -113,7 +135,7 @@ export default function BookPage() {
                     />
                     <ImageListItemBar
                       title={item.title}
-                      subtitle={<span>{item.author}</span>}
+                      subtitle={<span>{item.publisher}</span>}
                       position="below"
                     />
                   </ImageListItem>
@@ -138,62 +160,86 @@ const itemData = [
   {
     img: "https://images.unsplash.com/photo-1551963831-b3b1ca40c98e",
     title: "Breakfast",
-    author: "@bkristastucchio",
+    publisher: "EBS",
+    like: 1,
+    difficulty: 1,
   },
   {
     img: "https://images.unsplash.com/photo-1551782450-a2132b4ba21d",
     title: "Burger",
-    author: "@rollelflex_graphy726",
+    publisher: "EBS",
+    like: 3,
+    difficulty: 3,
   },
   {
     img: "https://images.unsplash.com/photo-1522770179533-24471fcdba45",
     title: "Camera",
-    author: "@helloimnik",
+    publisher: "교육청",
+    like: 1,
+    difficulty: 1,
   },
   {
     img: "https://images.unsplash.com/photo-1444418776041-9c7e33cc5a9c",
     title: "Coffee",
-    author: "@nolanissac",
+    publisher: "EBS",
+    like: 2,
+    difficulty: 1,
   },
   {
     img: "https://images.unsplash.com/photo-1533827432537-70133748f5c8",
     title: "Hats",
-    author: "@hjrc33",
+    publisher: "평가원",
+    like: 6,
+    difficulty: 2,
   },
   {
     img: "https://images.unsplash.com/photo-1558642452-9d2a7deb7f62",
     title: "Honey",
-    author: "@arwinneil",
+    publisher: "EBS",
+    like: 10,
+    difficulty: 2,
   },
   {
     img: "https://images.unsplash.com/photo-1516802273409-68526ee1bdd6",
     title: "Basketball",
-    author: "@tjdragotta",
+    publisher: "EBS",
+    like: 7,
+    difficulty: 2,
   },
   {
     img: "https://images.unsplash.com/photo-1518756131217-31eb79b20e8f",
     title: "Fern",
-    author: "@katie_wasserman",
+    publisher: "평가원",
+    like: 100,
+    difficulty: 3,
   },
   {
     img: "https://images.unsplash.com/photo-1597645587822-e99fa5d45d25",
     title: "Mushrooms",
-    author: "@silverdalex",
+    publisher: "평가원",
+    like: 6,
+    difficulty: 2,
   },
   {
     img: "https://images.unsplash.com/photo-1567306301408-9b74779a11af",
     title: "Tomato basil",
-    author: "@shelleypauls",
+    publisher: "교육청",
+    like: 12,
+    difficulty: 3,
   },
   {
     img: "https://images.unsplash.com/photo-1471357674240-e1a485acb3e1",
     title: "Sea star",
-    author: "@peterlaster",
+    publisher: "평가원",
+    like: 4,
+    difficulty: 3,
   },
   {
     img: "https://images.unsplash.com/photo-1589118949245-7d38baf380d6",
     title: "Bike",
-    author: "@southside_customs",
+    publisher: "교육청",
+    like: 1,
+    difficulty: 3,
   },
 ];
 
