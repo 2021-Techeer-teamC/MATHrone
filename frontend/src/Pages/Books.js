@@ -18,12 +18,22 @@ import Pagination from "@mui/material/Pagination";
 
 import SearchBar from "../Components/SearchBar";
 import "../App.css";
+import { ListItem } from "@mui/material";
 
 export default function BookPage() {
-  const [open, setOpen] = React.useState(true);
+  const [open, setOpen] = React.useState([false]);
 
-  const handleClick = () => {
-    setOpen(!open);
+  const handleClick = (value) => () => {
+    const newOpen = [...open];
+    const currentIndex = open.indexOf(value);
+
+    if (currentIndex === -1) {
+      newOpen.push(false);
+    } else {
+      newOpen.splice(currentIndex, 1, !currentIndex);
+    }
+
+    setOpen(newOpen);
   };
 
   return (
@@ -56,57 +66,27 @@ export default function BookPage() {
               component="nav"
               aria-labelledby="nested-list-subheader"
             >
-              <ListItemButton>
-                <ListItemIcon>
-                  <StarBorder />
-                </ListItemIcon>
-                <ListItemText primary="즐겨찾기" />
-              </ListItemButton>
-              <ListItemButton onClick={handleClick}>
-                <ListItemText primary="EBS" />
-                {open ? <ExpandLess /> : <ExpandMore />}
-              </ListItemButton>
-              <Collapse in={open} timeout="auto" unmountOnExit>
-                <List component="div" disablePadding>
-                  <ListItemButton sx={{ pl: 4 }}>
-                    <ListItemText primary="수능완성" />
+              {bookData.map((value) => (
+                <>
+                  <ListItemButton onClick={handleClick(value.id)}>
+                    <ListItemText primary={value.publisher} />
+                    {open.indexOf(value.id) ? <ExpandLess /> : <ExpandMore />}
                   </ListItemButton>
-                  <ListItemButton sx={{ pl: 4 }}>
-                    <ListItemText primary="수능특강" />
-                  </ListItemButton>
-                </List>
-              </Collapse>
-              <ListItemButton onClick={handleClick}>
-                <ListItemText primary="교육청" />
-                {open ? <ExpandLess /> : <ExpandMore />}
-              </ListItemButton>
-              <Collapse in={open} timeout="auto" unmountOnExit>
-                <List component="div" disablePadding>
-                  <ListItemButton sx={{ pl: 4 }}>
-                    <ListItemText primary="4월" />
-                  </ListItemButton>
-                  <ListItemButton sx={{ pl: 4 }}>
-                    <ListItemText primary="10월" />
-                  </ListItemButton>
-                </List>
-              </Collapse>
-              <ListItemButton onClick={handleClick}>
-                <ListItemText primary="평가원" />
-                {open ? <ExpandLess /> : <ExpandMore />}
-              </ListItemButton>
-              <Collapse in={open} timeout="auto" unmountOnExit>
-                <List component="div" disablePadding>
-                  <ListItemButton sx={{ pl: 4 }}>
-                    <ListItemText primary="6월" />
-                  </ListItemButton>
-                  <ListItemButton sx={{ pl: 4 }}>
-                    <ListItemText primary="9월" />
-                  </ListItemButton>
-                  <ListItemButton sx={{ pl: 4 }}>
-                    <ListItemText primary="수능" />
-                  </ListItemButton>
-                </List>
-              </Collapse>
+                  <Collapse
+                    in={open.indexOf(value.id)}
+                    timeout="auto"
+                    unmountOnExit
+                  >
+                    <List component="div" disablePadding>
+                      {value.books.map((b) => (
+                        <ListItemButton sx={{ pl: 4 }}>
+                          <ListItemText primary={b} />
+                        </ListItemButton>
+                      ))}
+                    </List>
+                  </Collapse>
+                </>
+              ))}
             </List>
           </div>
           <div className="item">
@@ -203,5 +183,30 @@ const itemData = [
     img: "https://images.unsplash.com/photo-1589118949245-7d38baf380d6",
     title: "Bike",
     author: "@southside_customs",
+  },
+];
+
+const bookData = [
+  {
+    publisher: "EBS",
+    books: ["수능완성", "수능특강"],
+    id: 0,
+  },
+  {
+    publisher: "교육청",
+    books: [
+      "3월 모의고사",
+      "4월 모의고사",
+      "5월 모의고사",
+      "7월 모의고사",
+      "8월 모의고사",
+      "10월 모의고사",
+    ],
+    id: 1,
+  },
+  {
+    publisher: "평가원",
+    books: ["6월 모의고사", "9월 모의고사", "대학수학능력시험"],
+    id: 2,
   },
 ];
