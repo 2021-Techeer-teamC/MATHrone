@@ -19,6 +19,8 @@ import ImageList from "@mui/material/ImageList";
 import ImageListItem from "@mui/material/ImageListItem";
 import ImageListItemBar from "@mui/material/ImageListItemBar";
 
+import Pagination from "@mui/material/Pagination";
+
 import SearchBar from "../Components/SearchBar";
 import "../App.css";
 
@@ -131,7 +133,12 @@ export default function BookPage() {
             </Paper>
           </div>
           <div className="item">E</div>
-          <div className="item">F</div>
+          <div
+            className="item"
+            style={{ display: "flex", justifyContent: "center" }}
+          >
+            <Pagination count={10} />
+          </div>
         </div>
       </Container>
     </div>
