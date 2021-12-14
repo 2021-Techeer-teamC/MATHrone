@@ -41,9 +41,23 @@ export default function BookPage() {
 
   //분류 선택
   const [selected, setSelected] = React.useState("전체");
+  const [result, setResult] = React.useState([...itemData]);
 
   const clickBook = (value) => () => {
     setSelected(value);
+
+    filterResult(value); //분류에 따라 보여지는 결과 변경
+  };
+
+  const filterResult = (value) => {
+    //분류에 따라 결과 필터
+    let newRes = [...itemData];
+    if (value !== "전체") {
+      newRes = itemData.filter(function (element) {
+        return element.publisher === value;
+      });
+    }
+    setResult(newRes);
   };
 
   //정렬기준
@@ -65,6 +79,7 @@ export default function BookPage() {
     }
 
     console.log(itemData);
+    //즉각 반영이 안되는 문제..
   };
 
   return (
@@ -125,7 +140,7 @@ export default function BookPage() {
           <div className="item">
             <Paper>
               <ImageList sx={{ width: "100%", height: 500 }} cols={3} gap={10}>
-                {itemData.map((item) => (
+                {result.map((item) => (
                   <ImageListItem key={item.img}>
                     <img
                       src={`${item.img}?w=248&fit=crop&auto=format`}
