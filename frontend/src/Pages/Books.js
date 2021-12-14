@@ -21,19 +21,22 @@ import "../App.css";
 import { ListItem } from "@mui/material";
 
 export default function BookPage() {
-  const [open, setOpen] = React.useState([false]);
+  //책 리스트 토글
+  const [open, setOpen] = React.useState([false]); //각 토글들의 상태를 배열로 관리함
 
   const handleClick = (value) => () => {
-    const newOpen = [...open];
-    const currentIndex = open.indexOf(value);
+    //value : 토글의 인덱스를 받아옴(몇번째 토글이 눌렸는지)
+    const newOpen = [...open]; //상태를 저장한 open배열을 복사해옴
+    const currentBool = open[value]; //현재 눌린 토글의 상태를 받아옴
 
-    if (currentIndex === -1) {
-      newOpen.push(false);
+    if (currentBool === undefined) {
+      //존재하지 않음-> 누른적이 없음(닫힌상태)
+      newOpen.push(true); //새로 true(열린상태)로 추가함
     } else {
-      newOpen.splice(currentIndex, 1, !currentIndex);
+      newOpen.splice(value, 1, !currentBool); //이미 배열에 존재하면, 상태를 반전시킴
     }
 
-    setOpen(newOpen);
+    setOpen(newOpen); //변경된 배열을 open배열에 복사해서 상태를 변경
   };
 
   return (
@@ -70,13 +73,9 @@ export default function BookPage() {
                 <>
                   <ListItemButton onClick={handleClick(value.id)}>
                     <ListItemText primary={value.publisher} />
-                    {open.indexOf(value.id) ? <ExpandLess /> : <ExpandMore />}
+                    {open[value.id] ? <ExpandLess /> : <ExpandMore />}
                   </ListItemButton>
-                  <Collapse
-                    in={open.indexOf(value.id)}
-                    timeout="auto"
-                    unmountOnExit
-                  >
+                  <Collapse in={open[value.id]} timeout="auto" unmountOnExit>
                     <List component="div" disablePadding>
                       {value.books.map((b) => (
                         <ListItemButton sx={{ pl: 4 }}>
