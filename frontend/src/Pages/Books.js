@@ -1,5 +1,4 @@
 import * as React from "react";
-import ListSubheader from "@mui/material/ListSubheader";
 import List from "@mui/material/List";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
@@ -10,15 +9,11 @@ import ExpandMore from "@mui/icons-material/ExpandMore";
 import StarBorder from "@mui/icons-material/StarBorder";
 import Paper from "@mui/material/Paper";
 import Container from "@mui/material/Container";
-
 import FormControl from "@mui/material/FormControl";
 import NativeSelect from "@mui/material/NativeSelect";
-import Box from "@mui/material/Box";
-
 import ImageList from "@mui/material/ImageList";
 import ImageListItem from "@mui/material/ImageListItem";
 import ImageListItemBar from "@mui/material/ImageListItemBar";
-
 import Pagination from "@mui/material/Pagination";
 
 import SearchBar from "../Components/SearchBar";
@@ -36,8 +31,11 @@ export default function BookPage() {
       <SearchBar></SearchBar>
       <Container>
         <div class="container">
-          <div class="item">A</div>
+          <div class="item" />
           <div class="item">
+            <span style={{ minWidth: 120, float: "left" }}>
+              EBS({itemData.length})
+            </span>
             <FormControl sx={{ minWidth: 120, float: "right" }}>
               <NativeSelect
                 defaultValue={"latest"}
@@ -124,7 +122,7 @@ export default function BookPage() {
                     />
                     <ImageListItemBar
                       title={item.title}
-                      subtitle={<span>by: {item.author}</span>}
+                      subtitle={<span>{item.author}</span>}
                       position="below"
                     />
                   </ImageListItem>
@@ -132,7 +130,7 @@ export default function BookPage() {
               </ImageList>
             </Paper>
           </div>
-          <div className="item">E</div>
+          <div class="item"></div>
           <div
             className="item"
             style={{ display: "flex", justifyContent: "center" }}
