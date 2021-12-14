@@ -111,7 +111,7 @@ export default function BookPage() {
           </div>
           <div className="item">
             <Paper>
-              <ImageList sx={{ width: 500, height: 450 }}>
+              <ImageList sx={{ width: "100%", height: 500 }} cols={3} gap={10}>
                 {itemData.map((item) => (
                   <ImageListItem key={item.img}>
                     <img
