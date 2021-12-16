@@ -19,7 +19,7 @@ import BookList from "../Components/BookList";
 import { useEffect } from "react";
 
 export default function BookPage() {
-  //책 리스트 토글
+  //책 리스트 토글마다 열림/닫힘 상태를 저장함
   const [open, setOpen] = React.useState([false]); //각 토글들의 상태를 배열로 관리함
 
   const handleClick = (value) => () => {
@@ -37,7 +37,7 @@ export default function BookPage() {
     setOpen(newOpen); //변경된 배열을 open배열에 복사해서 상태를 변경
   };
 
-  //분류 선택
+  //분류(book nav bar에서의 분류) 선택
   const [selected, setSelected] = React.useState("전체");
   const [result, setResult] = React.useState([...itemData]);
 
@@ -58,7 +58,7 @@ export default function BookPage() {
     setResult(newRes);
   };
 
-  //정렬기준
+  //정렬기준(난이도순, 인기순 등)
   const [sorted, setSorted] = React.useState("star");
   const selectSort = (event) => {
     const select = event.target.value; //정렬기준을 변경하면, 정렬기준 변수를 수정함 -> 수정되면 useEffect [sorted]가 수행됨
@@ -83,9 +83,9 @@ export default function BookPage() {
     filterResult(selected); //itemData가 변경되었으므로, result를 다시 필터해야함
   }, [sorted]); //sorted 변수가 변경될 떄 마다 실행
 
-  //pagination
+  //pagination과 관련된 변수
   const [currentPage, setCurrentPage] = React.useState(1);
-  const [postsPerPage, setPostsPerPage] = React.useState(3 * 3); //최대 보여질 수
+  const [postsPerPage, setPostsPerPage] = React.useState(3 * 3); //한페이지에 보여질 책의 수
 
   const indexOfLast = currentPage * postsPerPage;
   const indexOfFirst = indexOfLast - postsPerPage;
