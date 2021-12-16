@@ -16,6 +16,7 @@ import Pagination from "@mui/material/Pagination";
 import SearchBar from "../Components/SearchBar";
 import "../App.css";
 import BookList from "../Components/BookList";
+import { useEffect } from "react";
 
 export default function BookPage() {
   //책 리스트 토글
@@ -58,26 +59,29 @@ export default function BookPage() {
   };
 
   //정렬기준
+  const [sorted, setSorted] = React.useState("star");
   const selectSort = (event) => {
-    const select = event.target.value;
+    const select = event.target.value; //정렬기준을 변경하면, 정렬기준 변수를 수정함 -> 수정되면 useEffect [sorted]가 수행됨
+    setSorted(select);
+    // console.log(sorted);
+  };
 
-    console.log(select);
-
-    if (select === "star") {
+  useEffect(() => {
+    //itemData의 정렬을 바꾸어서 정렬함
+    if (sorted === "star") {
       console.log("인기순 정렬");
       itemData.sort(function (a, b) {
         return b.like - a.like; //인기 많은것부터
       });
-    } else if (select === "difficulty") {
+    } else if (sorted === "difficulty") {
       console.log("난이도순 정렬");
       itemData.sort(function (a, b) {
         return b.difficulty - a.difficulty; //난이도 높은 것 부터
       });
     }
 
-    console.log(itemData);
-    //즉각 반영이 안되는 문제..
-  };
+    filterResult(selected); //itemData가 변경되었으므로, result를 다시 필터해야함
+  }, [sorted]); //sorted 변수가 변경될 떄 마다 실행
 
   //pagination
   const [currentPage, setCurrentPage] = React.useState(1);
