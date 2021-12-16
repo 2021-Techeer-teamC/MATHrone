@@ -6,7 +6,7 @@ import Paper from "@mui/material/Paper";
 
 const BookList = ({ posts }) => {
   return (
-    <ImageList sx={{ width: "100%", height: 500 }} cols={3} gap={10}>
+    <ImageList sx={{ width: "100%", height: "100%" }} cols={3} gap={10}>
       {posts.map((item) => (
         <ImageListItem key={item.img}>
           <img
