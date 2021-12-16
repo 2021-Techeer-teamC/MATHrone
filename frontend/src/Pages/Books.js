@@ -11,14 +11,11 @@ import Paper from "@mui/material/Paper";
 import Container from "@mui/material/Container";
 import FormControl from "@mui/material/FormControl";
 import NativeSelect from "@mui/material/NativeSelect";
-import ImageList from "@mui/material/ImageList";
-import ImageListItem from "@mui/material/ImageListItem";
-import ImageListItemBar from "@mui/material/ImageListItemBar";
 import Pagination from "@mui/material/Pagination";
 
 import SearchBar from "../Components/SearchBar";
 import "../App.css";
-import { ListItem } from "@mui/material";
+import BookList from "../Components/BookList";
 
 export default function BookPage() {
   //책 리스트 토글
@@ -82,6 +79,22 @@ export default function BookPage() {
     //즉각 반영이 안되는 문제..
   };
 
+  //pagination
+  const [currentPage, setCurrentPage] = React.useState(1);
+  const [postsPerPage, setPostsPerPage] = React.useState(3 * 3); //최대 보여질 수
+
+  const indexOfLast = currentPage * postsPerPage;
+  const indexOfFirst = indexOfLast - postsPerPage;
+  function currentPosts(tmp) {
+    let currentPosts = 0;
+    currentPosts = tmp.slice(indexOfFirst, indexOfLast);
+    return currentPosts;
+  }
+
+  const changePage = (event, page) => {
+    setCurrentPage(page);
+  };
+
   return (
     <div>
       <SearchBar></SearchBar>
@@ -139,23 +152,7 @@ export default function BookPage() {
           </div>
           <div className="item">
             <Paper>
-              <ImageList sx={{ width: "100%", height: 500 }} cols={3} gap={10}>
-                {result.map((item) => (
-                  <ImageListItem key={item.img}>
-                    <img
-                      src={`${item.img}?w=248&fit=crop&auto=format`}
-                      srcSet={`${item.img}?w=248&fit=crop&auto=format&dpr=2 2x`}
-                      alt={item.title}
-                      loading="lazy"
-                    />
-                    <ImageListItemBar
-                      title={item.title}
-                      subtitle={<span>{item.publisher}</span>}
-                      position="below"
-                    />
-                  </ImageListItem>
-                ))}
-              </ImageList>
+              <BookList posts={currentPosts(result)}></BookList>
             </Paper>
           </div>
           <div class="item"></div>
@@ -163,7 +160,11 @@ export default function BookPage() {
             className="item"
             style={{ display: "flex", justifyContent: "center" }}
           >
-            <Pagination count={10} />
+            <Pagination
+              count={Math.ceil(result.length / postsPerPage)}
+              defaultPage={1}
+              onChange={changePage}
+            />
           </div>
         </div>
       </Container>
