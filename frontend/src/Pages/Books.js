@@ -56,6 +56,7 @@ export default function BookPage() {
       });
     }
     setResult(newRes);
+    setCurrentPage(1); //결과 필터가 변경되면 page = 1 부터 시작
   };
 
   //정렬기준(난이도순, 인기순 등)
