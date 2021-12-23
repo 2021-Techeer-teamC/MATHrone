@@ -168,6 +168,7 @@ export default function BookPage() {
             <Pagination
               count={Math.ceil(result.length / postsPerPage)}
               defaultPage={1}
+              page={currentPage} //current page와 버튼상 보여지는 page를 동기화
               onChange={changePage}
             />
           </div>
