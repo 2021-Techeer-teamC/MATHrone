@@ -1,4 +1,5 @@
 import * as React from "react";
+// import axios from "axios";
 import List from "@mui/material/List";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
@@ -38,20 +39,32 @@ export default function BookPage() {
   };
 
   //분류(book nav bar에서의 분류) 선택
-  const [selected, setSelected] = React.useState("전체");
-  const [result, setResult] = React.useState([...itemData]);
+  const [selected, setSelected] = React.useState("all");
+  const [itemDatas, setItemDatas] = React.useState([...itemData]); //axios결과 임시용
+  const [result, setResult] = React.useState([...itemDatas]);
+  const [url, setURL] = React.useState("");
+
+  const params = new URLSearchParams([["publisher", selected]]);
 
   const clickBook = (value) => () => {
     setSelected(value);
+    setURL("http://localhost:8080/workbook/publisher");
 
     filterResult(value); //분류에 따라 보여지는 결과 변경
   };
 
   const filterResult = (value) => {
-    //분류에 따라 결과 필터
-    let newRes = [...itemData];
-    if (value !== "전체") {
-      newRes = itemData.filter(function (element) {
+    // axios (출판사로 보내기)
+    // axios.get(url, { params }).then((res) => {
+    //  setItemDatas([...res])
+    //   setResult(itemDatas);
+    //   setCurrentPage(1);
+    // });
+
+    //분류에 따라 결과 필터(not axios) 전체 결과 받아와서 react에서 출판사를 구분
+    let newRes = [...itemDatas];
+    if (value !== "all") {
+      newRes = itemDatas.filter(function (element) {
         return element.publisher === value;
       });
     }
@@ -69,15 +82,17 @@ export default function BookPage() {
 
   useEffect(() => {
     //itemData의 정렬을 바꾸어서 정렬함
+    console.log(result);
+
     if (sorted === "star") {
       console.log("인기순 정렬");
-      itemData.sort(function (a, b) {
+      itemDatas.sort(function (a, b) {
         return b.like - a.like; //인기 많은것부터
       });
-    } else if (sorted === "difficulty") {
+    } else if (sorted === "level") {
       console.log("난이도순 정렬");
-      itemData.sort(function (a, b) {
-        return b.difficulty - a.difficulty; //난이도 높은 것 부터
+      itemDatas.sort(function (a, b) {
+        return b.level - a.level; //난이도 높은 것 부터
       });
     }
 
@@ -108,7 +123,7 @@ export default function BookPage() {
           <div class="item" />
           <div class="item">
             <span style={{ minWidth: 120, float: "left" }}>
-              {selected}({result.length})
+              {selected == "all" ? "전체" : selected}({result.length})
             </span>
             <FormControl sx={{ minWidth: 120, float: "right" }}>
               <NativeSelect
@@ -120,7 +135,7 @@ export default function BookPage() {
                 onChange={selectSort}
               >
                 <option value={"star"}>인기순</option>
-                <option value={"difficulty"}>난이도순</option>
+                <option value={"level"}>난이도순</option>
               </NativeSelect>
             </FormControl>
           </div>
@@ -131,7 +146,7 @@ export default function BookPage() {
               aria-labelledby="nested-list-subheader"
             >
               <ListItemButton>
-                <ListItemText primary="전체" onClick={clickBook("전체")} />
+                <ListItemText primary="전체" onClick={clickBook("all")} />
               </ListItemButton>
               {bookData.map((value) => (
                 <>
@@ -180,88 +195,100 @@ export default function BookPage() {
 
 const itemData = [
   {
-    img: "https://images.unsplash.com/photo-1551963831-b3b1ca40c98e",
+    workbook_id: "01-01-00001",
     title: "Breakfast",
-    publisher: "EBS",
-    like: 1,
-    difficulty: 1,
-  },
-  {
-    img: "https://images.unsplash.com/photo-1551782450-a2132b4ba21d",
-    title: "Burger",
-    publisher: "EBS",
-    like: 3,
-    difficulty: 3,
-  },
-  {
-    img: "https://images.unsplash.com/photo-1522770179533-24471fcdba45",
-    title: "Camera",
+    img: "https://images.unsplash.com/photo-1551963831-b3b1ca40c98e",
     publisher: "교육청",
-    like: 1,
-    difficulty: 1,
-  },
-  {
-    img: "https://images.unsplash.com/photo-1444418776041-9c7e33cc5a9c",
-    title: "Coffee",
-    publisher: "EBS",
+    level: 1,
     like: 2,
-    difficulty: 1,
   },
   {
-    img: "https://images.unsplash.com/photo-1533827432537-70133748f5c8",
-    title: "Hats",
-    publisher: "평가원",
-    like: 6,
-    difficulty: 2,
-  },
-  {
-    img: "https://images.unsplash.com/photo-1558642452-9d2a7deb7f62",
-    title: "Honey",
+    workbook_id: "01-01-00002",
+    title: "Burger",
+    img: "https://images.unsplash.com/photo-1551782450-a2132b4ba21d",
     publisher: "EBS",
-    like: 10,
-    difficulty: 2,
+    level: 3,
+    like: 3,
   },
   {
-    img: "https://images.unsplash.com/photo-1516802273409-68526ee1bdd6",
-    title: "Basketball",
+    workbook_id: "01-01-00003",
+    title: "Camera",
+    img: "https://images.unsplash.com/photo-1522770179533-24471fcdba45",
+    publisher: "교육청",
+    level: 1,
+    like: 2,
+  },
+  {
+    workbook_id: "01-01-00004",
+    title: "Camera",
+    img: "https://images.unsplash.com/photo-1444418776041-9c7e33cc5a9c",
     publisher: "EBS",
-    like: 7,
-    difficulty: 2,
-  },
-  {
-    img: "https://images.unsplash.com/photo-1518756131217-31eb79b20e8f",
-    title: "Fern",
-    publisher: "평가원",
-    like: 100,
-    difficulty: 3,
-  },
-  {
-    img: "https://images.unsplash.com/photo-1597645587822-e99fa5d45d25",
-    title: "Mushrooms",
-    publisher: "평가원",
-    like: 6,
-    difficulty: 2,
-  },
-  {
-    img: "https://images.unsplash.com/photo-1567306301408-9b74779a11af",
-    title: "Tomato basil",
-    publisher: "교육청",
-    like: 12,
-    difficulty: 3,
-  },
-  {
-    img: "https://images.unsplash.com/photo-1471357674240-e1a485acb3e1",
-    title: "Sea star",
-    publisher: "평가원",
-    like: 4,
-    difficulty: 3,
-  },
-  {
-    img: "https://images.unsplash.com/photo-1589118949245-7d38baf380d6",
-    title: "Bike",
-    publisher: "교육청",
+    level: 2,
     like: 1,
-    difficulty: 3,
+  },
+  {
+    workbook_id: "01-01-00005",
+    title: "Hats",
+    img: "https://images.unsplash.com/photo-1533827432537-70133748f5c8",
+    publisher: "EBS",
+    level: 2,
+    like: 6,
+  },
+  {
+    workbook_id: "01-01-00006",
+    title: "Honey",
+    img: "https://images.unsplash.com/photo-1558642452-9d2a7deb7f62",
+    publisher: "평가원",
+    level: 2,
+    like: 10,
+  },
+  {
+    workbook_id: "01-01-00007",
+    title: "Basketball",
+    img: "https://images.unsplash.com/photo-1516802273409-68526ee1bdd6",
+    publisher: "평가원",
+    level: 2,
+    like: 7,
+  },
+  {
+    workbook_id: "01-01-00008",
+    title: "Fern",
+    img: "https://images.unsplash.com/photo-1518756131217-31eb79b20e8f",
+    publisher: "EBS",
+    level: 3,
+    like: 12,
+  },
+  {
+    workbook_id: "01-01-00009",
+    title: "Mushrooms",
+    img: "https://images.unsplash.com/photo-1597645587822-e99fa5d45d25",
+    publisher: "EBS",
+    level: 2,
+    like: 6,
+  },
+  {
+    workbook_id: "01-01-00010",
+    title: "Tomato basil",
+    img: "https://images.unsplash.com/photo-1567306301408-9b74779a11af",
+    publisher: "평가원",
+    level: 3,
+    like: 12,
+  },
+  {
+    workbook_id: "01-01-00011",
+    title: "See star",
+    img: "https://images.unsplash.com/photo-1471357674240-e1a485acb3e1",
+    publisher: "EBS",
+    level: 3,
+    like: 4,
+  },
+  {
+    workbook_id: "01-01-00012",
+    title: "Bike",
+    img: "https://images.unsplash.com/photo-1589118949245-7d38baf380d6",
+    publisher: "평가원",
+    level: 3,
+    like: 1,
   },
 ];
 
