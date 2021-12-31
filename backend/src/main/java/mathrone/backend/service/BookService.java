@@ -5,8 +5,6 @@ import mathrone.backend.repository.BookRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.awt.print.Book;
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -23,11 +21,10 @@ public class BookService {
         bookRepository.save(bookInfoDTO);
     }
 
-    public List<BookInfoDTO> searchAll(){
-        return bookRepository.findAll();
-    }
-
     public  List<BookInfoDTO> findPublisher(String publisher) {
-        return bookRepository.findByPublisher(publisher);
+        if (publisher.equals("all"))
+            return bookRepository.findAll();
+        else
+            return bookRepository.findByPublisher(publisher);
     }
 }

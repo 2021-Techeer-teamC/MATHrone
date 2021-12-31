@@ -6,16 +6,7 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
-//@Repository
-//public interface BookRepository extends JpaRepository<BookInfoDTO, Integer> {
-
-//    BookInfoDTO findByPublisher(String publisher);
-//}
-// 메모리용
-
-public interface BookRepository { //extends JpaRepository<BookInfoDTO, Long>{
-
-    void save(BookInfoDTO bookInfoDTO);
+@Repository
+public interface BookRepository extends JpaRepository<BookInfoDTO, Long>{
     List<BookInfoDTO> findByPublisher(String publisher);
-    List<BookInfoDTO> findAll();
 }
