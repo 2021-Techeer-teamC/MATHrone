@@ -48,6 +48,7 @@ const BookSlider = ({ posts }) => {
         display: "flex",
         alignItems: "center",
         justifyContent: "space-between",
+        marginTop: "20px",
       }}
     >
       <div>
