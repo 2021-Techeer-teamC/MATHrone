@@ -18,21 +18,38 @@ const theme = createTheme();
 
 export default function Main() {
   //시도 중인 문제집
-  const [data, setData] = React.useState([...itemData]);
+  const [data, setData] = React.useState(...[itemData.slice(0, 4)]);
   const [firstIdx, setFirstIdx] = React.useState(0);
   const [lastIdx, setLastIdx] = React.useState(4); //defalut로 보여질 갯수 + 1개
 
   const moveBackward = () => {
-    setFirstIdx(firstIdx + 1);
-    setLastIdx(lastIdx + 1);
+    let f_idx = firstIdx;
+    let l_idx = lastIdx;
+
+    if (l_idx + 1 < itemData.length) {
+      //범위를 넘어가지 않을 때만
+      f_idx += 1;
+      l_idx += 1;
+    }
+
+    setFirstIdx(f_idx);
+    setLastIdx(l_idx);
 
     const tmp = itemData.slice(firstIdx, lastIdx);
     setData(tmp);
   };
 
   const moveForward = () => {
-    setFirstIdx(firstIdx - 1);
-    setLastIdx(lastIdx - 1);
+    let f_idx = firstIdx;
+    let l_idx = lastIdx;
+
+    if (f_idx - 1 > 0) {
+      f_idx -= 1;
+      l_idx -= 1;
+    }
+
+    setFirstIdx(f_idx);
+    setLastIdx(l_idx);
 
     const tmp = itemData.slice(firstIdx, lastIdx);
     setData(tmp);
