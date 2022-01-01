@@ -5,7 +5,7 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 
 import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
-import styled from "styled-components";
+
 import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a loader
 import { Carousel } from "react-responsive-carousel";
 
@@ -28,10 +28,18 @@ import IconButton from "@mui/material/IconButton";
 const theme = createTheme();
 
 export default function Main() {
+  //화면 크기
+  const size = {
+    width: window.innerWidth || document.body.clientWidth,
+    height: window.innerHeight || document.body.clientHeight,
+  };
+
   //시도 중인 문제집
-  const [data, setData] = React.useState(...[itemData.slice(0, 4)]);
   const [firstIdx, setFirstIdx] = React.useState(0);
   const [lastIdx, setLastIdx] = React.useState(4); //defalut로 보여질 갯수 + 1개
+  const [data, setData] = React.useState(
+    ...[itemData.slice(firstIdx, lastIdx)]
+  );
 
   const moveBackward = () => {
     let f_idx = firstIdx;
@@ -77,15 +85,22 @@ export default function Main() {
               <Route path="/books" exact element={<Books />} />
               <Route path="/rank" exact element={<Rank />} />
             </Routes>
-            <div class="item">
+            <div
+              class="item"
+              style={{
+                alignItems: "center",
+                justifyContent: "center",
+              }}
+            >
               <Carousel
                 autoPlay={true}
                 interval={3000} // default = 3000
                 infiniteLoop={true}
                 swipeable={true} // default = true
-                width={"500px"}
+                width={"100%"}
                 showStatus={false}
                 showThumbs={false}
+                dynamicHeight={false}
               >
                 <div>
                   <img src="https://images.unsplash.com/photo-1518756131217-31eb79b20e8f" />
@@ -109,34 +124,33 @@ export default function Main() {
             >
               <div>
                 <IconButton
-                  aria-label="delete"
-                  size="small"
+                  aria-label="arrow"
+                  size="large"
                   onClick={moveForward}
                 >
                   <ArrowBackIosNewIcon />
                 </IconButton>
-                {/*<StyleButton onClick={moveForward}>*/}
-                {/*  <ArrowBackIosNewIcon></ArrowBackIosNewIcon>*/}
-                {/*</StyleButton>*/}
               </div>
               <div>
                 {data.map((image) => (
-                  <div style={{ float: "left" }}>
-                    <img src={image.img} width="120" height="120" alt="test" />
+                  <div style={{ float: "left", margin: "10px" }}>
+                    <img
+                      src={image.img}
+                      width={"200px"}
+                      height={"300px"}
+                      alt="test"
+                    />
                   </div>
                 ))}
               </div>
               <div>
                 <IconButton
-                  aria-label="delete"
-                  size="small"
+                  aria-label="arrow"
+                  size="large"
                   onClick={moveBackward}
                 >
                   <ArrowForwardIosIcon />
                 </IconButton>
-                {/*<StyleButton onClick={moveBackward}>*/}
-                {/*  <ArrowForwardIosIcon></ArrowForwardIosIcon>*/}
-                {/*</StyleButton>*/}
               </div>
             </div>
           </main>
@@ -247,9 +261,3 @@ const itemData = [
     like: 1,
   },
 ];
-
-const StyleButton = styled.button`
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  appearance: none;
-`;
