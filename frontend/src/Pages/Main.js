@@ -6,7 +6,7 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 
 import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
-
+import styled from "styled-components";
 import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a loader
 import { Carousel } from "react-responsive-carousel";
 
@@ -22,6 +22,7 @@ import {
 import InfoPage from "./InfoPage";
 import Books from "./Books";
 import Rank from "./Rank";
+import IconButton from "@mui/material/IconButton";
 
 const sections = [
   { title: "소개", url: "/info" },
@@ -85,40 +86,67 @@ export default function Main() {
               <Route path="/books" exact element={<Books />} />
               <Route path="/rank" exact element={<Rank />} />
             </Routes>
+            <div class="item">
+              <Carousel
+                autoPlay={true}
+                interval={3000} // default = 3000
+                infiniteLoop={true}
+                swipeable={true} // default = true
+                width={"500px"}
+                showStatus={false}
+                showThumbs={false}
+              >
+                <div>
+                  <img src="https://images.unsplash.com/photo-1518756131217-31eb79b20e8f" />
+                </div>
+                <div>
+                  <img src="https://images.unsplash.com/photo-1597645587822-e99fa5d45d25" />
+                </div>
+                <div>
+                  <img src="https://images.unsplash.com/photo-1567306301408-9b74779a11af" />
+                </div>
+              </Carousel>
+            </div>
 
-            <Carousel
-              autoPlay={true}
-              interval={3000} // default = 3000
-              infiniteLoop={true}
-              swipeable={true} // default = true
-              width={"500px"}
-              showStatus={false}
-              showThumbs={false}
+            <div
+              class="item"
+              style={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "space-between",
+              }}
             >
               <div>
-                <img src="https://images.unsplash.com/photo-1518756131217-31eb79b20e8f" />
+                <IconButton
+                  aria-label="delete"
+                  size="small"
+                  onClick={moveForward}
+                >
+                  <ArrowBackIosNewIcon />
+                </IconButton>
+                {/*<StyleButton onClick={moveForward}>*/}
+                {/*  <ArrowBackIosNewIcon></ArrowBackIosNewIcon>*/}
+                {/*</StyleButton>*/}
               </div>
-              <div>
-                <img src="https://images.unsplash.com/photo-1597645587822-e99fa5d45d25" />
-              </div>
-              <div>
-                <img src="https://images.unsplash.com/photo-1567306301408-9b74779a11af" />
-              </div>
-            </Carousel>
-            <div>
-              <button onClick={moveForward}>
-                <ArrowBackIosNewIcon></ArrowBackIosNewIcon>
-              </button>
               <div>
                 {data.map((image) => (
-                  <div>
-                    <img src={image.img} width="120" height="120" alt="testA" />
+                  <div style={{ float: "left" }}>
+                    <img src={image.img} width="120" height="120" alt="test" />
                   </div>
                 ))}
               </div>
-              <button onClick={moveBackward}>
-                <ArrowForwardIosIcon></ArrowForwardIosIcon>
-              </button>
+              <div>
+                <IconButton
+                  aria-label="delete"
+                  size="small"
+                  onClick={moveBackward}
+                >
+                  <ArrowForwardIosIcon />
+                </IconButton>
+                {/*<StyleButton onClick={moveBackward}>*/}
+                {/*  <ArrowForwardIosIcon></ArrowForwardIosIcon>*/}
+                {/*</StyleButton>*/}
+              </div>
             </div>
           </main>
         </Container>
@@ -229,3 +257,9 @@ const itemData = [
     like: 1,
   },
 ];
+
+const StyleButton = styled.button`
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+`;
