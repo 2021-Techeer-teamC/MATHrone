@@ -4,8 +4,8 @@ import Container from "@mui/material/Container";
 import Paper from "@mui/material/Paper";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 
-import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
-import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
+import MenuBookRoundedIcon from "@mui/icons-material/MenuBookRounded";
+import StarRoundedIcon from "@mui/icons-material/StarRounded";
 
 import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a loader
 import { Carousel } from "react-responsive-carousel";
@@ -17,6 +17,7 @@ import {
   Routes,
   Route,
   Redirect,
+  Link,
 } from "react-router-dom";
 
 import InfoPage from "./InfoPage";
@@ -24,6 +25,8 @@ import Books from "./Books";
 import Rank from "./Rank";
 import IconButton from "@mui/material/IconButton";
 import BookSlider from "../Components/BookSlider";
+import Typography from "@mui/material/Typography";
+import Toolbar from "@mui/material/Toolbar";
 
 const sections = [
   { title: "소개", url: "/info" },
@@ -85,10 +88,32 @@ export default function Main() {
                 </div>
               </Carousel>
             </div>
-            <div class="item">
+            <div class="item" style={{ paddingTop: "30px" }}>
+              <Typography
+                component="h2"
+                variant="h5"
+                color="inherit"
+                align="left"
+                noWrap
+                sx={{ flex: 1 }}
+              >
+                <MenuBookRoundedIcon fontSize={"large"} />
+                시도 중인 문제집
+              </Typography>
               <BookSlider posts={itemData} />
             </div>
-            <div className="item">
+            <div className="item" style={{ paddingTop: "30px" }}>
+              <Typography
+                component="h2"
+                variant="h5"
+                color="inherit"
+                align="left"
+                noWrap
+                sx={{ flex: 1 }}
+              >
+                <StarRoundedIcon fontSize={"large"} />
+                즐겨찾기
+              </Typography>
               <BookSlider posts={itemData} />
             </div>
           </main>
