@@ -23,6 +23,7 @@ import InfoPage from "./InfoPage";
 import Books from "./Books";
 import Rank from "./Rank";
 import IconButton from "@mui/material/IconButton";
+import BookSlider from "../Components/BookSlider";
 
 const sections = [
   { title: "소개", url: "/info" },
@@ -43,44 +44,6 @@ export default function Main() {
   };
 
   //시도 중인 문제집
-  const [firstIdx, setFirstIdx] = React.useState(0);
-  const [lastIdx, setLastIdx] = React.useState(4); //defalut로 보여질 갯수 + 1개
-  const [data, setData] = React.useState(
-    ...[itemData.slice(firstIdx, lastIdx)]
-  );
-
-  const moveBackward = () => {
-    let f_idx = firstIdx;
-    let l_idx = lastIdx;
-
-    if (l_idx + 1 < itemData.length) {
-      //범위를 넘어가지 않을 때만
-      f_idx += 1;
-      l_idx += 1;
-    }
-
-    setFirstIdx(f_idx);
-    setLastIdx(l_idx);
-
-    const tmp = itemData.slice(firstIdx, lastIdx);
-    setData(tmp);
-  };
-
-  const moveForward = () => {
-    let f_idx = firstIdx;
-    let l_idx = lastIdx;
-
-    if (f_idx - 1 > 0) {
-      f_idx -= 1;
-      l_idx -= 1;
-    }
-
-    setFirstIdx(f_idx);
-    setLastIdx(l_idx);
-
-    const tmp = itemData.slice(firstIdx, lastIdx);
-    setData(tmp);
-  };
 
   return (
     <Router>
@@ -122,45 +85,11 @@ export default function Main() {
                 </div>
               </Carousel>
             </div>
-
-            <div
-              class="item"
-              style={{
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "space-between",
-              }}
-            >
-              <div>
-                <IconButton
-                  aria-label="arrow"
-                  size="large"
-                  onClick={moveForward}
-                >
-                  <ArrowBackIosNewIcon />
-                </IconButton>
-              </div>
-              <div>
-                {data.map((image) => (
-                  <div style={{ float: "left", margin: "10px" }}>
-                    <img
-                      src={image.img}
-                      width={"200px"}
-                      height={"300px"}
-                      alt="test"
-                    />
-                  </div>
-                ))}
-              </div>
-              <div>
-                <IconButton
-                  aria-label="arrow"
-                  size="large"
-                  onClick={moveBackward}
-                >
-                  <ArrowForwardIosIcon />
-                </IconButton>
-              </div>
+            <div class="item">
+              <BookSlider posts={itemData} />
+            </div>
+            <div className="item">
+              <BookSlider posts={itemData} />
             </div>
           </main>
         </Container>
