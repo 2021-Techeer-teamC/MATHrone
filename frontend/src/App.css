@@ -49,3 +49,32 @@
   align-items: center;
   justify-content: center;
 }
+
+.main2 {
+  display: grid;
+  grid-template-areas:
+    "carousel carousel"
+    "slider slider"
+    "slider2 slider2"
+    "probA probB";
+}
+
+.carousel {
+  grid-area: carousel;
+}
+
+.slider {
+  grid-area: slider;
+}
+
+.slider2 {
+  grid-area: slider2;
+}
+
+.probA {
+  grid-area: probA;
+}
+
+.probB {
+  grid-area: probB;
+}
