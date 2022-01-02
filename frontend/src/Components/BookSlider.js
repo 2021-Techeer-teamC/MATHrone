@@ -3,6 +3,8 @@ import IconButton from "@mui/material/IconButton";
 import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 
+import styled from "styled-components";
+
 const BookSlider = ({ posts }) => {
   //시도 중인 문제집
   const [firstIdx, setFirstIdx] = React.useState(0);
@@ -57,9 +59,15 @@ const BookSlider = ({ posts }) => {
         </IconButton>
       </div>
       <div>
-        {data.map((image) => (
+        {data.map((item) => (
           <div style={{ float: "left", margin: "10px" }}>
-            <img src={image.img} width={"200px"} height={"300px"} alt="test" />
+            <StyledImg
+              src={item.img}
+              width={"200px"}
+              height={"300px"}
+              alt="test"
+            />
+            <StyledText>{item.title}</StyledText>
           </div>
         ))}
       </div>
@@ -71,5 +79,24 @@ const BookSlider = ({ posts }) => {
     </div>
   );
 };
+
+const StyledText = styled.text`
+  position: absolute;
+
+  font-size: 30px;
+  color: white;
+  visibility: hidden;
+`;
+
+const StyledImg = styled.img`
+  border-radius: 20px;
+  box-shadow: 0px 2px 10px 0px rgba(0, 0, 0, 0.4); /* 그림자효과 */
+  &:hover + ${StyledText} {
+    visibility: visible;
+  }
+  &:hover {
+    opacity: 0.5;
+  }
+`;
 
 export default BookSlider;
