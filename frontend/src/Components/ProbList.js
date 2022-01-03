@@ -51,7 +51,7 @@ const ProbList = ({ data, title }) => {
             </Link>
           </div>
           <List>
-            {data.map((item) => (
+            {data.slice(0, 10).map((item) => (
               <ListItem>
                 <ListItemText
                   primary={item.workbook_title + " " + item.problem_num + "번"}
