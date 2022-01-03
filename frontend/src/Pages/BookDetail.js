@@ -3,12 +3,14 @@ import ExpandLess from '@mui/icons-material/ExpandLess';
 import ExpandMore from '@mui/icons-material/ExpandMore';
 
 import { Grid, Paper, Card, CardMedia, CardContent, Button, Typography,
-ListItemButton, ListItemText, List, Collapse} from '@mui/material';
+ListItemButton, ListItemText, List, Collapse, LinearProgress} from '@mui/material';
+import { green } from '@mui/material/colors';
 
 
 
 export default function BookDetail() {
     const [open, setOpen] = React.useState(true);
+    const greenProgress = green[500]; // #f44336
 
     const handleClick = () => {
         setOpen(!open);
@@ -31,6 +33,7 @@ export default function BookDetail() {
                     <Typography variant="h5" component="div">
                         2022학년도 수능 연계교재 수능완성
                     </Typography>
+                    <LinearProgress variant='determinate' value={40} style={{color:'green'}}></LinearProgress>
                     <Typography sx={{ mb: 1.5 }} color="text.secondary">
                         EBS
                     </Typography>
