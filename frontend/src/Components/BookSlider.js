@@ -60,7 +60,12 @@ const BookSlider = ({ posts }) => {
       </div>
       <div>
         {data.map((item) => (
-          <div style={{ float: "left", margin: "10px" }}>
+          <div
+            style={{
+              float: "left",
+              margin: "10px",
+            }}
+          >
             <StyledImg
               src={item.img}
               width={"200px"}
@@ -81,21 +86,36 @@ const BookSlider = ({ posts }) => {
 };
 
 const StyledText = styled.text`
-  position: absolute;
+  //이미지랑 같은 크기로 검은색
+  background-color: rgb(0, 0, 0, 0.5);
+  width: 200px;
+  height: 300px;
+  border-radius: 20px;
 
-  font-size: 30px;
+  //위치 이미지와 동일
+  position: absolute;
+  transform: translate(-100%, 0%);
+  padding: 20px;
+  padding-top: 70px;
+
+  font-size: 25px;
+  text-align: center;
+
   color: white;
+
   visibility: hidden;
 `;
 
 const StyledImg = styled.img`
   border-radius: 20px;
   box-shadow: 0px 2px 10px 0px rgba(0, 0, 0, 0.4); /* 그림자효과 */
+
   &:hover + ${StyledText} {
     visibility: visible;
   }
+
   &:hover {
-    opacity: 0.5;
+    color: rgb(0, 0, 0, 0.5);
   }
 `;
 
