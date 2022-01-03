@@ -37,6 +37,7 @@ import {
 } from "@mui/material";
 import List from "@mui/material/List";
 import ProbList from "../Components/ProbList";
+import MainCarousel from "../Components/MainCarousel";
 
 const sections = [
   { title: "소개", url: "/info" },
@@ -77,26 +78,7 @@ export default function Main() {
                 justifyContent: "center",
               }}
             >
-              <Carousel
-                autoPlay={true}
-                interval={3000} // default = 3000
-                infiniteLoop={true}
-                swipeable={true} // default = true
-                width={"100%"}
-                showStatus={false}
-                showThumbs={false}
-                dynamicHeight={false}
-              >
-                <div>
-                  <img src="https://images.unsplash.com/photo-1518756131217-31eb79b20e8f" />
-                </div>
-                <div>
-                  <img src="https://images.unsplash.com/photo-1597645587822-e99fa5d45d25" />
-                </div>
-                <div>
-                  <img src="https://images.unsplash.com/photo-1567306301408-9b74779a11af" />
-                </div>
-              </Carousel>
+              <MainCarousel posts={addData} />
             </div>
             <div class="slider" style={{ paddingTop: "30px" }}>
               <Typography
@@ -106,7 +88,7 @@ export default function Main() {
                 align="left"
                 noWrap
                 sx={{ flex: 1 }}
-                fontFamily="NotoSans-Medium"
+                fontFamily="NotoSans-Bold"
                 padding="5px"
               >
                 {"  시도 중인 문제집"}
@@ -121,7 +103,7 @@ export default function Main() {
                 align="left"
                 noWrap
                 sx={{ flex: 1 }}
-                fontFamily="NotoSans-Medium"
+                fontFamily="NotoSans-Bold"
                 padding="5px"
               >
                 {"  즐겨 찾기"}
@@ -145,6 +127,27 @@ export default function Main() {
     </Router>
   );
 }
+
+const addData = [
+  {
+    year: 2022,
+    img: "https://storage.googleapis.com/mathrone-bucket/addthumb/2022.png",
+    title: "수능완성",
+    content: "2022학년도 수능 대비 수능완성과 함께",
+  },
+  {
+    year: 2021,
+    img: "https://storage.googleapis.com/mathrone-bucket/addthumb/2021.png",
+    title: "수능완성",
+    content: "2021학년도 수능 대비 수능완성과 함께",
+  },
+  {
+    year: 2020,
+    img: "https://storage.googleapis.com/mathrone-bucket/addthumb/2020.png",
+    title: "수능완성",
+    content: "2020학년도 수능 대비 수능완성과 함께",
+  },
+];
 
 const itemData = [
   {
@@ -262,7 +265,7 @@ const tryData = [
     problem_id: "01-01-00001",
     problem_num: "2",
     workbook_title: "수능완성",
-    level: 3,
+    level: 1,
     subject: "미적분",
     chapter: "수열의 극한",
   },
@@ -278,7 +281,7 @@ const tryData = [
     problem_id: "01-01-00003",
     problem_num: "5",
     workbook_title: "수능완성",
-    level: 3,
+    level: 2,
     subject: "미적분",
     chapter: "수열의 극한",
   },
@@ -286,7 +289,7 @@ const tryData = [
     problem_id: "01-01-00004",
     problem_num: "12",
     workbook_title: "모의고사",
-    level: 3,
+    level: 2,
     subject: "미적분",
     chapter: "수열의 극한",
   },
@@ -302,7 +305,7 @@ const tryData = [
     problem_id: "01-01-00006",
     problem_num: "22",
     workbook_title: "수능완성",
-    level: 3,
+    level: 2,
     subject: "미적분",
     chapter: "수열의 극한",
   },
@@ -310,7 +313,7 @@ const tryData = [
     problem_id: "01-01-00007",
     problem_num: "1",
     workbook_title: "수능완성",
-    level: 3,
+    level: 1,
     subject: "미적분",
     chapter: "수열의 극한",
   },
@@ -318,7 +321,7 @@ const tryData = [
     problem_id: "01-01-00008",
     problem_num: "29",
     workbook_title: "수능완성",
-    level: 3,
+    level: 1,
     subject: "미적분",
     chapter: "수열의 극한",
   },
@@ -334,7 +337,7 @@ const tryData = [
     problem_id: "01-01-00010",
     problem_num: "18",
     workbook_title: "수능완성",
-    level: 3,
+    level: 2,
     subject: "미적분",
     chapter: "적분법",
   },
