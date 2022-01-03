@@ -4,8 +4,8 @@ import Container from "@mui/material/Container";
 import Paper from "@mui/material/Paper";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 
-import MenuBookRoundedIcon from "@mui/icons-material/MenuBookRounded";
-import StarRoundedIcon from "@mui/icons-material/StarRounded";
+import BookIcon from "@mui/icons-material/MenuBookRounded";
+import StarIcon from "@mui/icons-material/Star";
 
 import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a loader
 import { Carousel } from "react-responsive-carousel";
@@ -32,6 +32,7 @@ import {
   FormGroup,
   Grid,
   ListItem,
+  ListItemIcon,
   ListItemText,
 } from "@mui/material";
 import List from "@mui/material/List";
@@ -105,9 +106,10 @@ export default function Main() {
                 align="left"
                 noWrap
                 sx={{ flex: 1 }}
+                fontFamily="NotoSans-Medium"
+                padding="5px"
               >
-                <MenuBookRoundedIcon fontSize={"large"} />
-                시도 중인 문제집
+                {"  시도 중인 문제집"}
               </Typography>
               <BookSlider posts={itemData} />
             </div>
@@ -119,10 +121,12 @@ export default function Main() {
                 align="left"
                 noWrap
                 sx={{ flex: 1 }}
+                fontFamily="NotoSans-Medium"
+                padding="5px"
               >
-                <StarRoundedIcon fontSize={"large"} />
-                즐겨찾기
+                {"  즐겨 찾기"}
               </Typography>
+
               <BookSlider posts={itemData} />
             </div>
             <div class="probA">

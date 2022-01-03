@@ -78,3 +78,30 @@
 .probB {
   grid-area: probB;
 }
+
+/*FONT*/
+
+@font-face {
+  font-family: "NotoSans-Black";
+  src: url("./Assets/font/NotoSansKR-Black.otf");
+}
+@font-face {
+  font-family: "NotoSans-Bold";
+  src: url("./Assets/font/NotoSansKR-Bold.otf");
+}
+@font-face {
+  font-family: "NotoSans-Light";
+  src: url("./Assets/font/NotoSansKR-Light.otf");
+}
+@font-face {
+  font-family: "NotoSans-Medium";
+  src: url("./Assets/font/NotoSansKR-Medium.otf");
+}
+@font-face {
+  font-family: "NotoSans-Regular";
+  src: url("./Assets/font/NotoSansKR-Regular.otf");
+}
+@font-face {
+  font-family: "NotoSans-Thin";
+  src: url("./Assets/font/NotoSansKR-Thin.otf");
+}
