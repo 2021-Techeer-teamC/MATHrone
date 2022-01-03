@@ -51,6 +51,8 @@ const BookSlider = ({ posts }) => {
         alignItems: "center",
         justifyContent: "space-between",
         marginTop: "20px",
+        paddingBottom: "60px",
+        borderBottom: "1px solid #E4E4E4",
       }}
     >
       <div>
@@ -63,7 +65,8 @@ const BookSlider = ({ posts }) => {
           <div
             style={{
               float: "left",
-              margin: "10px",
+              marginRight: "40px",
+              marginLeft: "40px",
             }}
           >
             <StyledImg
