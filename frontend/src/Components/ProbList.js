@@ -35,6 +35,7 @@ const ProbList = ({ data, title }) => {
               style={{
                 fontFamily: "NotoSans-Bold",
                 fontSize: "25px",
+                borderBottom: "2px solid #BCDCC4",
               }}
             >
               {title}
