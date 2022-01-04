@@ -5,6 +5,7 @@ import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 
 import styled from "styled-components";
 import { useEffect } from "react";
+import Pencil from "../Assets/image/pencil.png";
 
 const BookSlider = ({ posts }) => {
   //시도 중인 문제집
@@ -64,46 +65,73 @@ const BookSlider = ({ posts }) => {
   });
 
   return (
-    <div
-      style={{
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "space-between",
-        marginTop: "20px",
-        paddingBottom: "60px",
-        borderBottom: "1px solid #E4E4E4",
-      }}
-    >
-      <div>
-        <IconButton aria-label="arrow" size="large" onClick={moveForward}>
-          <ArrowBackIosNewIcon />
-        </IconButton>
-      </div>
-      <div>
-        {data.map((item) => (
-          <div
+    <>
+      {posts.length != 0 ? (
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-between",
+            marginTop: "20px",
+            paddingBottom: "60px",
+            borderBottom: "1px solid #E4E4E4",
+          }}
+        >
+          <div>
+            <IconButton aria-label="arrow" size="large" onClick={moveForward}>
+              <ArrowBackIosNewIcon />
+            </IconButton>
+          </div>
+          <div>
+            {data.map((item) => (
+              <div
+                style={{
+                  float: "left",
+                  marginRight: "30px",
+                  marginLeft: "30px",
+                }}
+              >
+                <StyledImg
+                  src={item.img}
+                  width={"200px"}
+                  height={"300px"}
+                  alt="test"
+                />
+                <StyledText>{item.title}</StyledText>
+              </div>
+            ))}
+          </div>
+          <div>
+            <IconButton aria-label="arrow" size="large" onClick={moveBackward}>
+              <ArrowForwardIosIcon />
+            </IconButton>
+          </div>
+        </div>
+      ) : (
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "center",
+            alignItems: "center",
+            paddingTop: "50px",
+            paddingBottom: "50px",
+          }}
+        >
+          <img src={Pencil} width="100px" />
+          <label
             style={{
-              float: "left",
-              marginRight: "30px",
-              marginLeft: "30px",
+              textAlign: "center",
+              alignItems: "center",
+              color: "#434343",
+              paddingTop: "40px",
             }}
           >
-            <StyledImg
-              src={item.img}
-              width={"200px"}
-              height={"300px"}
-              alt="test"
-            />
-            <StyledText>{item.title}</StyledText>
-          </div>
-        ))}
-      </div>
-      <div>
-        <IconButton aria-label="arrow" size="large" onClick={moveBackward}>
-          <ArrowForwardIosIcon />
-        </IconButton>
-      </div>
-    </div>
+            등록된 문제집이 없습니다.
+          </label>
+        </div>
+      )}
+    </>
   );
 };
 
