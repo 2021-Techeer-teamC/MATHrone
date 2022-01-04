@@ -91,6 +91,7 @@ const BookSlider = ({ posts }) => {
                   marginLeft: "30px",
                 }}
               >
+                <StyledDiv />
                 <StyledImg
                   src={item.img}
                   width={"200px"}
@@ -136,37 +137,42 @@ const BookSlider = ({ posts }) => {
 };
 
 const StyledText = styled.text`
-  //이미지랑 같은 크기로 검은색
-  background-color: rgb(0, 0, 0, 0.5);
-  width: 200px;
-  height: 300px;
-  border-radius: 20px;
-
   //위치 이미지와 동일
   position: absolute;
   transform: translate(-100%, 0%);
-  padding: 20px;
-  padding-top: 70px;
+  z-index: 3;
 
-  font-size: 25px;
-  text-align: center;
-
-  color: white;
+  padding: 10px;
+  width: 200px;
+  font-size: 20px;
+  text-align: left;
 
   visibility: hidden;
+  color: white;
+`;
+
+const StyledDiv = styled.div`
+  position: absolute;
+  transform: translate(0%, 0%);
+
+  border-radius: 20px;
+  width: 200px;
+  height: 300px;
+
+  z-index: 2;
+
+  &:hover {
+    background-color: rgb(0, 0, 0, 0.5);
+  }
+
+  &:hover ~ ${StyledText} {
+    visibility: visible;
+  }
 `;
 
 const StyledImg = styled.img`
   border-radius: 20px;
   box-shadow: 0px 2px 10px 0px rgba(0, 0, 0, 0.4); /* 그림자효과 */
-
-  &:hover + ${StyledText} {
-    visibility: visible;
-  }
-
-  &:hover {
-    color: rgb(0, 0, 0, 0.5);
-  }
 `;
 
 export default BookSlider;
