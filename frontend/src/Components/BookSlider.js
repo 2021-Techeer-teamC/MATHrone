@@ -2,7 +2,7 @@ import * as React from "react";
 import IconButton from "@mui/material/IconButton";
 import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
-
+import Rating from "@mui/material/Rating";
 import styled from "styled-components";
 import { useEffect } from "react";
 import Pencil from "../Assets/image/pencil.png";
@@ -91,6 +91,18 @@ const BookSlider = ({ posts }) => {
                   marginLeft: "30px",
                 }}
               >
+                <Rating
+                  name="size-large"
+                  defaultValue={item.star === true ? 1 : 0}
+                  max={1}
+                  size="large"
+                  color="red"
+                  style={{
+                    position: "absolute",
+                    transform: "translate(530%,800%)",
+                    zIndex: 3,
+                  }}
+                />
                 <StyledDiv />
                 <StyledImg
                   src={item.img}
@@ -139,7 +151,7 @@ const BookSlider = ({ posts }) => {
 const StyledText = styled.text`
   //위치 이미지와 동일
   position: absolute;
-  transform: translate(-100%, 0%);
+  transform: translate(-100%, 50%);
   z-index: 3;
 
   padding: 10px;
@@ -161,6 +173,7 @@ const StyledDiv = styled.div`
 
   z-index: 2;
 
+  //hover 순서도 영향 미침 Styled 먼저하면 엄청 깜박거림
   &:hover {
     background-color: rgb(0, 0, 0, 0.5);
   }
