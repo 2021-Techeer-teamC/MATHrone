@@ -4,11 +4,12 @@ import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 
 import styled from "styled-components";
+import { useEffect } from "react";
 
 const BookSlider = ({ posts }) => {
   //시도 중인 문제집
   const [firstIdx, setFirstIdx] = React.useState(0);
-  const [lastIdx, setLastIdx] = React.useState(4); //defalut로 보여질 갯수 + 1개
+  const [lastIdx, setLastIdx] = React.useState((window.innerWidth - 200) / 280); //defalut로 보여질 갯수 + 1개
   const [data, setData] = React.useState(...[posts.slice(firstIdx, lastIdx)]);
 
   const moveBackward = () => {
@@ -44,6 +45,24 @@ const BookSlider = ({ posts }) => {
     setData(tmp);
   };
 
+  useEffect(() => {
+    const resize = () => {
+      let value = parseInt(firstIdx + (window.innerWidth - 200) / 280);
+
+      if (value <= 4 && value >= 1) {
+        //최대 범위
+        setLastIdx(value);
+        const tmp = posts.slice(firstIdx, lastIdx);
+        setData(tmp);
+      }
+    };
+
+    window.addEventListener("resize", resize);
+    return () => {
+      window.removeEventListener("resize", resize);
+    };
+  });
+
   return (
     <div
       style={{
@@ -65,8 +84,8 @@ const BookSlider = ({ posts }) => {
           <div
             style={{
               float: "left",
-              marginRight: "40px",
-              marginLeft: "40px",
+              marginRight: "30px",
+              marginLeft: "30px",
             }}
           >
             <StyledImg
