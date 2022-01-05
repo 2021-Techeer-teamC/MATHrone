@@ -15,6 +15,9 @@ const BookSlider = ({ posts }) => {
   ); //defalut로 보여질 갯수 + 1개
   const [data, setData] = React.useState(...[posts.slice(firstIdx, lastIdx)]);
 
+  const [btnR, setBtnR] = React.useState(false);
+  const [btnL, setBtnL] = React.useState(true);
+
   const moveBackward = () => {
     let f_idx = firstIdx;
     let l_idx = lastIdx;
@@ -23,6 +26,9 @@ const BookSlider = ({ posts }) => {
       //범위를 넘어가지 않을 때만
       f_idx += 1;
       l_idx += 1;
+      setBtnL(false);
+    } else {
+      setBtnR(true);
     }
 
     setFirstIdx(f_idx);
@@ -39,6 +45,9 @@ const BookSlider = ({ posts }) => {
     if (f_idx - 1 >= 0) {
       f_idx -= 1;
       l_idx -= 1;
+      setBtnR(false);
+    } else {
+      setBtnL(true);
     }
 
     setFirstIdx(f_idx);
@@ -80,7 +89,12 @@ const BookSlider = ({ posts }) => {
           }}
         >
           <div>
-            <IconButton aria-label="arrow" size="large" onClick={moveForward}>
+            <IconButton
+              aria-label="arrow"
+              size="large"
+              onClick={moveForward}
+              disabled={btnL}
+            >
               <ArrowBackIosNewIcon />
             </IconButton>
           </div>
@@ -117,7 +131,12 @@ const BookSlider = ({ posts }) => {
             ))}
           </div>
           <div>
-            <IconButton aria-label="arrow" size="large" onClick={moveBackward}>
+            <IconButton
+              aria-label="arrow"
+              size="large"
+              onClick={moveBackward}
+              disabled={btnR}
+            >
               <ArrowForwardIosIcon />
             </IconButton>
           </div>
