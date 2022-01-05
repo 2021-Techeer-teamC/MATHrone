@@ -10,14 +10,16 @@ import Pencil from "../Assets/image/pencil.png";
 const BookSlider = ({ posts }) => {
   //시도 중인 문제집
   const [firstIdx, setFirstIdx] = React.useState(0);
-  const [lastIdx, setLastIdx] = React.useState((window.innerWidth - 200) / 280); //defalut로 보여질 갯수 + 1개
+  const [lastIdx, setLastIdx] = React.useState(
+    parseInt((window.innerWidth - 200) / 280)
+  ); //defalut로 보여질 갯수 + 1개
   const [data, setData] = React.useState(...[posts.slice(firstIdx, lastIdx)]);
 
   const moveBackward = () => {
     let f_idx = firstIdx;
     let l_idx = lastIdx;
 
-    if (l_idx + 1 < posts.length) {
+    if (l_idx + 1 <= posts.length) {
       //범위를 넘어가지 않을 때만
       f_idx += 1;
       l_idx += 1;
@@ -34,7 +36,7 @@ const BookSlider = ({ posts }) => {
     let f_idx = firstIdx;
     let l_idx = lastIdx;
 
-    if (f_idx - 1 > 0) {
+    if (f_idx - 1 >= 0) {
       f_idx -= 1;
       l_idx -= 1;
     }
