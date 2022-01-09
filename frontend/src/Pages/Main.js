@@ -31,7 +31,7 @@ const theme = createTheme();
 
 export default function Main() {
   return (
-    <Router>
+    <Router basename="Main">
       <ThemeProvider theme={theme}>
         <CssBaseline />
         <Container maxWidth="lg">
