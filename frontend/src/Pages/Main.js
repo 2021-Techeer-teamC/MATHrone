@@ -100,7 +100,7 @@ export default function Main() {
                 {"  즐겨 찾기"}
               </Typography>
 
-              <BookSlider posts={starData} />
+              <BookSlider posts={recData} />
             </div>
             <div class="probA">
               <ProbList data={tryData} title={"오늘 가장 많이 시도한 문제"} />
