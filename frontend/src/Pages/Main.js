@@ -15,6 +15,7 @@ import {
 
 import InfoPage from "./InfoPage";
 import Books from "./Books";
+import Workbook from "./BookDetail";
 import Rank from "./Rank";
 
 const sections = [
@@ -42,10 +43,10 @@ export default function Main() {
           {/*  />*/}
           {/*</Paper>*/}
           <main>
-            page is
             <Routes>
               <Route path="/info" exact element={<InfoPage />} />
               <Route path="/books" exact element={<Books />} />
+              <Route path="/workbook" exact element={<Workbook />} />
               <Route path="/rank" exact element={<Rank />} />
             </Routes>
           </main>
