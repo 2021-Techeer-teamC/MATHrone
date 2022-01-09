@@ -100,13 +100,13 @@ export default function Main() {
                 {"  즐겨 찾기"}
               </Typography>
 
-              <BookSlider posts={itemData} />
+              <BookSlider posts={starData} />
             </div>
             <div class="probA">
               <ProbList data={tryData} title={"오늘 가장 많이 시도한 문제"} />
             </div>
             <div class="probB">
-              <ProbList data={tryData} title={"추천 문제"} />
+              <ProbList data={recData} title={"추천 문제"} />
             </div>
           </main>
         </Container>
@@ -146,110 +146,143 @@ const itemData = [
   {
     workbook_id: "01",
     title: "2020학년도 10월 고3 전국연합학력평가 문제지 수학 영역 (가형)",
-    img:
-      "https://storage.googleapis.com/mathrone-bucket/thumbnail/workbook-thumbnail-03.jpg",
+    img: "https://storage.googleapis.com/mathrone-bucket/test/01.jpg",
     publisher: "교육청",
     level: 1,
-    like: 2,
+    star: true,
   },
   {
     workbook_id: "01",
     title: "2021학년도 수능 연계교재 수능완성 수학영역 수학 가형",
-    img:
-      "https://storage.googleapis.com/mathrone-bucket/thumbnail/workbook-thumbnail-03.jpg",
+    img: "https://storage.googleapis.com/mathrone-bucket/test/02.jpg",
     publisher: "EBS",
     level: 3,
-    like: 3,
+    star: true,
   },
   {
     workbook_id: "01",
     title: "2020학년도 10월 고3 전국연합학력평가 문제지 수학 영역 (가형)",
-    img:
-      "https://storage.googleapis.com/mathrone-bucket/thumbnail/workbook-thumbnail-03.jpg",
+    img: "https://storage.googleapis.com/mathrone-bucket/test/03.jpeg",
     publisher: "교육청",
     level: 1,
-    like: 2,
+    star: false,
   },
   {
     workbook_id: "01",
     title: "2021학년도 수능 연계교재 수능완성 수학영역 수학 가형",
-    img:
-      "https://storage.googleapis.com/mathrone-bucket/thumbnail/workbook-thumbnail-01.jpeg",
+    img: "https://storage.googleapis.com/mathrone-bucket/test/04.jpg",
     publisher: "EBS",
     level: 2,
-    like: 1,
+    star: false,
   },
   {
     workbook_id: "01",
     title: "2021학년도 수능 연계교재 수능완성 수학영역 수학 가형",
-    img:
-      "https://storage.googleapis.com/mathrone-bucket/thumbnail/workbook-thumbnail-01.jpeg",
+    img: "https://storage.googleapis.com/mathrone-bucket/test/05.jpg",
     publisher: "EBS",
     level: 2,
-    like: 6,
+    star: false,
   },
   {
     workbook_id: "01",
-    title: "Honey",
-    img:
-      "https://storage.googleapis.com/mathrone-bucket/thumbnail/workbook-thumbnail-06.jpg",
+    title: "2020학년도 10월 고3 전국연합학력평가 문제지 수학 영역 (가형)",
+    img: "https://storage.googleapis.com/mathrone-bucket/test/06.jpg",
     publisher: "평가원",
     level: 2,
-    like: 10,
+    star: true,
   },
   {
     workbook_id: "01",
     title: "2021학년도 대학수학능력시험 문제지 수학 영역 (나형)",
-    img:
-      "https://storage.googleapis.com/mathrone-bucket/thumbnail/workbook-thumbnail-06.jpg",
+    img: "https://storage.googleapis.com/mathrone-bucket/test/07.jpg",
     publisher: "평가원",
     level: 2,
-    like: 7,
+    star: false,
   },
   {
     workbook_id: "01",
     title: "2021학년도 수능 연계교재 수능완성 수학영역 수학 가형",
-    img:
-      "https://storage.googleapis.com/mathrone-bucket/thumbnail/workbook-thumbnail-01.jpeg",
+    img: "https://storage.googleapis.com/mathrone-bucket/test/05.jpg",
     publisher: "EBS",
     level: 3,
-    like: 12,
+    star: false,
   },
   {
     workbook_id: "01",
     title: "2021학년도 수능 연계교재 수능완성 수학영역 수학 가형",
-    img:
-      "https://storage.googleapis.com/mathrone-bucket/thumbnail/workbook-thumbnail-01.jpeg",
+    img: "https://storage.googleapis.com/mathrone-bucket/test/02.jpg",
     publisher: "EBS",
     level: 2,
-    like: 6,
+    star: false,
   },
   {
     workbook_id: "01",
     title: "2021학년도 대학수학능력시험 문제지 수학 영역 (나형)",
-    img:
-      "https://storage.googleapis.com/mathrone-bucket/thumbnail/workbook-thumbnail-06.jpg",
+    img: "https://storage.googleapis.com/mathrone-bucket/test/01.jpg",
     publisher: "평가원",
     level: 3,
-    like: 12,
+    star: false,
   },
   {
     workbook_id: "01",
     title: "2021학년도 수능 연계교재 수능완성 수학영역 수학 가형",
-    img:
-      "https://storage.googleapis.com/mathrone-bucket/thumbnail/workbook-thumbnail-01.jpeg",
+    img: "https://storage.googleapis.com/mathrone-bucket/test/06.jpg",
     publisher: "EBS",
     level: 3,
-    like: 4,
+    star: true,
   },
   {
     workbook_id: "01",
     title: "2021학년도 대학수학능력시험 문제지 수학 영역 (나형)",
-    img:
-      "https://storage.googleapis.com/mathrone-bucket/thumbnail/workbook-thumbnail-06.jpg",
+    img: "https://storage.googleapis.com/mathrone-bucket/test/03.jpeg",
     publisher: "평가원",
     level: 3,
-    like: 1,
+    star: true,
+  },
+];
+
+const starData = [
+  {
+    workbook_id: "01",
+    title: "2020학년도 10월 고3 전국연합학력평가 문제지 수학 영역 (가형)",
+    img: "https://storage.googleapis.com/mathrone-bucket/test/01.jpg",
+    publisher: "교육청",
+    level: 1,
+    star: true,
+  },
+  {
+    workbook_id: "01",
+    title: "2021학년도 수능 연계교재 수능완성 수학영역 수학 가형",
+    img: "https://storage.googleapis.com/mathrone-bucket/test/02.jpg",
+    publisher: "EBS",
+    level: 3,
+    star: true,
+  },
+
+  {
+    workbook_id: "01",
+    title: "2020학년도 10월 고3 전국연합학력평가 문제지 수학 영역 (가형)",
+    img: "https://storage.googleapis.com/mathrone-bucket/test/06.jpg",
+    publisher: "평가원",
+    level: 2,
+    star: true,
+  },
+
+  {
+    workbook_id: "01",
+    title: "2021학년도 수능 연계교재 수능완성 수학영역 수학 가형",
+    img: "https://storage.googleapis.com/mathrone-bucket/test/06.jpg",
+    publisher: "EBS",
+    level: 3,
+    star: true,
+  },
+  {
+    workbook_id: "01",
+    title: "2021학년도 대학수학능력시험 문제지 수학 영역 (나형)",
+    img: "https://storage.googleapis.com/mathrone-bucket/test/03.jpeg",
+    publisher: "평가원",
+    level: 3,
+    star: true,
   },
 ];
 
@@ -344,13 +377,4 @@ const tryData = [
   },
 ];
 
-const recData = [
-  {
-    problem_id: "01-01-00001",
-    title: "Breakfast",
-    img: "https://images.unsplash.com/photo-1551963831-b3b1ca40c98e",
-    publisher: "교육청",
-    level: 1,
-    like: 2,
-  },
-];
+const recData = [];
