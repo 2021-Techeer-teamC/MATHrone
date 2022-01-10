@@ -1,16 +1,14 @@
 package mathrone.backend.domain;
 import com.sun.istack.NotNull;
 import com.vladmihalcea.hibernate.type.array.IntArrayType;
-import lombok.*;
+import lombok.NoArgsConstructor;
 import org.hibernate.annotations.Type;
 import org.hibernate.annotations.TypeDef;
 
 import javax.persistence.*;
 
-@Getter
-@Setter
+
 @NoArgsConstructor
-@AllArgsConstructor
 @Entity
 @Table(name = "workbook")
 @TypeDef(name = "int-array", typeClass = IntArrayType.class)
@@ -49,4 +47,40 @@ public class BookInfoDTO {
     @Column(name="chapter_id")
     @Type(type = "int-array")
     private Integer[] chapter_id;
+
+    public int getWorkbook_id() {
+        return workbook_id;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public String getPublisher() {
+        return publisher;
+    }
+
+    public String getProfile_img() {
+        return profile_img;
+    }
+
+    public String getContent() {
+        return content;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public Short getYear() {
+        return year;
+    }
+
+    public Short getMonth() {
+        return month;
+    }
+
+    public Integer[] getChapter_id() {
+        return chapter_id;
+    }
 }
