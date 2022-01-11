@@ -12,44 +12,38 @@ import javax.persistence.*;
 @Entity
 @Table(name = "workbook")
 @TypeDef(name = "int-array", typeClass = IntArrayType.class)
-public class BookInfoDTO {
+public class WorkBookInfo {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY) //JPA 사용시 필요
     @Column(name = "workbook_id")
-    private int workbook_id;
+    private int workbookId;
 
-    @Column(name = "title")
     @NotNull
     private String title;
 
-    @Column(name = "publisher")
     @NotNull
     private String publisher;
 
     @Column(name = "profile_img")
     @NotNull
-    private String profile_img;
+    private String profileImg;
 
-    @Column(name = "content")
     @NotNull
     private String content;
 
-    @Column(name = "type")
     @NotNull
     private String type;
 
-    @Column(name = "year")
     private Short year;
 
-    @Column(name = "month" )
     private Short month;
 
     @Column(name="chapter_id")
     @Type(type = "int-array")
-    private Integer[] chapter_id;
+    private Integer[] chapterId;
 
-    public int getWorkbook_id() {
-        return workbook_id;
+    public int getWorkbookId() {
+        return workbookId;
     }
 
     public String getTitle() {
@@ -60,8 +54,8 @@ public class BookInfoDTO {
         return publisher;
     }
 
-    public String getProfile_img() {
-        return profile_img;
+    public String getProfileImg() {
+        return profileImg;
     }
 
     public String getContent() {
@@ -81,6 +75,6 @@ public class BookInfoDTO {
     }
 
     public Integer[] getChapter_id() {
-        return chapter_id;
+        return chapterId;
     }
 }
