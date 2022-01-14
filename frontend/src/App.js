@@ -32,13 +32,25 @@ function App() {
   return (
     <div className="App">
         <Router>
+            <ThemeProvider theme={theme}>
+                <CssBaseline />
+                <Container maxWidth="lg">
+                    <Header title="MATHrone" sections={sections} />
             <Routes>
                 <Route path="/" exact element={<Main/>}/>
+                <Route path="/SignUp" exact element={<SignUp/>}/>
+                <Route path="/SignIn" exact element={<SignIn/>}/>
                 <Route path="/info" exact element={<InfoPage />} />
                 <Route path="/books" exact element={<Books />} />
                 <Route path="/workbook" exact element={<Workbook />} />
                 <Route path="/rank" exact element={<Rank />} />
             </Routes>
+                </Container>
+                <Footer
+                    title="Footer"
+                    description="Something here to give the footer a purpose!"
+                />
+            </ThemeProvider>
         </Router>
     </div>
   );
