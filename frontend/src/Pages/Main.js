@@ -17,6 +17,8 @@ import InfoPage from "./InfoPage";
 import Books from "./Books";
 import Workbook from "./BookDetail";
 import Rank from "./Rank";
+import SignIn from "./SignIn";
+import SignUp from "./SignUp";
 
 const sections = [
   { title: "소개", url: "/info" },
@@ -31,7 +33,7 @@ const theme = createTheme();
 
 export default function Main() {
   return (
-    <Router basename="Main">
+    <Router>
       <ThemeProvider theme={theme}>
         <CssBaseline />
         <Container maxWidth="lg">
@@ -44,6 +46,7 @@ export default function Main() {
           {/*</Paper>*/}
           <main>
             <Routes>
+              <Route path="/login" exact element={<SignIn />} />
               <Route path="/info" exact element={<InfoPage />} />
               <Route path="/books" exact element={<Books />} />
               <Route path="/workbook" exact element={<Workbook />} />
