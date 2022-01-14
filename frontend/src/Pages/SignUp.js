@@ -31,7 +31,7 @@ function SignUp() {
   };
 
   return (
-    <ThemeProvider theme={theme}>
+
       <Container component="main" maxWidth="xs">
         <CssBaseline />
         <Box
@@ -103,7 +103,6 @@ function SignUp() {
           </Box>
         </Box>
       </Container>
-    </ThemeProvider>
   );
 };
 export default SignUp;
