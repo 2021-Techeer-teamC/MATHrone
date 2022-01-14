@@ -41,7 +41,7 @@ export default function SignIn() {
   };
 
   return (
-    <Router basename="SignIn">
+
     <ThemeProvider theme={theme}>
       <Container component="main" maxWidth="xs">
         <CssBaseline />
@@ -109,6 +109,5 @@ export default function SignIn() {
         <Copyright sx={{ mt: 8, mb: 4 }} />
       </Container>
     </ThemeProvider>
-    </Router>
   );
 }

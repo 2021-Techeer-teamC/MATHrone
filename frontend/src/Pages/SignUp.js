@@ -31,7 +31,6 @@ function SignUp() {
   };
 
   return (
-    <Router basename="SignUp">
     <ThemeProvider theme={theme}>
       <Container component="main" maxWidth="xs">
         <CssBaseline />
@@ -105,7 +104,6 @@ function SignUp() {
         </Box>
       </Container>
     </ThemeProvider>
-    </Router>
   );
 };
 export default SignUp;
