@@ -1,67 +1,65 @@
 import * as React from "react";
 import PropTypes from "prop-types";
-import Toolbar from "@mui/material/Toolbar";
+import { Toolbar, Box, AppBar, Grid, Container } from "@mui/material/";
 import Button from "@mui/material/Button";
-import IconButton from "@mui/material/IconButton";
-import SearchIcon from "@mui/icons-material/Search";
 import Typography from "@mui/material/Typography";
 import LinkM from "@mui/material/Link";
 import { Link } from "react-router-dom";
+import { styled } from '@mui/material/styles';
+import { grey, teal } from '@mui/material/colors';
+import "../Assets/styles/components.css"
+
+const RegisterButton = styled(Button)(({ theme }) => ({
+  width: '90px',
+  borderRadius: '100px',
+  color: theme.palette.getContrastText(grey[50]),
+  backgroundColor: '#BCDCC4',
+  '&:hover': {
+    backgroundColor: teal[500],
+  },
+}));
+
+const LoginButton = styled(Button)(({ theme }) => ({
+  width: '70px',
+  borderRadius: '100px',
+  color: theme.palette.getContrastText(grey[900]),
+  backgroundColor: '#315C72',
+  '&:hover': {
+    backgroundColor: teal[500],
+  },
+}));
 
 function Header(props) {
-  const { sections, title } = props;
+  const { title } = props;
 
   return (
-    <React.Fragment>
-      <Toolbar sx={{ borderBottom: 1, borderColor: "divider" }}>
-        <Button size="small">Subscribe</Button>
+      <Box style={{ width: '100%' }} sx={{ flexGrow: 1 }}>
+        <div style={{ width: '100%', backgroundColor: 'none', border: 'none' }} className="header">
+          <div className="headerTitle">
+            <Link to="/../" style={{ textDecoration: 'none', color: '#151515' }}>
+              {title}<span style={{ color: '#BCDCC4' }}><strong>.</strong></span>
+            </Link>
+          </div>
 
-        <Typography
-          component="h2"
-          variant="h5"
-          color="inherit"
-          aligh="center"
-          noWrap
-          sx={{ flex: 1 }}
-        >
-          <Link to="/">{title}</Link>
-        </Typography>
-        <IconButton>
-          <SearchIcon />
-        </IconButton>
-        <Link to="/../SignUp" style={{textDecoration: 'none'}}>
-        <Button variant="outlined" size="small" onClick>
-          Sign up
-        </Button>
-        </Link>
-        <Link to="/../SignIn" style={{textDecoration: 'none'}}>
-        <Button variant="outlined" size="small" onClick>
-          Sign in
-        </Button>
-        </Link>
-      </Toolbar>
-      <Toolbar
-        component="nav"
-        variant="dense"
-        sx={{ justifyContent: "space-between", overflowX: "auto" }}
-      >
-        {sections.map((section) => (
-          /*<LinkM
-            color="inherit"
-            noWrap
-            key={section.title}
-            variant="body2"
-            href={section.url}
-            sx={{ p: 1, flexShrink: 0 }}
-          >
-            {section.title}
-          </LinkM>*/
-          <Link to={section.url}>
-            <Button>{section.title}</Button>
-          </Link>
-        ))}
-      </Toolbar>
-    </React.Fragment>
+          <Box sx={{ flexGrow: 1 }} />
+
+          <Box sx={{ display: { xs: 'flex' } }}>
+            <Grid container spacing={1}>
+              <Grid item xs={6} md={7}>
+                <Link to="/../SignUp" style={{ textDecoration: 'none' }}>
+                  <RegisterButton>회원가입</RegisterButton>
+                </Link>
+
+              </Grid>
+              <Grid item xs={6} md={5}>
+                <Link to="/../SignIn" style={{ textDecoration: 'none' }}>
+                  <LoginButton>로그인</LoginButton>
+                </Link>
+              </Grid>
+            </Grid>
+          </Box>
+        </div>
+      </Box>
   );
 }
 
@@ -76,3 +74,5 @@ Header.propTypes = {
 };
 
 export default Header;
+
+
