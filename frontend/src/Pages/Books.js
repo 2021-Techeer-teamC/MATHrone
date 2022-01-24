@@ -1,4 +1,8 @@
 import * as React from "react";
+import Header from "../Components/Header";
+import NavBar from "../Components/NavBar";
+import Footer from "../Components/Footer";
+
 // import axios from "axios";
 import List from "@mui/material/List";
 import ListItemButton from "@mui/material/ListItemButton";
@@ -19,7 +23,7 @@ import "../App.css";
 import BookList from "../Components/BookList";
 import { useEffect } from "react";
 
-export default function BookPage() {
+export default function BookPage(props) {
   //책 리스트 토글마다 열림/닫힘 상태를 저장함
   const [open, setOpen] = React.useState([false]); //각 토글들의 상태를 배열로 관리함
 
@@ -117,6 +121,8 @@ export default function BookPage() {
 
   return (
     <div>
+      <Header title="MATHrone" />
+      <NavBar sections={props.sections} />
       <SearchBar></SearchBar>
       <Container>
         <div class="container">
@@ -189,6 +195,11 @@ export default function BookPage() {
           </div>
         </div>
       </Container>
+
+      <Footer
+        title="Footer"
+        description="Something here to give the footer a purpose!"
+      />
     </div>
   );
 }
