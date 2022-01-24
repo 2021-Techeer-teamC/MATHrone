@@ -30,6 +30,7 @@ interface bookItem {
   publisher: string;
   level: number;
   like: number;
+  sections: any;
 }
 
 
