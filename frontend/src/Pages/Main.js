@@ -1,10 +1,13 @@
 import * as React from "react";
+import "../Assets/styles/components.css"
+
 import CssBaseline from "@mui/material/CssBaseline";
 import Container from "@mui/material/Container";
-import Paper from "@mui/material/Paper";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 
+
 import Header from "../Components/Header";
+import NavBar from "../Components/NavBar";
 import Footer from "../Components/Footer";
 import {
   BrowserRouter as Router,
@@ -24,9 +27,6 @@ const sections = [
   { title: "소개", url: "/info" },
   { title: "교재", url: "/books" },
   { title: "랭킹", url: "/rank" },
-  { title: "소개", url: "/info" },
-  { title: "교재", url: "/books" },
-  { title: "랭킹", url: "/rank" },
 ];
 
 const theme = createTheme();
@@ -36,8 +36,9 @@ export default function Main() {
     <Router>
       <ThemeProvider theme={theme}>
         <CssBaseline />
+        <Header title="MATHrone" />
+        <NavBar sections={sections}/>
         <Container maxWidth="lg">
-          <Header title="MATHrone" sections={sections} />
           {/*<Paper>*/}
           {/*  <img*/}
           {/*    src="https://images.unsplash.com/photo-1596495577886-d920f1fb7238?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=874&q=80"*/}
