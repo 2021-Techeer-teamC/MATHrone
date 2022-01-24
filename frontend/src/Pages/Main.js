@@ -15,7 +15,7 @@ import {
 
 import InfoPage from "./InfoPage";
 import Books from "./Books";
-import Workbook from "./BookDetail";
+import BooksDetail from "./BookDetail";
 import Rank from "./Rank";
 import SignIn from "./SignIn";
 import SignUp from "./SignUp";
@@ -49,7 +49,7 @@ export default function Main() {
               <Route path="/login" exact element={<SignIn />} />
               <Route path="/info" exact element={<InfoPage />} />
               <Route path="/books" exact element={<Books />} />
-              <Route path="/workbook" exact element={<Workbook />} />
+              <Route path="/books-detail" exact element={<BooksDetail id={2} name="2022학년도 수능 연계교재 수능완성"/>} />
               <Route path="/rank" exact element={<Rank />} />
             </Routes>
           </main>

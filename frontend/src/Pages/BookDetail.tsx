@@ -6,9 +6,12 @@ import { Grid, Paper, Card, CardMedia, CardContent, Button, Typography,
 ListItemButton, ListItemText, List, Collapse, LinearProgress} from '@mui/material';
 import { green } from '@mui/material/colors';
 
+type WorkbookDetailProps = {
+    id: number;
+    name: string;
+};
 
-
-export default function BookDetail() {
+export default function BookDetail({ id, name}: WorkbookDetailProps) {
     const [open, setOpen] = React.useState(true);
     const greenProgress = green[500]; // #f44336
 
@@ -31,7 +34,7 @@ export default function BookDetail() {
                         수학 - 고등학교 3학년
                     </Typography>
                     <Typography variant="h5" component="div">
-                        2022학년도 수능 연계교재 수능완성
+                        {name}
                     </Typography>
                     <LinearProgress variant='determinate' value={40} style={{color:'green'}}></LinearProgress>
                     <Typography sx={{ mb: 1.5 }} color="text.secondary">
