@@ -17,8 +17,8 @@ function NavBar(props) {
                 sx={{ justifyContent: "space-between", overflowX: "auto" }}
             >
                 {sections.map((section) => (
-                    <Link to={section.url}>
-                        <Button>{section.title}</Button>
+                    <Link style={{ textDecoration: 'none', color:'#151515'}} to={section.url}>
+                        {section.title}
                     </Link>
                 ))}
             </Toolbar>
