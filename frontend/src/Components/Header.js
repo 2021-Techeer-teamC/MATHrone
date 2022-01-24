@@ -29,12 +29,12 @@ function Header(props) {
         <IconButton>
           <SearchIcon />
         </IconButton>
-        <Link to="/../SignUp" style={{textDecoration: 'none'}}>
+        <Link to="/user/signUp" style={{textDecoration: 'none'}}>
         <Button variant="outlined" size="small" onClick>
           Sign up
         </Button>
         </Link>
-        <Link to="/../SignIn" style={{textDecoration: 'none'}}>
+        <Link to="/user/login" style={{textDecoration: 'none'}}>
         <Button variant="outlined" size="small" onClick>
           Sign in
         </Button>

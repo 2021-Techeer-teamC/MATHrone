@@ -17,8 +17,8 @@ import InfoPage from "./InfoPage";
 import Books from "./Books";
 import Workbook from "./BookDetail";
 import Rank from "./Rank";
-import SignIn from "./SignIn";
-import SignUp from "./SignUp";
+import SignIn from "./User/SignIn";
+import SignUp from "./User/SignUp";
 
 const sections = [
   { title: "소개", url: "/info" },
@@ -46,7 +46,8 @@ export default function Main() {
           {/*</Paper>*/}
           <main>
             <Routes>
-              <Route path="/login" exact element={<SignIn />} />
+              <Route path="/user/login" exact element={<SignIn />} />
+              <Route path="/user/signUp" exact element={<SignUp/>} />
               <Route path="/info" exact element={<InfoPage />} />
               <Route path="/books" exact element={<Books />} />
               <Route path="/workbook" exact element={<Workbook />} />
