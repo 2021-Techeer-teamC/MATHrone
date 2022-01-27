@@ -2,19 +2,27 @@ import * as React from 'react';
 import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
 import Typography from '@mui/material/Typography';
-import { CardActions, Divider, Icon } from '@mui/material';
 import { Container } from '@mui/material';
 import CardContent from '@mui/material/CardContent';
-import { CardHeader } from '@mui/material';
 import CardMedia from '@mui/material/CardMedia';
-import { border, borderBottom, color, grid } from '@mui/system';
 import { useEffect } from "react";
 import "../App.css";
 import RankList from '../Components/RankList';
 
 
+interface rankData {
+  user_name: string;
+  correct_count: number;
+  try_count: number;
+}
+
+type dataList = {
+  posts: rankData[];
+}
+
 export default function Rankpage() {
 
+   
   const [rankDatas, setRankDatas] = React.useState([...rankData]);
   const [res, setRes] = React.useState([...rankDatas]);
 
@@ -51,8 +59,8 @@ export default function Rankpage() {
       </Box>
       
       <Card style={{backgroundColor: 'WhiteSmoke'}} sx={{p:1}}>
-        <Card elevation={5} sx={{ display: 'flex', flexDirection: 'column', p: 2, mb: 3 }}>
-          <div class="rankContainer">
+        <Card elevation={5} sx={{ display: 'flex', flexDirection: 'column', pb: 2, pt: 2, mb: 3, pr:5, pl:5 }}>
+          <div className="rankContainer">
             <Typography variant="body1" component="p">
               랭킹
             </Typography>
@@ -66,11 +74,12 @@ export default function Rankpage() {
               시도한 문제 수
             </Typography>
           </div>
-        </Card>        
-        <RankList posts={res}></RankList>
+        </Card>
+
+        <RankList posts={res}/>
       </Card>
 
-      <Card variant="outlined" sx={{ display: 'grid', gridTemplateColumns: '1fr 3fr 1fr 1fr', mt: 2, pt: 3, pb: 3 }}>
+      <Card variant="outlined" sx={{ display: 'grid', gridTemplateColumns: '1fr 3fr 1fr 1fr', mt: 2, pt: 3, pb: 3, pl:5, pr:6}}>
           <Typography variant="body1" component="p">
             10000
           </Typography>
@@ -88,7 +97,7 @@ export default function Rankpage() {
   );
 }
 
-const rankData = [
+const rankData:rankData[] = [
   {
     user_name: "tester1",
     correct_count: 904,
