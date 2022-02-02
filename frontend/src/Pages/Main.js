@@ -1,4 +1,8 @@
 import * as React from "react";
+import CssBaseline from "@mui/material/CssBaseline";
+import Container from "@mui/material/Container";
+import Paper from "@mui/material/Paper";
+
 import "../Assets/styles/components.css"
 
 import { createTheme, ThemeProvider } from "@mui/material/styles";
@@ -42,7 +46,7 @@ import MainCarousel from "../Components/MainCarousel";
 
 const theme = createTheme();
 
-export default function Main() {
+export default function Main(props) {
   //화면 크기
   const size = {
     width: window.innerWidth || document.body.clientWidth,
@@ -52,69 +56,65 @@ export default function Main() {
   //시도 중인 문제집
 
   return (
-      <ThemeProvider theme={theme}>
-        <CssBaseline />
-        <Container maxWidth="lg">
-          <Header title="MATHrone" sections={sections} />
-          <main class="main2">
-            <Routes>
-              <Route path="/info" exact element={<InfoPage />} />
-              <Route path="/books" exact element={<Books />} />
-              <Route path="/rank" exact element={<Rank />} />
-            </Routes>
-            <div
-              class="carousel"
-              style={{
-                alignItems: "center",
-                justifyContent: "center",
-              }}
+    <ThemeProvider theme={theme}>
+      <Header title="MATHrone" />
+      <NavBar sections={props.sections} />
+      <CssBaseline />
+      <Container maxWidth="lg">
+        <main class="main2">
+          <div
+            class="carousel"
+            style={{
+              alignItems: "center",
+              justifyContent: "center",
+            }}
+          >
+            <MainCarousel posts={addData} />
+          </div>
+          <div class="slider" style={{ paddingTop: "30px" }}>
+            <Typography
+              component="h2"
+              variant="h5"
+              color="inherit"
+              align="left"
+              noWrap
+              sx={{ flex: 1 }}
+              fontFamily="NotoSans-Bold"
+              padding="5px"
             >
-              <MainCarousel posts={addData} />
-            </div>
-            <div class="slider" style={{ paddingTop: "30px" }}>
-              <Typography
-                component="h2"
-                variant="h5"
-                color="inherit"
-                align="left"
-                noWrap
-                sx={{ flex: 1 }}
-                fontFamily="NotoSans-Bold"
-                padding="5px"
-              >
-                {"  시도 중인 문제집"}
-              </Typography>
-              <BookSlider posts={itemData} />
-            </div>
-            <div class="slider2" style={{ paddingTop: "30px" }}>
-              <Typography
-                component="h2"
-                variant="h5"
-                color="inherit"
-                align="left"
-                noWrap
-                sx={{ flex: 1 }}
-                fontFamily="NotoSans-Bold"
-                padding="5px"
-              >
-                {"  즐겨 찾기"}
-              </Typography>
+              {"  시도 중인 문제집"}
+            </Typography>
+            <BookSlider posts={itemData} />
+          </div>
+          <div class="slider2" style={{ paddingTop: "30px" }}>
+            <Typography
+              component="h2"
+              variant="h5"
+              color="inherit"
+              align="left"
+              noWrap
+              sx={{ flex: 1 }}
+              fontFamily="NotoSans-Bold"
+              padding="5px"
+            >
+              {"  즐겨 찾기"}
+            </Typography>
 
-              <BookSlider posts={recData} />
-            </div>
-            <div class="probA">
-              <ProbList data={tryData} title={"오늘 가장 많이 시도한 문제"} />
-            </div>
-            <div class="probB">
-              <ProbList data={recData} title={"추천 문제"} />
-            </div>
-          </main>
-        </Container>
-        <Footer
-          title="Footer"
-          description="Something here to give the footer a purpose!"
-        />
-      </ThemeProvider>
+            <BookSlider posts={recData} />
+          </div>
+          <div class="probA">
+            <ProbList data={tryData} title={"오늘 가장 많이 시도한 문제"} />
+          </div>
+          <div class="probB">
+            <ProbList data={recData} title={"추천 문제"} />
+          </div>
+        </main>
+      </Container>
+      <Footer
+        title="Footer"
+        description="Something here to give the footer a purpose!"
+      />
+    </ThemeProvider>
   );
 }
 
