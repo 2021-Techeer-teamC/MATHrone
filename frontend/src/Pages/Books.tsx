@@ -30,7 +30,7 @@ interface bookItem {
   publisher: string;
   level: number;
   like: number;
-  sections: any;
+  //sections: any;
 }
 
 
@@ -132,7 +132,7 @@ export default function BookPage(props: { sections: any; }) {
 
   return (
     <div>
-      <Header title="MATHrone" />
+      <Header title="MATHrone" sections={props.sections} />
       <NavBar sections={props.sections} />
       <SearchBar></SearchBar>
       <Container>
