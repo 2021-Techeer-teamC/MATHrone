@@ -26,6 +26,17 @@ dependencies {
 	implementation group: 'org.springframework.cloud', name: 'spring-cloud-gcp-starter-sql-postgresql', version: '1.2.8.RELEASE'
 	implementation group: 'com.vladmihalcea', name: 'hibernate-types-52', version: '2.10.4'
 	implementation 'com.google.cloud:spring-cloud-gcp-starter'
+
+	// security dependency
+	implementation 'org.springframework.boot:spring-boot-starter-security'
+
+	// jwt dependency
+//	implementation 'io.jsonwebtoken:jjwt:0.9.1'
+
+	implementation group: 'io.jsonwebtoken', name: 'jjwt-api', version: '0.11.2'
+	implementation group: 'io.jsonwebtoken', name: 'jjwt-impl', version: '0.11.2'
+	implementation group: 'io.jsonwebtoken', name: 'jjwt-jackson', version: '0.11.2'
+
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 }
 

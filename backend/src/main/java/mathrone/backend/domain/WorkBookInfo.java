@@ -7,7 +7,6 @@ import org.hibernate.annotations.TypeDef;
 
 import javax.persistence.*;
 
-
 @NoArgsConstructor
 @Entity
 @Table(name = "workbook")
