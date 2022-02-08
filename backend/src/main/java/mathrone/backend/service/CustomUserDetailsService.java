@@ -1,5 +1,6 @@
 package mathrone.backend.service;
 
+import lombok.RequiredArgsConstructor;
 import mathrone.backend.domain.UserInfo;
 import mathrone.backend.repository.UserRepository;
 import org.springframework.security.core.userdetails.User;
@@ -16,13 +17,10 @@ import java.util.List;
 Repository를 통해 database로부터 필요한 user 정보를 가져오는 service
 */
 @Service
+@RequiredArgsConstructor
 public class CustomUserDetailsService implements UserDetailsService {
 
     private final UserRepository userRepository;
-
-    public CustomUserDetailsService(UserRepository userRepository){
-        this.userRepository = userRepository;
-    }
 
     @Override
     public UserDetails loadUserByUsername(String Id) throws UsernameNotFoundException {
@@ -34,12 +32,6 @@ public class CustomUserDetailsService implements UserDetailsService {
             .password(isExist.getPassword())
             .roles("USER")
             .build();
-    }
-
-    public void signUp(UserInfo user){
-        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-        user.setPassword(encoder.encode(user.getPassword()));
-        userRepository.save(user);
     }
 
     public List<UserInfo> allUser(){

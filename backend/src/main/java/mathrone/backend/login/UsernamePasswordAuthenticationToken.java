@@ -10,7 +10,7 @@ public class UsernamePasswordAuthenticationToken extends AbstractAuthenticationT
     private static final long serialVersionUID =
             SpringSecurityCoreVersion.SERIAL_VERSION_UID;
     // user id
-    private final Object principal;
+    private Object principal;
     // user password
     private Object credentials;
 

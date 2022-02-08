@@ -1,52 +1,51 @@
 package mathrone.backend.controller;
 
+import mathrone.backend.controller.dto.TokenDto;
+import mathrone.backend.controller.dto.UserRequestDto;
+import mathrone.backend.controller.dto.UserResponseDto;
 import mathrone.backend.domain.UserInfo;
 import mathrone.backend.login.TokenProvider;
-import mathrone.backend.login.UsernamePasswordAuthenticationToken;
+import mathrone.backend.service.AuthService;
 import mathrone.backend.service.CustomUserDetailsService;
 import org.springframework.http.MediaType;
-import org.springframework.security.core.Authentication;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
-import java.util.Map;
 
 @RestController
 @RequestMapping("/user")
 public class UserController {
     private final TokenProvider customAuthenticationProvider;
-    private final CustomUserDetailsService customUserDetailsService;
+    private final AuthService authService;
 
-    public UserController(TokenProvider cp, CustomUserDetailsService cs){
+    public UserController(TokenProvider cp, AuthService as){
         this.customAuthenticationProvider = cp;
-        this.customUserDetailsService = cs;
+        this.authService = as;
     }
 
     @PostMapping(value = "/login", produces = MediaType.APPLICATION_JSON_VALUE)
-    public Authentication login (@RequestParam(value = "userId") String userId,
-                                @RequestParam(value = "userPassword") String userPassword) {
-        return customAuthenticationProvider.authenticate(new UsernamePasswordAuthenticationToken(userId,userPassword));
-//        UserDetails user = customUserDetailsService.loadUserByUsername(userId);
-//        if (user.getPassword().equals(userPassword)){
-//            return user;
-//        } else throw new Exception("password error");
+    public ResponseEntity<TokenDto> login (@RequestBody UserRequestDto userRequestDto) {
+
+        return ResponseEntity.ok(authService.login(userRequestDto));
+//        return customAuthenticationProvider.authenticate(new UsernamePasswordAuthenticationToken(userId,userPassword));
     }
 
     @PostMapping(value = "/signup", headers = {"Content-type=application/json"})
-    public String signUp(@RequestBody Map<String,String> info){
-        UserInfo user = new UserInfo();
-        user.setId(info.get("id"));
-        user.setPassword(info.get("password"));
-        user.setNickname(info.get("nickname"));
-        user.setExp(0);
-        user.setPremium(false);
-        user.setEmail(info.get("email"));
-        customUserDetailsService.signUp(user);
-        return "redirect:/login";
+    public ResponseEntity<UserResponseDto> signUp(@RequestBody UserRequestDto userRequestDto){
+        return ResponseEntity.ok(authService.signup(userRequestDto));
+
+//        UserInfo user = new UserInfo();
+//        user.setId(info.get("id"));
+//        user.setPassword(info.get("password"));
+//        user.setNickname(info.get("nickname"));
+//        user.setExp(0);
+//        user.setPremium(false);
+//        user.setEmail(info.get("email"));
+////        customUserDetailsService.signUp(user);
+//        return "redirect:/login";
     }
 
-    @GetMapping(value = "/all")
-    public List<UserInfo> allUser(){
-        return customUserDetailsService.allUser();
-    }
+//    @GetMapping(value = "/all")
+//    public List<UserInfo> allUser(){
+//        return customUserDetailsService.allUser();
+//    }
 }

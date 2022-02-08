@@ -2,10 +2,11 @@ package mathrone.backend.domain;
 
 import com.sun.istack.NotNull;
 import com.vladmihalcea.hibernate.type.array.IntArrayType;
+import lombok.Builder;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.TypeDef;
-import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
 
@@ -13,6 +14,8 @@ import javax.persistence.*;
 @Entity
 @Table(name = "user_info")
 @TypeDef(name = "int-array", typeClass = IntArrayType.class)
+@Getter
+@Setter
 public class UserInfo {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY) //JPA 사용시 필요)
     @Column(name = "user_id")
@@ -44,16 +47,24 @@ public class UserInfo {
 
     private String role;
 
-    public String getId() {
-        return id;
+    @Builder
+    public UserInfo(String email, String password, String role, String id, String nickname) {
+        this.email = email;
+        this.password = password;
+        this.role = role;
+        this.id = id;
+        this.nickname = nickname;
     }
-    public String getPassword() {
-        return password;
-    }
-    public void setPassword(String password){ this.password = password;}
-    public void setId(String id) { this.id = id; }
-    public void setNickname(String nickname) { this.nickname = nickname;}
-    public void setExp(int i) { this.exp = i;}
-    public void setPremium(boolean b) { this.premium = b;}
-    public void setEmail(String email) { this.email = email;}
+//    public String getId() {
+//        return id;
+//    }
+//    public String getPassword() {
+//        return password;
+//    }
+//    public void setPassword(String password){ this.password = password;}
+//    public void setId(String id) { this.id = id; }
+//    public void setNickname(String nickname) { this.nickname = nickname;}
+//    public void setExp(int i) { this.exp = i;}
+//    public void setPremium(boolean b) { this.premium = b;}
+//    public void setEmail(String email) { this.email = email;}
 }
