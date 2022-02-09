@@ -22,10 +22,10 @@ import SignUp from "./SignUp";
 
 const sections = [
   { title: "소개", url: "/info" },
-  { title: "교재", url: "/books" },
+  { title: "교재", url: "/book" },
   { title: "랭킹", url: "/rank" },
   { title: "소개", url: "/info" },
-  { title: "교재", url: "/books" },
+  { title: "교재", url: "/book" },
   { title: "랭킹", url: "/rank" },
 ];
 
@@ -48,7 +48,7 @@ export default function Main() {
             <Routes>
               <Route path="/login" exact element={<SignIn />} />
               <Route path="/info" exact element={<InfoPage />} />
-              <Route path="/books" exact element={<Books />} />
+              <Route path="/book" exact element={<Books />} />
               <Route path="/workbook" exact element={<Workbook />} />
               <Route path="/rank" exact element={<Rank />} />
             </Routes>
