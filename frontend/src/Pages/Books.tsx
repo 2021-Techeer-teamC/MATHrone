@@ -1,5 +1,5 @@
 import * as React from "react";
-// import axios from "axios";
+import axios, {AxiosResponse} from "axios";
 import List from "@mui/material/List";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
@@ -16,27 +16,34 @@ import Pagination from "@mui/material/Pagination";
 
 import SearchBar from "../Components/SearchBar";
 import "../App.css";
-import BookList from "../Components/BookList";
+import BookImageList from "../Components/BookImageList";
 import { useEffect } from "react";
 
-interface bookItem {
-  workbook_id: string;
-  title: string;
-  img: string;
-  publisher: string;
-  level: number;
-  like: number;
-}
+import service from "../Services/service";
+import bookItem from "../Types/bookItem";
+import bookContent from "../Types/bookContent";
+
+//
+// interface bookItem {
+//   workbook_id: string;
+//   title: string;
+//   img: string;
+//   publisher: string;
+//   level: number;
+//   like: number;
+// }
+
+
 
 
 export default function BookPage() {
   //책 리스트 토글마다 열림/닫힘 상태를 저장함
-  const [open, setOpen] = React.useState([false]); //각 토글들의 상태를 배열로 관리함
+  const [open, setOpen] = React.useState<boolean[]>([false]); //각 토글들의 상태를 배열로 관리함
 
   const handleClick = (value : number) => () => {
     //value : 토글의 인덱스를 받아옴(몇번째 토글이 눌렸는지)
-    const newOpen = [...open]; //상태를 저장한 open배열을 복사해옴
-    const currentBool = open[value]; //현재 눌린 토글의 상태를 받아옴
+    const newOpen:boolean[] = [...open]; //상태를 저장한 open배열을 복사해옴
+    const currentBool:boolean|undefined = open[value]; //현재 눌린 토글의 상태를 받아옴
 
     if (currentBool === undefined) {
       //존재하지 않음-> 누른적이 없음(닫힌상태)
@@ -49,12 +56,12 @@ export default function BookPage() {
   };
 
   //분류(book nav bar에서의 분류) 선택
-  const [selected, setSelected] = React.useState("all");
-  const [itemDatas, setItemDatas] = React.useState([...itemData]); //axios결과 임시용
-  const [result, setResult] = React.useState([...itemDatas]);
-  const [url, setURL] = React.useState("");
+  const [selected, setSelected] = React.useState<string>("all");
+  const [itemDatas, setItemDatas] = React.useState<bookItem[]>(itemData); //axios결과 임시용
+  const [result, setResult] = React.useState<bookItem[]>(itemDatas);
+  const [url, setURL] = React.useState<string>("https://localhost/8080/workbook");
 
-  const params = new URLSearchParams([["publisher", selected]]);
+  // const params = new URLSearchParams([["publisher", selected]]);
 
   const clickBook = (value:string) => () => {
     setSelected(value);
@@ -65,32 +72,61 @@ export default function BookPage() {
 
   const filterResult = (value:string) => {
     // axios (출판사로 보내기)
-    // axios.get(url, { params }).then((res) => {
-    //  setItemDatas([...res])
+    service.getWorkbookByPb(selected).then((res:any)=>{
+      setItemDatas(res);
+      setResult(itemDatas);
+      setCurrentPage(1);
+    })
+    // axios.get(url, { params }).then(res:bookItem[] => {
+    //   setItemDatas([...res])
     //   setResult(itemDatas);
     //   setCurrentPage(1);
     // });
 
-    //분류에 따라 결과 필터(not axios) 전체 결과 받아와서 react에서 출판사를 구분
-    let newRes = [...itemDatas];
-    if (value !== "all") {
-      newRes = itemDatas.filter(function (element) {
-        return element.publisher === value;
-      });
-    }
-    setResult(newRes);
-    setCurrentPage(1); //결과 필터가 변경되면 page = 1 부터 시작
+    // 분류에 따라 결과 필터(not axios) 전체 결과 받아와서 react에서 출판사를 구분
+    // let newRes = [...itemDatas];
+    // if (value !== "all") {
+    //   newRes = itemDatas.filter(function (element) {
+    //     return element.publisher === value;
+    //   });
+    // }
+    // setResult(newRes);
+    // setCurrentPage(1); //결과 필터가 변경되면 page = 1 부터 시작
+
+
+
   };
 
   //정렬기준(난이도순, 인기순 등)
-  const [sorted, setSorted] = React.useState("star");
+  const [sorted, setSorted] = React.useState<string>("star");
   const selectSort = (event : React.ChangeEvent<HTMLSelectElement>) => {
     const select = event.target.value; //정렬기준을 변경하면, 정렬기준 변수를 수정함 -> 수정되면 useEffect [sorted]가 수행됨
     setSorted(select);
     // console.log(sorted);
   };
 
+
+  //책 리스트
+  const [bookContents,setBookContents] = React.useState<bookContent[]>([]);//empty bookList
+
   useEffect(() => {
+
+    //bookContent를 서버에서 가져옴 -> 반영
+    // service.getAllBookContent().then((res:any)=>{
+    //   setBookContents(res);
+    //   console.log(res);
+    // }).catch((e:Error)=>{
+    //   console.log(e);
+    // })
+
+    //itemData(bookItem)를 서버에서 가져옴
+    service.getAllBookContent().then((res:any)=>{
+      setItemDatas(res);
+      console.log(res);
+    }).catch((e:Error)=>{
+      console.log(e);
+    })
+
     //itemData의 정렬을 바꾸어서 정렬함
     console.log(result);
 
@@ -110,14 +146,14 @@ export default function BookPage() {
   }, [sorted]); //sorted 변수가 변경될 떄 마다 실행
 
   //pagination과 관련된 변수
-  const [currentPage, setCurrentPage] = React.useState(1);
-  const [postsPerPage, setPostsPerPage] = React.useState(3 * 3); //한페이지에 보여질 책의 수
+  const [currentPage, setCurrentPage] = React.useState<number>(1);
+  const [postsPerPage, setPostsPerPage] = React.useState<number>(3 * 3); //한페이지에 보여질 책의 수
 
   const indexOfLast = currentPage * postsPerPage;
   const indexOfFirst = indexOfLast - postsPerPage;
   function currentPosts(tmp:bookItem[]) {
-    let currentPosts : bookItem[];
-    currentPosts = tmp.slice(indexOfFirst, indexOfLast);
+    let currentPosts : bookItem[] = [];
+    currentPosts = Array.from(tmp).slice(indexOfFirst, indexOfLast);
     return currentPosts;
   }
 
@@ -182,7 +218,7 @@ export default function BookPage() {
           </div>
           <div className="item">
             <Paper>
-              <BookList posts={currentPosts(result)}/>
+              <BookImageList posts={currentPosts(result)}/>
             </Paper>
           </div>
           <div className="item"></div>
