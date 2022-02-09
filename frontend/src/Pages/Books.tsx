@@ -57,8 +57,8 @@ export default function BookPage() {
 
   //분류(book nav bar에서의 분류) 선택
   const [selected, setSelected] = React.useState<string>("all");
-  const [itemDatas, setItemDatas] = React.useState<bookItem[]>(itemData); //axios결과 임시용
-  const [result, setResult] = React.useState<bookItem[]>(itemDatas);
+  const [itemDatas, setItemDatas] = React.useState<bookItem[]>([]); //axios결과 임시용
+  const [result, setResult] = React.useState<bookItem[]>([]);
   const [url, setURL] = React.useState<string>("https://localhost/8080/workbook");
 
   // const params = new URLSearchParams([["publisher", selected]]);
@@ -120,8 +120,12 @@ export default function BookPage() {
     // })
 
     //itemData(bookItem)를 서버에서 가져옴
-    service.getAllBookContent().then((res:any)=>{
-      setItemDatas(res);
+    service.getAllWorkbook().then((res:any)=>{
+      setItemDatas(res); //res result is 2
+      setResult(itemDatas);
+      console.log(result);
+      console.log(result.length); // why is this result 0 ? 
+      console.log("use effect no prob");
       console.log(res);
     }).catch((e:Error)=>{
       console.log(e);
@@ -132,12 +136,12 @@ export default function BookPage() {
 
     if (sorted === "star") {
       console.log("인기순 정렬");
-      itemDatas.sort(function (a, b) {
+      Array.from(itemDatas).sort(function (a, b) {
         return b.like - a.like; //인기 많은것부터
       });
     } else if (sorted === "level") {
       console.log("난이도순 정렬");
-      itemDatas.sort(function (a, b) {
+      Array.from(itemDatas).sort(function (a, b) {
         return b.level - a.level; //난이도 높은 것 부터
       });
     }
@@ -239,104 +243,104 @@ export default function BookPage() {
   );
 }
 
-const itemData = [
-  {
-    workbook_id: "01-01-00001",
-    title: "Breakfast",
-    img: "https://images.unsplash.com/photo-1551963831-b3b1ca40c98e",
-    publisher: "교육청",
-    level: 1,
-    like: 2,
-  },
-  {
-    workbook_id: "01-01-00002",
-    title: "Burger",
-    img: "https://images.unsplash.com/photo-1551782450-a2132b4ba21d",
-    publisher: "EBS",
-    level: 3,
-    like: 3,
-  },
-  {
-    workbook_id: "01-01-00003",
-    title: "Camera",
-    img: "https://images.unsplash.com/photo-1522770179533-24471fcdba45",
-    publisher: "교육청",
-    level: 1,
-    like: 2,
-  },
-  {
-    workbook_id: "01-01-00004",
-    title: "Camera",
-    img: "https://images.unsplash.com/photo-1444418776041-9c7e33cc5a9c",
-    publisher: "EBS",
-    level: 2,
-    like: 1,
-  },
-  {
-    workbook_id: "01-01-00005",
-    title: "Hats",
-    img: "https://images.unsplash.com/photo-1533827432537-70133748f5c8",
-    publisher: "EBS",
-    level: 2,
-    like: 6,
-  },
-  {
-    workbook_id: "01-01-00006",
-    title: "Honey",
-    img: "https://images.unsplash.com/photo-1558642452-9d2a7deb7f62",
-    publisher: "평가원",
-    level: 2,
-    like: 10,
-  },
-  {
-    workbook_id: "01-01-00007",
-    title: "Basketball",
-    img: "https://images.unsplash.com/photo-1516802273409-68526ee1bdd6",
-    publisher: "평가원",
-    level: 2,
-    like: 7,
-  },
-  {
-    workbook_id: "01-01-00008",
-    title: "Fern",
-    img: "https://images.unsplash.com/photo-1518756131217-31eb79b20e8f",
-    publisher: "EBS",
-    level: 3,
-    like: 12,
-  },
-  {
-    workbook_id: "01-01-00009",
-    title: "Mushrooms",
-    img: "https://images.unsplash.com/photo-1597645587822-e99fa5d45d25",
-    publisher: "EBS",
-    level: 2,
-    like: 6,
-  },
-  {
-    workbook_id: "01-01-00010",
-    title: "Tomato basil",
-    img: "https://images.unsplash.com/photo-1567306301408-9b74779a11af",
-    publisher: "평가원",
-    level: 3,
-    like: 12,
-  },
-  {
-    workbook_id: "01-01-00011",
-    title: "See star",
-    img: "https://images.unsplash.com/photo-1471357674240-e1a485acb3e1",
-    publisher: "EBS",
-    level: 3,
-    like: 4,
-  },
-  {
-    workbook_id: "01-01-00012",
-    title: "Bike",
-    img: "https://images.unsplash.com/photo-1589118949245-7d38baf380d6",
-    publisher: "평가원",
-    level: 3,
-    like: 1,
-  },
-];
+// const itemData = [
+//   {
+//     workbook_id: "01-01-00001",
+//     title: "Breakfast",
+//     img: "https://images.unsplash.com/photo-1551963831-b3b1ca40c98e",
+//     publisher: "교육청",
+//     level: 1,
+//     like: 2,
+//   },
+//   {
+//     workbook_id: "01-01-00002",
+//     title: "Burger",
+//     img: "https://images.unsplash.com/photo-1551782450-a2132b4ba21d",
+//     publisher: "EBS",
+//     level: 3,
+//     like: 3,
+//   },
+//   {
+//     workbook_id: "01-01-00003",
+//     title: "Camera",
+//     img: "https://images.unsplash.com/photo-1522770179533-24471fcdba45",
+//     publisher: "교육청",
+//     level: 1,
+//     like: 2,
+//   },
+//   {
+//     workbook_id: "01-01-00004",
+//     title: "Camera",
+//     img: "https://images.unsplash.com/photo-1444418776041-9c7e33cc5a9c",
+//     publisher: "EBS",
+//     level: 2,
+//     like: 1,
+//   },
+//   {
+//     workbook_id: "01-01-00005",
+//     title: "Hats",
+//     img: "https://images.unsplash.com/photo-1533827432537-70133748f5c8",
+//     publisher: "EBS",
+//     level: 2,
+//     like: 6,
+//   },
+//   {
+//     workbook_id: "01-01-00006",
+//     title: "Honey",
+//     img: "https://images.unsplash.com/photo-1558642452-9d2a7deb7f62",
+//     publisher: "평가원",
+//     level: 2,
+//     like: 10,
+//   },
+//   {
+//     workbook_id: "01-01-00007",
+//     title: "Basketball",
+//     img: "https://images.unsplash.com/photo-1516802273409-68526ee1bdd6",
+//     publisher: "평가원",
+//     level: 2,
+//     like: 7,
+//   },
+//   {
+//     workbook_id: "01-01-00008",
+//     title: "Fern",
+//     img: "https://images.unsplash.com/photo-1518756131217-31eb79b20e8f",
+//     publisher: "EBS",
+//     level: 3,
+//     like: 12,
+//   },
+//   {
+//     workbook_id: "01-01-00009",
+//     title: "Mushrooms",
+//     img: "https://images.unsplash.com/photo-1597645587822-e99fa5d45d25",
+//     publisher: "EBS",
+//     level: 2,
+//     like: 6,
+//   },
+//   {
+//     workbook_id: "01-01-00010",
+//     title: "Tomato basil",
+//     img: "https://images.unsplash.com/photo-1567306301408-9b74779a11af",
+//     publisher: "평가원",
+//     level: 3,
+//     like: 12,
+//   },
+//   {
+//     workbook_id: "01-01-00011",
+//     title: "See star",
+//     img: "https://images.unsplash.com/photo-1471357674240-e1a485acb3e1",
+//     publisher: "EBS",
+//     level: 3,
+//     like: 4,
+//   },
+//   {
+//     workbook_id: "01-01-00012",
+//     title: "Bike",
+//     img: "https://images.unsplash.com/photo-1589118949245-7d38baf380d6",
+//     publisher: "평가원",
+//     level: 3,
+//     like: 1,
+//   },
+// ];
 
 const bookData = [
   {
