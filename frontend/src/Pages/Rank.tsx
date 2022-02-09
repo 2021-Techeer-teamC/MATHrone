@@ -16,10 +16,6 @@ interface rankData {
   try_count: number;
 }
 
-type dataList = {
-  posts: rankData[];
-}
-
 export default function Rankpage() {
 
    
@@ -27,8 +23,8 @@ export default function Rankpage() {
   const [res, setRes] = React.useState([...rankDatas]);
 
   useEffect(() => {
-    // axios (출판사로 보내기)
-    // axios.get(url, { params }).then((rank) => {
+    // axios (출판사로 보내기) 요청보낼 주소? 내 점수 조회를 위한 나의 user_name?
+    // axios.get(url, { my_user_name }).then((rank) => {
     //  setItemDatas([...rank])
     //   setResult(rankDatas);
     // 랭크데이터 받아오기
@@ -65,6 +61,8 @@ export default function Rankpage() {
               랭킹
             </Typography>
             <Typography variant="body1" component="p">
+            </Typography>
+            <Typography variant="body1" component="p">
               유저 닉네임
             </Typography>
             <Typography variant="body1" component="p">
@@ -79,10 +77,11 @@ export default function Rankpage() {
         <RankList posts={res}/>
       </Card>
 
-      <Card variant="outlined" sx={{ display: 'grid', gridTemplateColumns: '1fr 3fr 1fr 1fr', mt: 2, pt: 3, pb: 3, pl:5, pr:6}}>
+      <Card variant="outlined" sx={{ display: 'grid', gridTemplateColumns: '0.5fr 0.5fr 3fr 1fr 1fr', mt: 2, pt: 3, pb: 3, pl:5, pr:6}}>
           <Typography variant="body1" component="p">
             10000
           </Typography>
+          <Typography/>
           <Typography variant="body1" component="p">
             its meeee
           </Typography>
