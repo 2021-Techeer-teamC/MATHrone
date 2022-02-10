@@ -19,7 +19,7 @@ public class RefreshToken {
     private String key;
     private String value;
 
-    public RefreshToken updateToken(String token) {
+    public RefreshToken updateValue(String token) {
         this.value = value;
         return this;
     }

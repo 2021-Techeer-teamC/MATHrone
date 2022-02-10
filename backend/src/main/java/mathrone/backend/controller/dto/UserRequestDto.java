@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import mathrone.backend.domain.UserInfo;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Getter
@@ -15,7 +16,7 @@ public class UserRequestDto {
     private String password;
     private String id;
     private String nickname;
-
+    private String token;
 
     public UserInfo toUser(PasswordEncoder passwordEncoder){
         return UserInfo.builder()
@@ -25,5 +26,9 @@ public class UserRequestDto {
                 .password(passwordEncoder.encode(password))
                 .role("ROLE_USER")
                 .build();
+    }
+
+    public UsernamePasswordAuthenticationToken of(){
+        return new UsernamePasswordAuthenticationToken(email, password);
     }
 }

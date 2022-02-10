@@ -2,7 +2,6 @@ package mathrone.backend.controller;
 
 import mathrone.backend.domain.WorkBookInfo;
 import mathrone.backend.service.WorkBookService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;

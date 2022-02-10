@@ -11,36 +11,30 @@ import java.util.stream.Collectors;
 
 import lombok.extern.slf4j.Slf4j;
 import mathrone.backend.controller.dto.TokenDto;
+import mathrone.backend.controller.dto.UserResponseDto;
 import mathrone.backend.service.CustomUserDetailsService;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.PropertySource;
-import org.springframework.security.authentication.AuthenticationProvider;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 // 실제 인증에 대한 부분 중 인증 전 객체를 받아 인증된 객체를 반환하는 역할
 @Slf4j
 @Component
 @PropertySource("classpath:/keys/jwtKey.properties")
-public class TokenProvider implements AuthenticationProvider {
+public class TokenProvider{
 
     private static final String AUTHORITIES_KEY = "auth";
-    private static final String BEARER_TYPE = "bearer";
+    private static final String BEARER_TYPE = "bearer";     // token 인증 타입(jwt 토큰을 의미)
     private static final long ACCESS_TOKEN_EXPIRE_TIME = 1000 * 60 * 30;            // 30분
     private static final long REFRESH_TOKEN_EXPIRE_TIME = 1000 * 60 * 60 * 24 * 7;  // 7일
 
-    //jwt decode
-//    private final Key key = Keys.secretKeyFor(SignatureAlgorithm.HS256);
-//    private final String jws = Jwts.builder().setSubject("mathrone").signWith(key).compact();
-
+    // key는 HS512 알고리즘을 사용함
     private final Key key;
     private final CustomUserDetailsService customUserDetailsService;
 
@@ -50,24 +44,6 @@ public class TokenProvider implements AuthenticationProvider {
         this.customUserDetailsService = customUserDetailsService;
         byte[] keyBytes = Decoders.BASE64.decode(secretKey);
         this.key = Keys.hmacShaKeyFor(keyBytes);
-    }
-
-    @Override
-    public Authentication authenticate(Authentication authentication) throws AuthenticationException {
-        String username = authentication.getName();
-        String password = authentication.getCredentials().toString();
-        UserDetails loadedUser = customUserDetailsService.loadUserByUsername(username);
-
-        UsernamePasswordAuthenticationToken result = new UsernamePasswordAuthenticationToken
-                (username,password,loadedUser.getAuthorities());
-        result.setDetails(authentication.getDetails());
-        return result;
-    }
-
-    @Override
-    public boolean supports(Class<?> authentication) {
-        return UsernamePasswordAuthenticationToken.class.isAssignableFrom
-                (authentication);
     }
 
     public TokenDto generateToken(Authentication authentication){
@@ -87,7 +63,7 @@ public class TokenProvider implements AuthenticationProvider {
                 .signWith(key, SignatureAlgorithm.HS512)
                 .compact();
 
-        // refresh token
+        // refresh token (만료일자만 저장)
         String refreshToken = Jwts.builder()
                 .setExpiration(new Date(now + REFRESH_TOKEN_EXPIRE_TIME))
                 .signWith(key, SignatureAlgorithm.HS512)
@@ -98,18 +74,20 @@ public class TokenProvider implements AuthenticationProvider {
                 .accessToken(accessToken)
                 .accessTokenExpiresIn(accessTokenExpires.getTime())
                 .refreshToken(refreshToken)
+                .userInfo(UserResponseDto.builder()
+                        .id(authentication.getName()).build())
                 .build();
     }
 
     public Authentication getAuthentication(String accessToken){
-        // 토큰 복호화
+        // 토큰 복호화 (내부 정보 가져옴)
         Claims claims = parseClaims(accessToken);
 
         if (claims.get(AUTHORITIES_KEY) == null){
             throw new RuntimeException("권한 정보가 없는 토큰입니다.");
         }
 
-        // 권한 정보 가져오기
+        // 권한 정보 가져옴
         Collection<? extends GrantedAuthority> authorities =
                 Arrays.stream(claims.get(AUTHORITIES_KEY).toString()
                         .split(",")).map(SimpleGrantedAuthority::new)
@@ -117,10 +95,12 @@ public class TokenProvider implements AuthenticationProvider {
 
         UserDetails principal = new User(claims.getSubject(), "",
                 authorities);
+
         return new UsernamePasswordAuthenticationToken(principal,
                 "", authorities);
     }
 
+    // 만료된 토큰의 경우에도 정보를 꺼내기 위한 메소드
     private Claims parseClaims(String accessToken){
         try {
             return Jwts.parserBuilder().setSigningKey(key)
@@ -131,6 +111,7 @@ public class TokenProvider implements AuthenticationProvider {
         }
     }
 
+    // 토큰 정보 검증
     public boolean validateToken(String token) {
         try {
             Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(token);
