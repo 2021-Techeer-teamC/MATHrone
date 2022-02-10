@@ -20,7 +20,12 @@ interface rankData {
   try_count: number;
 }
 
-export default function Rankpage() {
+// interface sections {
+//   title: string;
+//   url: string;
+// }
+
+export default function Rankpage({/*props: sections*/}) {
   const [rankDatas, setRankDatas] = React.useState([...rankData]);
   const [res, setRes] = React.useState([...rankDatas]);
 
@@ -35,6 +40,8 @@ export default function Rankpage() {
 
   return (
     <Container>
+      {/* <Header title="MATHrone" />
+      <NavBar sections={props.sections} /> */}
       <Box sx={{ display: "flex", paddingBottom: 0.1 }}>
         <Box sx={{ display: "flex", flexDirection: "column" }}>
           <Box sx={{ display: "flex", alignItems: "center", pt: 5 }}>
@@ -94,6 +101,10 @@ export default function Rankpage() {
             124
           </Typography>
       </Card>
+      <Footer
+        title="Footer"
+        description="Something here to give the footer a purpose!"
+      />
     </Container>
   );
 }
