@@ -4,7 +4,9 @@ import Typography from '@mui/material/Typography';
 import { debug } from "console";
 import { Container } from '@mui/material';
 import CardMedia from '@mui/material/CardMedia';
-// import Medal from '../Components/Medal';
+import Gold from "../Assets/image/gold-medal.png";
+import Silver from "../Assets/image/silver-medal.png";
+import Bronze from "../Assets/image/bronze-medal.png";
 
 interface rankData {
     user_name: string;
@@ -28,7 +30,7 @@ const Medal = (rank:data) => { // 순위에 따라서 메달 이미지 변경
             <CardMedia
                 component="img"
                 sx={{ width: 30 }}
-                image="https://drive.google.com/uc?id=1O1dGZVqT1lcq7IHNGLjdeT_XMLSxT7sY"
+                image= {Gold}
                 alt="gold medal" />);
 
     else if (rank.rank-1 < 5) {
@@ -36,7 +38,7 @@ const Medal = (rank:data) => { // 순위에 따라서 메달 이미지 변경
             <CardMedia
                 component="img"
                 sx={{ width: 30 }}
-                image="https://drive.google.com/uc?id=1gGOEcrCZS5iue5G1u3L3Gn2KgD8tOWFm"
+                image={Silver}
                 alt="silver medal" />);
     }
     else if (rank.rank-1 < 11) {
@@ -44,7 +46,7 @@ const Medal = (rank:data) => { // 순위에 따라서 메달 이미지 변경
             <CardMedia
                 component="img"
                 sx={{ width: 30 }}
-                image="https://drive.google.com/uc?id=1zvwV6Pkzj1UXHY2IlKAjPYH5SpE_sxsC"
+                image={Bronze}
                 alt="bronze medal" />);
     }
     else {

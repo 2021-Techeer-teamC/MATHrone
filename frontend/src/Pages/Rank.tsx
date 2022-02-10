@@ -8,6 +8,10 @@ import CardMedia from '@mui/material/CardMedia';
 import { useEffect } from "react";
 import "../App.css";
 import RankList from '../Components/RankList';
+import Header from "../Components/Header";
+import NavBar from "../Components/NavBar";
+import Footer from "../Components/Footer";
+import Trophy from "../Assets/image/trophy.png";
 
 
 interface rankData {
@@ -17,13 +21,11 @@ interface rankData {
 }
 
 export default function Rankpage() {
-
-   
   const [rankDatas, setRankDatas] = React.useState([...rankData]);
   const [res, setRes] = React.useState([...rankDatas]);
 
   useEffect(() => {
-    // axios (출판사로 보내기) 요청보낼 주소? 내 점수 조회를 위한 나의 user_name?
+    // axios 요청보낼 주소 URI? 내 점수 조회를 위한 나의 user_name?
     // axios.get(url, { my_user_name }).then((rank) => {
     //  setItemDatas([...rank])
     //   setResult(rankDatas);
@@ -39,7 +41,7 @@ export default function Rankpage() {
             <CardMedia
               component="img"
               sx={{ width: 90, pr:2}}
-              image="https://drive.google.com/uc?id=1obBgZRkXdAbR7PUgax1TL5XC1PQdsSkN"
+              image={Trophy}
               alt="Live from space album cover"
             />
             <Typography variant="h4">
