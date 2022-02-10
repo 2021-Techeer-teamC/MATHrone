@@ -1,4 +1,8 @@
 import * as React from "react";
+import Header from "../Components/Header";
+import NavBar from "../Components/NavBar";
+import Footer from "../Components/Footer";
+
 // import axios from "axios";
 import List from "@mui/material/List";
 import ListItemButton from "@mui/material/ListItemButton";
@@ -19,11 +23,22 @@ import "../App.css";
 import BookList from "../Components/BookList";
 import { useEffect } from "react";
 
-export default function BookPage() {
+interface bookItem {
+  workbook_id: string;
+  title: string;
+  img: string;
+  publisher: string;
+  level: number;
+  like: number;
+  //sections: any;
+}
+
+
+export default function BookPage(props: { sections: any; }) {
   //책 리스트 토글마다 열림/닫힘 상태를 저장함
   const [open, setOpen] = React.useState([false]); //각 토글들의 상태를 배열로 관리함
 
-  const handleClick = (value) => () => {
+  const handleClick = (value : number) => () => {
     //value : 토글의 인덱스를 받아옴(몇번째 토글이 눌렸는지)
     const newOpen = [...open]; //상태를 저장한 open배열을 복사해옴
     const currentBool = open[value]; //현재 눌린 토글의 상태를 받아옴
@@ -46,14 +61,14 @@ export default function BookPage() {
 
   const params = new URLSearchParams([["publisher", selected]]);
 
-  const clickBook = (value) => () => {
+  const clickBook = (value:string) => () => {
     setSelected(value);
     setURL("http://localhost:8080/workbook/publisher");
 
     filterResult(value); //분류에 따라 보여지는 결과 변경
   };
 
-  const filterResult = (value) => {
+  const filterResult = (value:string) => {
     // axios (출판사로 보내기)
     // axios.get(url, { params }).then((res) => {
     //  setItemDatas([...res])
@@ -74,7 +89,7 @@ export default function BookPage() {
 
   //정렬기준(난이도순, 인기순 등)
   const [sorted, setSorted] = React.useState("star");
-  const selectSort = (event) => {
+  const selectSort = (event : React.ChangeEvent<HTMLSelectElement>) => {
     const select = event.target.value; //정렬기준을 변경하면, 정렬기준 변수를 수정함 -> 수정되면 useEffect [sorted]가 수행됨
     setSorted(select);
     // console.log(sorted);
@@ -105,23 +120,25 @@ export default function BookPage() {
 
   const indexOfLast = currentPage * postsPerPage;
   const indexOfFirst = indexOfLast - postsPerPage;
-  function currentPosts(tmp) {
-    let currentPosts = 0;
+  function currentPosts(tmp:bookItem[]) {
+    let currentPosts : bookItem[];
     currentPosts = tmp.slice(indexOfFirst, indexOfLast);
     return currentPosts;
   }
 
-  const changePage = (event, page) => {
+  const changePage = (event : React.ChangeEvent<unknown>, page:number) => {
     setCurrentPage(page);
   };
 
   return (
     <div>
+      <Header title="MATHrone" sections={props.sections} />
+      <NavBar sections={props.sections} />
       <SearchBar></SearchBar>
       <Container>
-        <div class="container">
-          <div class="item" />
-          <div class="item">
+        <div className="container">
+          <div className="item" />
+          <div className="item">
             <span style={{ minWidth: 120, float: "left" }}>
               {selected == "all" ? "전체" : selected}({result.length})
             </span>
@@ -139,7 +156,7 @@ export default function BookPage() {
               </NativeSelect>
             </FormControl>
           </div>
-          <div class="item">
+          <div className="item">
             <List
               sx={{ width: "100%", maxWidth: 250, bgcolor: "background.paper" }}
               component="nav"
@@ -172,10 +189,10 @@ export default function BookPage() {
           </div>
           <div className="item">
             <Paper>
-              <BookList posts={currentPosts(result)}></BookList>
+              <BookList posts={currentPosts(result)}/>
             </Paper>
           </div>
-          <div class="item"></div>
+          <div className="item"></div>
           <div
             className="item"
             style={{ display: "flex", justifyContent: "center" }}
@@ -189,6 +206,11 @@ export default function BookPage() {
           </div>
         </div>
       </Container>
+
+      <Footer
+        title="Footer"
+        description="Something here to give the footer a purpose!"
+      />
     </div>
   );
 }
