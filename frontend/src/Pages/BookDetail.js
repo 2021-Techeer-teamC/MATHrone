@@ -1,44 +1,53 @@
 import * as React from "react";
+import Header from "../Components/Header";
+import NavBar from "../Components/NavBar";
+import Footer from "../Components/Footer";
+
 import ExpandLess from '@mui/icons-material/ExpandLess';
 import ExpandMore from '@mui/icons-material/ExpandMore';
 
-import { Grid, Paper, Card, CardMedia, CardContent, Button, Typography,
-ListItemButton, ListItemText, List, Collapse, LinearProgress} from '@mui/material';
+import {
+    Grid, Paper, Card, CardMedia, CardContent, Button, Typography,
+    ListItemButton, ListItemText, List, Collapse, LinearProgress
+} from '@mui/material';
 import { green } from '@mui/material/colors';
 
 
 
-export default function BookDetail() {
+export default function BookDetail(props) {
     const [open, setOpen] = React.useState(true);
     const greenProgress = green[500]; // #f44336
 
     const handleClick = () => {
         setOpen(!open);
-      };
+    };
 
     return (
-        <div style={{ backgroundColor: "#E2E2E2", width: "100%" }}>
-            <Card sx={{ display: 'flex' }} style={{ backgroundColor: "#E2E2E2", width: "100%", padding: "5%" }}>
-                <CardMedia
-                    style={{ marginRight: "5px" }}
-                    component="img"
-                    sx={{ width: 300 }}
-                    image="https://storage.googleapis.com/mathrone-bucket/thumbnail/sample_workbook_thumnail.png"
-                    alt="workbook thumbnail"
-                />
-                <CardContent style={{ textAlign: "left" }}>
-                    <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
-                        수학 - 고등학교 3학년
+        <>
+            <Header title="MATHrone" />
+            <NavBar sections={props.sections} />
+            <div style={{ backgroundColor: "#E2E2E2", width: "100%" }}>
+                <Card sx={{ display: 'flex' }} style={{ backgroundColor: "#E2E2E2", width: "100%", padding: "5%" }}>
+                    <CardMedia
+                        style={{ marginRight: "5px" }}
+                        component="img"
+                        sx={{ width: 300 }}
+                        image="https://storage.googleapis.com/mathrone-bucket/thumbnail/sample_workbook_thumnail.png"
+                        alt="workbook thumbnail"
+                    />
+                    <CardContent style={{ textAlign: "left" }}>
+                        <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
+                            수학 - 고등학교 3학년
                     </Typography>
-                    <Typography variant="h5" component="div">
-                        2022학년도 수능 연계교재 수능완성
+                        <Typography variant="h5" component="div">
+                            2022학년도 수능 연계교재 수능완성
                     </Typography>
-                    <LinearProgress variant='determinate' value={40} style={{color:'green'}}></LinearProgress>
-                    <Typography sx={{ mb: 1.5 }} color="text.secondary">
-                        EBS
+                        <LinearProgress variant='determinate' value={40} style={{ color: 'green' }}></LinearProgress>
+                        <Typography sx={{ mb: 1.5 }} color="text.secondary">
+                            EBS
                     </Typography>
-                    <Typography variant="body1">
-                        -유형·테마편+실전편 구성의 수능 대비 최종 연계교재!
+                        <Typography variant="body1">
+                            -유형·테마편+실전편 구성의 수능 대비 최종 연계교재!
                         <br /><br />
                         ▶핵심 개념 정리와 출제 유형 완벽 공략
                         <br />
@@ -50,80 +59,85 @@ export default function BookDetail() {
                         <br />
                         -학습 내용을 최종 점검하여 본인의 실력을 테스트하고,수능에 대한 실전 감각을 기를 수 있는 실전 모의고사 수록
                     </Typography>
-                    <Typography variant="body2">
-                        # 수학1 #수학2 #미적분
+                        <Typography variant="body2">
+                            # 수학1 #수학2 #미적분
                         <br />
-                        <span style={{ color: "gray" }}>난이도 : 보통(1283)</span>
-                    </Typography>
-                    <hr></hr>
-                    <Grid container>
-                        <Grid item xs={2}>
-                            <Button variant="contained" color="success" size="small">쉬움</Button>
+                            <span style={{ color: "gray" }}>난이도 : 보통(1283)</span>
+                        </Typography>
+                        <hr></hr>
+                        <Grid container>
+                            <Grid item xs={2}>
+                                <Button variant="contained" color="success" size="small">쉬움</Button>
+                            </Grid>
+                            <Grid item xs={2}>
+                                <Button variant="contained" color="success" size="small">중간</Button>
+                            </Grid>
+                            <Grid item xs={2}>
+                                <Button variant="contained" color="success" size="small">어려움</Button>
+                            </Grid>
                         </Grid>
-                        <Grid item xs={2}>
-                            <Button variant="contained" color="success" size="small">중간</Button>
-                        </Grid>
-                        <Grid item xs={2}>
-                            <Button variant="contained" color="success" size="small">어려움</Button>
-                        </Grid>
-                    </Grid>
-                </CardContent>
-            </Card>
-            <div style={{backgroundColor:'white'}}>
-            <Paper style={{width:"80%", margin:'auto'}} elevation={24}>
-                <ListItemButton onClick={handleClick}>
-                    <ListItemText primary="수학1" />
-                    {open ? <ExpandLess /> : <ExpandMore />}
-                </ListItemButton>
-                <Collapse in={open} timeout="auto" unmountOnExit>
-                    <List component="div" disablePadding>
-                        <ListItemButton sx={{ pl: 6 }}>
-                            <ListItemText primary="지수함수와 로그함수" />
+                    </CardContent>
+                </Card>
+                <div style={{ backgroundColor: 'white' }}>
+                    <Paper style={{ width: "80%", margin: 'auto' }} elevation={24}>
+                        <ListItemButton onClick={handleClick}>
+                            <ListItemText primary="수학1" />
+                            {open ? <ExpandLess /> : <ExpandMore />}
                         </ListItemButton>
-                        <ListItemButton sx={{ pl: 6 }}>
-                            <ListItemText primary="삼각함수" />
-                        </ListItemButton>
-                        <ListItemButton sx={{ pl: 6 }}>
-                            <ListItemText primary="수열" />
-                        </ListItemButton>
-                    </List>
-                </Collapse>
+                        <Collapse in={open} timeout="auto" unmountOnExit>
+                            <List component="div" disablePadding>
+                                <ListItemButton sx={{ pl: 6 }}>
+                                    <ListItemText primary="지수함수와 로그함수" />
+                                </ListItemButton>
+                                <ListItemButton sx={{ pl: 6 }}>
+                                    <ListItemText primary="삼각함수" />
+                                </ListItemButton>
+                                <ListItemButton sx={{ pl: 6 }}>
+                                    <ListItemText primary="수열" />
+                                </ListItemButton>
+                            </List>
+                        </Collapse>
 
-                <ListItemButton onClick={handleClick}>
-                    <ListItemText primary="수학2" />
-                    {open ? <ExpandLess /> : <ExpandMore />}
-                </ListItemButton>
-                <Collapse in={open} timeout="auto" unmountOnExit>
-                    <List component="div" disablePadding>
-                        <ListItemButton sx={{ pl: 6 }}>
-                            <ListItemText primary="함수의 극한과 연속" />
+                        <ListItemButton onClick={handleClick}>
+                            <ListItemText primary="수학2" />
+                            {open ? <ExpandLess /> : <ExpandMore />}
                         </ListItemButton>
-                        <ListItemButton sx={{ pl: 6 }}>
-                            <ListItemText primary="다항함수의 미분법" />
-                        </ListItemButton>
-                        <ListItemButton sx={{ pl: 6 }}>
-                            <ListItemText primary="다항함수의 적분법" />
-                        </ListItemButton>
-                    </List>
-                </Collapse>
+                        <Collapse in={open} timeout="auto" unmountOnExit>
+                            <List component="div" disablePadding>
+                                <ListItemButton sx={{ pl: 6 }}>
+                                    <ListItemText primary="함수의 극한과 연속" />
+                                </ListItemButton>
+                                <ListItemButton sx={{ pl: 6 }}>
+                                    <ListItemText primary="다항함수의 미분법" />
+                                </ListItemButton>
+                                <ListItemButton sx={{ pl: 6 }}>
+                                    <ListItemText primary="다항함수의 적분법" />
+                                </ListItemButton>
+                            </List>
+                        </Collapse>
 
-                <ListItemButton onClick={handleClick}>
-                    <ListItemText primary="미적분" />
-                    {open ? <ExpandLess /> : <ExpandMore />}
-                </ListItemButton>
-                <Collapse in={open} timeout="auto" unmountOnExit>
-                    <List component="div" disablePadding>
-                        <ListItemButton sx={{ pl: 6 }}>
-                            <ListItemText primary="수열의 극한" />
+                        <ListItemButton onClick={handleClick}>
+                            <ListItemText primary="미적분" />
+                            {open ? <ExpandLess /> : <ExpandMore />}
                         </ListItemButton>
-                        <ListItemButton sx={{ pl: 6 }}>
-                            <ListItemText primary="미분법" />
-                        </ListItemButton>
-                    </List>
-                </Collapse>
-            </Paper>
+                        <Collapse in={open} timeout="auto" unmountOnExit>
+                            <List component="div" disablePadding>
+                                <ListItemButton sx={{ pl: 6 }}>
+                                    <ListItemText primary="수열의 극한" />
+                                </ListItemButton>
+                                <ListItemButton sx={{ pl: 6 }}>
+                                    <ListItemText primary="미분법" />
+                                </ListItemButton>
+                            </List>
+                        </Collapse>
+                    </Paper>
+                </div>
+                <Footer
+                    title="Footer"
+                    description="Something here to give the footer a purpose!"
+                />
             </div>
-        </div>
+        </>
     );
 }
 
