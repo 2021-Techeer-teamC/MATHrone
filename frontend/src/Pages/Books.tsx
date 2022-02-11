@@ -16,7 +16,7 @@ import Pagination from "@mui/material/Pagination";
 
 import SearchBar from "../Components/SearchBar";
 import "../App.css";
-import BookImageList from "../Components/BookImageList";
+import BookImgList from "../Components/BookImgList";
 import { useEffect } from "react";
 
 import service from "../Services/service";
@@ -120,18 +120,21 @@ export default function BookPage() {
     // })
 
     //itemData(bookItem)를 서버에서 가져옴
-    service.getAllWorkbook().then((res:any)=>{
-      setItemDatas(res); //res result is 2
+    service.getAllWorkbook().then(res=>{
+      setItemDatas(res.data); //res result is 2sugm
       setResult(itemDatas);
-      console.log(result);
-      console.log(result.length); // why is this result 0 ? 
-      console.log("use effect no prob");
-      console.log(res);
+      // console.log(itemDatas);
+      // console.log(res.data.length); // why is this result 0 ?
+      // console.log("use effect no prob");
+      // console.log(res.data[0].title);
     }).catch((e:Error)=>{
       console.log(e);
     })
 
     //itemData의 정렬을 바꾸어서 정렬함
+    console.log("itemDatas");
+    console.log(itemDatas);
+    console.log("result");
     console.log(result);
 
     if (sorted === "star") {
@@ -147,7 +150,7 @@ export default function BookPage() {
     }
 
     filterResult(selected); //itemData가 변경되었으므로, result를 다시 필터해야함
-  }, [sorted]); //sorted 변수가 변경될 떄 마다 실행
+  },[sorted] ); //sorted 변수가 변경될 떄 마다 실행
 
   //pagination과 관련된 변수
   const [currentPage, setCurrentPage] = React.useState<number>(1);
@@ -222,7 +225,7 @@ export default function BookPage() {
           </div>
           <div className="item">
             <Paper>
-              <BookImageList posts={currentPosts(result)}/>
+              <BookImgList posts={currentPosts(result)}/>
             </Paper>
           </div>
           <div className="item"></div>
