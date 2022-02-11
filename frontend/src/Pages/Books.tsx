@@ -72,10 +72,12 @@ export default function BookPage() {
 
   const filterResult = (value:string) => {
     // axios (출판사로 보내기)
-    service.getWorkbookByPb(selected).then((res:any)=>{
-      setItemDatas(res);
+    service.getWorkbookByPb(selected).then(res=>{
+      setItemDatas(res.data);
       setResult(itemDatas);
       setCurrentPage(1);
+      // eslint-disable-next-line no-restricted-globals
+      // location.href = `http://localhost:8080/workbook?publisher=${selected}`;
     })
     // axios.get(url, { params }).then(res:bookItem[] => {
     //   setItemDatas([...res])
