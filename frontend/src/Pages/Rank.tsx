@@ -39,58 +39,60 @@ export default function Rankpage(props: { sections: any; }) {
   }, [])
 
   return (
-    <Container>
+
+    <div>
       <Header title="MATHrone" sections={props.sections} />
       <NavBar sections={props.sections} />
-      <Box sx={{ display: "flex", paddingBottom: 0.1 }}>
-        <Box sx={{ display: "flex", flexDirection: "column" }}>
-          <Box sx={{ display: "flex", alignItems: "center", pt: 5 }}>
-            <CardMedia
-              component="img"
-              sx={{ width: 90, pr:2}}
-              image={Trophy}
-              alt="Live from space album cover"
-            />
-            <Typography variant="h4">
-              Ranking
-            </Typography>
+      <Container>
+        <Box sx={{ display: "flex", paddingBottom: 0.1 }}>
+          <Box sx={{ display: "flex", flexDirection: "column" }}>
+            <Box sx={{ display: "flex", alignItems: "center", pt: 5 }}>
+              <CardMedia
+                component="img"
+                sx={{ width: 90, pr: 2 }}
+                image={Trophy}
+                alt="Live from space album cover"
+              />
+              <Typography variant="h4">
+                Ranking
+              </Typography>
+            </Box>
+            <CardContent>
+              <Typography variant="h6" component="div" align='left'>
+                맞은 문제 별 전체 순위
+              </Typography>
+            </CardContent>
           </Box>
-          <CardContent>
-            <Typography variant="h6" component="div" align='left'>
-              맞은 문제 별 전체 순위
-            </Typography>
-          </CardContent>
         </Box>
-      </Box>
-      
-      <Card style={{backgroundColor: 'WhiteSmoke'}} sx={{p:1}}>
-        <Card elevation={5} sx={{ display: 'flex', flexDirection: 'column', pb: 2, pt: 2, mb: 3, pr:5, pl:5 }}>
-          <div className="rankContainer">
-            <Typography variant="body1" component="p">
-              랭킹
-            </Typography>
-            <Typography variant="body1" component="p">
-            </Typography>
-            <Typography variant="body1" component="p">
-              유저 닉네임
-            </Typography>
-            <Typography variant="body1" component="p">
-              맞은 문제 수
-            </Typography>
-            <Typography variant="body1" component="p">
-              시도한 문제 수
-            </Typography>
-          </div>
+
+        <Card style={{ backgroundColor: 'WhiteSmoke' }} sx={{ p: 1 }}>
+          <Card elevation={5} sx={{ display: 'flex', flexDirection: 'column', pb: 2, pt: 2, mb: 3, pr: 5, pl: 5 }}>
+            <div className="rankContainer">
+              <Typography variant="body1" component="p">
+                랭킹
+              </Typography>
+              <Typography variant="body1" component="p">
+              </Typography>
+              <Typography variant="body1" component="p">
+                유저 닉네임
+              </Typography>
+              <Typography variant="body1" component="p">
+                맞은 문제 수
+              </Typography>
+              <Typography variant="body1" component="p">
+                시도한 문제 수
+              </Typography>
+            </div>
+          </Card>
+
+          <RankList posts={res} />
         </Card>
 
-        <RankList posts={res}/>
-      </Card>
-
-      <Card variant="outlined" sx={{ display: 'grid', gridTemplateColumns: '0.5fr 0.5fr 3fr 1fr 1fr', mt: 2, pt: 3, pb: 3, pl:5, pr:6}}>
+        <Card variant="outlined" sx={{ display: 'grid', gridTemplateColumns: '0.5fr 0.5fr 3fr 1fr 1fr', mt: 2, pt: 3, pb: 3, pl: 5, pr: 6 }}>
           <Typography variant="body1" component="p">
             10000
           </Typography>
-          <Typography/>
+          <Typography />
           <Typography variant="body1" component="p">
             its meeee
           </Typography>
@@ -100,16 +102,18 @@ export default function Rankpage(props: { sections: any; }) {
           <Typography variant="body1" component="p">
             124
           </Typography>
-      </Card>
-      <Footer
-        title="Footer"
-        description="Something here to give the footer a purpose!"
-      />
-    </Container>
+        </Card>
+        <Footer
+          title="Footer"
+          description="Something here to give the footer a purpose!"
+        />
+
+      </Container>
+    </div>
   );
 }
 
-const rankData:rankData[] = [
+const rankData: rankData[] = [
   {
     user_name: "tester1",
     correct_count: 904,
