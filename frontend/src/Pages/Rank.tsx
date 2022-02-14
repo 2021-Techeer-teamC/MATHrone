@@ -25,7 +25,7 @@ interface rankData {
 //   url: string;
 // }
 
-export default function Rankpage({/*props: sections*/}) {
+export default function Rankpage(props: { sections: any; }) {
   const [rankDatas, setRankDatas] = React.useState([...rankData]);
   const [res, setRes] = React.useState([...rankDatas]);
 
@@ -40,8 +40,8 @@ export default function Rankpage({/*props: sections*/}) {
 
   return (
     <Container>
-      {/* <Header title="MATHrone" />
-      <NavBar sections={props.sections} /> */}
+      <Header title="MATHrone" sections={props.sections} />
+      <NavBar sections={props.sections} />
       <Box sx={{ display: "flex", paddingBottom: 0.1 }}>
         <Box sx={{ display: "flex", flexDirection: "column" }}>
           <Box sx={{ display: "flex", alignItems: "center", pt: 5 }}>
