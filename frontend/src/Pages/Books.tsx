@@ -23,6 +23,9 @@ import service from "../Services/service";
 import bookItem from "../Types/bookItem";
 import bookContent from "../Types/bookContent";
 
+
+import { useSelector } from 'react-redux';
+import {useLocation} from "react-router-dom";
 //
 // interface bookItem {
 //   workbook_id: string;
@@ -37,6 +40,17 @@ import bookContent from "../Types/bookContent";
 
 
 export default function BookPage() {
+
+  // const location = useLocation();
+  // console.log(location.state);
+  //
+  // console.log("item data is ");
+  // console.log(ress);
+  // console.log(sample);
+
+
+
+
   //책 리스트 토글마다 열림/닫힘 상태를 저장함
   const [open, setOpen] = React.useState<boolean[]>([false]); //각 토글들의 상태를 배열로 관리함
 
@@ -57,6 +71,7 @@ export default function BookPage() {
 
   //분류(book nav bar에서의 분류) 선택
   const [selected, setSelected] = React.useState<string>("all");
+
   const [itemDatas, setItemDatas] = React.useState<bookItem[]>([]); //axios결과 임시용
   const [result, setResult] = React.useState<bookItem[]>([]);
   const [url, setURL] = React.useState<string>("https://localhost/8080/workbook");
@@ -111,33 +126,30 @@ export default function BookPage() {
   //책 리스트
   const [bookContents,setBookContents] = React.useState<bookContent[]>([]);//empty bookList
 
-  useEffect(() => {
-
-    //bookContent를 서버에서 가져옴 -> 반영
-    // service.getAllBookContent().then((res:any)=>{
-    //   setBookContents(res);
-    //   console.log(res);
-    // }).catch((e:Error)=>{
-    //   console.log(e);
-    // })
-
-    //itemData(bookItem)를 서버에서 가져옴
-    service.getAllWorkbook().then(res=>{
-      setItemDatas(res.data); //res result is 2sugm
+  const getAllWorkbooks = async () => {
+    console.log("start2");
+    try {
+      const res = await service.getAllWorkbook();
+      setItemDatas(res.data);
       setResult(itemDatas);
-      // console.log(itemDatas);
-      // console.log(res.data.length); // why is this result 0 ?
-      // console.log("use effect no prob");
-      // console.log(res.data[0].title);
-    }).catch((e:Error)=>{
-      console.log(e);
-    })
+    } catch (err){
+      console.log(err);
+    }
+   console.log("end2");
 
-    //itemData의 정렬을 바꾸어서 정렬함
-    console.log("itemDatas");
-    console.log(itemDatas);
-    console.log("result");
-    console.log(result);
+  };
+
+  useEffect(()=>{
+    console.log("start");
+    getAllWorkbooks();
+    console.log("end");
+  },[])
+
+
+
+
+  //sorted 변수 변경 시 마다 실ㅇ
+  useEffect(() => {
 
     if (sorted === "star") {
       console.log("인기순 정렬");
@@ -153,6 +165,8 @@ export default function BookPage() {
 
     filterResult(selected); //itemData가 변경되었으므로, result를 다시 필터해야함
   },[sorted] ); //sorted 변수가 변경될 떄 마다 실행
+
+
 
   //pagination과 관련된 변수
   const [currentPage, setCurrentPage] = React.useState<number>(1);
@@ -204,7 +218,7 @@ export default function BookPage() {
                 <ListItemText primary="전체" onClick={clickBook("all")} />
               </ListItemButton>
               {bookData.map((value) => (
-                <>
+                <div key={value.id}>
                   <ListItemButton onClick={handleClick(value.id)}>
                     <ListItemText
                       primary={value.publisher}
@@ -215,13 +229,15 @@ export default function BookPage() {
                   <Collapse in={open[value.id]} timeout="auto" unmountOnExit>
                     <List component="div" disablePadding>
                       {value.books.map((b) => (
+                          <div key={b}>
                         <ListItemButton sx={{ pl: 4 }}>
                           <ListItemText primary={b} onClick={clickBook(b)} />
                         </ListItemButton>
+                          </div>
                       ))}
                     </List>
                   </Collapse>
-                </>
+                </div>
               ))}
             </List>
           </div>
