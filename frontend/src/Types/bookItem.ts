@@ -1,7 +1,16 @@
+// export default interface bookItem {
+//     workbook_id: string;
+//     title: string;
+//     img: string;
+//     publisher: string;
+//     level: number;
+//     like: number;
+// }
+
 export default interface bookItem {
-    workbook_id: string;
+    workbookId: string;
     title: string;
-    img: string;
+    profileImg: string;
     publisher: string;
     level: number;
     like: number;
