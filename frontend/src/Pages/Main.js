@@ -21,12 +21,12 @@ import SignIn from "./SignIn";
 import SignUp from "./SignUp";
 
 const sections = [
-  { title: "소개", url: "/info" },
-  { title: "교재", url: "/book" },
-  { title: "랭킹", url: "/rank" },
-  { title: "소개", url: "/info" },
-  { title: "교재", url: "/book" },
-  { title: "랭킹", url: "/rank" },
+  { id : 1, title: "소개", url: "/info" },
+  { id : 2,title: "교재", url: "/book" },
+  { id : 3,title: "랭킹", url: "/rank" },
+  { id : 4,title: "소개", url: "/info" },
+  { id : 5,title: "교재", url: "/book" },
+  { id : 6,title: "랭킹", url: "/rank" },
 ];
 
 const theme = createTheme();

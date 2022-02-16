@@ -9,7 +9,7 @@ import LinkM from "@mui/material/Link";
 import { Link } from "react-router-dom";
 
 function Header(props) {
-  const { sections, title } = props;
+  const { id, sections, title } = props;
 
   return (
     <React.Fragment>
@@ -56,7 +56,7 @@ function Header(props) {
           >
             {section.title}
           </LinkM>*/
-          <Link to={section.url}>
+          <Link to={section.url} key={section.id}>
             <Button>{section.title}</Button>
           </Link>
         ))}
