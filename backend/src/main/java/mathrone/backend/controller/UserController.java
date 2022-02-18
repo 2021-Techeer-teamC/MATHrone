@@ -27,6 +27,7 @@ public class UserController {
         return ResponseEntity.ok(authService.signup(userRequestDto));
     }
 
+    // 재발급 api
     @PostMapping(value = "/reissue")
     public ResponseEntity<TokenDto> reissue (@RequestBody TokenRequestDto tokenRequestDto){
         return ResponseEntity.ok(authService.reissue(tokenRequestDto));

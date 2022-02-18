@@ -17,6 +17,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.Date;
 
 @Service
 @RequiredArgsConstructor
@@ -50,16 +51,14 @@ public class AuthService {
         TokenDto tokenDto = tokenProvider.generateToken(authentication);
 
         // 4. refresh token 생성
-        RefreshToken refreshToken = RefreshToken.builder()
-                .key(authentication.getName())
-                .value(tokenDto.getRefreshToken())
-                .build();
+        RefreshToken refreshToken = tokenProvider.generateRefreshToken(tokenDto);
 
         // 5. 토큰 저장 테이블에 저장이나, 테스트를 위해 임시로 로컬 저장 방식으로 구현하기.
 //        refreshTokenRepository.save(refreshToken);
 
         return tokenDto;
     }
+
 
     @Transactional
     public TokenDto reissue(TokenRequestDto tokenRequestDto) {
@@ -73,7 +72,7 @@ public class AuthService {
 
         // 3. 저장소에서 Member ID 를 기반으로 Refresh Token 값 가져오기
         // 현재 로컬로 구현 예정
-//        RefreshToken refreshToken = refreshTokenRepository.findByKey(authentication.getName())
+//        RefreshToken refreshToken = refreshTokenRepository.findByUserId(authentication.getName())
 //                .orElseThrow(() -> new RuntimeException("로그아웃 된 사용자입니다."));
 //
 //        // 4. Refresh Token 일치 여부 검사

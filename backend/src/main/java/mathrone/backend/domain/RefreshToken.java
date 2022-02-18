@@ -5,9 +5,8 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
+import java.util.Date;
 
 @Getter
 @NoArgsConstructor
@@ -15,18 +14,29 @@ import javax.persistence.Table;
 @Entity
 public class RefreshToken {
 
-    @Id
-    private String key;
-    private String value;
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY) //JPA 사용시 필요)
+    @Column(name = "token_id")
+    private int tokenId;
 
-    public RefreshToken updateValue(String token) {
-        this.value = value;
+    @Column(name = "user_id")
+    private String userId;
+
+    @Column(name = "refresh_token")
+    private String refreshToken;
+
+    @Column(name = "valid_util")
+    private Date validUtil;
+
+    public RefreshToken updateValue(String refreshToken, Date validUtil) {
+        this.refreshToken = refreshToken;
+        this.validUtil = validUtil;
         return this;
     }
 
     @Builder
-    public RefreshToken(String key, String value) {
-        this.key = key;
-        this.value = value;
+    public RefreshToken(String userId, String refreshToken, Date validUtil) {
+        this.userId = userId;
+        this.refreshToken = refreshToken;
+        this.validUtil = validUtil;
     }
 }

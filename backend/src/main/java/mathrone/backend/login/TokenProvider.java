@@ -12,6 +12,7 @@ import java.util.stream.Collectors;
 import lombok.extern.slf4j.Slf4j;
 import mathrone.backend.controller.dto.TokenDto;
 import mathrone.backend.controller.dto.UserResponseDto;
+import mathrone.backend.domain.RefreshToken;
 import mathrone.backend.service.CustomUserDetailsService;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
@@ -74,8 +75,19 @@ public class TokenProvider{
                 .accessToken(accessToken)
                 .accessTokenExpiresIn(accessTokenExpires.getTime())
                 .refreshToken(refreshToken)
-                .userInfo(UserResponseDto.builder()
-                        .id(authentication.getName()).build())
+                .userInfo(UserResponseDto.builder().id(authentication.getName()).build())
+                .build();
+    }
+
+    public RefreshToken generateRefreshToken(TokenDto tokenDto) {
+        long now = (new Date()).getTime();
+
+        Date RefreshTokenExpires = new Date(now + REFRESH_TOKEN_EXPIRE_TIME);
+
+        return RefreshToken.builder()
+                .userId((String) tokenDto.getUserInfo().getId())
+                .refreshToken(tokenDto.getRefreshToken())
+                .validUtil(RefreshTokenExpires)
                 .build();
     }
 
@@ -126,5 +138,9 @@ public class TokenProvider{
             log.info("JWT 토큰이 잘못되었습니다.");
         }
         return false;
+    }
+
+    public static long getRefreshTokenExpireTime() {
+        return REFRESH_TOKEN_EXPIRE_TIME;
     }
 }
