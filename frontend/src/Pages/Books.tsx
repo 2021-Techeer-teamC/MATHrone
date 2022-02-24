@@ -24,31 +24,10 @@ import bookItem from "../Types/bookItem";
 import bookContent from "../Types/bookContent";
 
 
-import { useSelector } from 'react-redux';
-import {useLocation} from "react-router-dom";
-//
-// interface bookItem {
-//   workbookId: string;
-//   title: string;
-//   img: string;
-//   publisher: string;
-//   level: number;
-//   like: number;
-// }
-
 
 
 
 export default function BookPage() {
-
-  // const location = useLocation();
-  // console.log(location.state);
-  //
-  // console.log("item data is ");
-  // console.log(ress);
-  // console.log(sample);
-
-
 
 
   //책 토글 관련
@@ -81,9 +60,8 @@ export default function BookPage() {
   //정렬기준(난이도순, 인기순 등)
   //sortType 변경시 변수 수정
   const selectSort = (event : React.ChangeEvent<HTMLSelectElement>) => {
-    const sortType = event.target.value; //정렬기준을 변경하면, 정렬기준 변수를 수정함 -> 수정되면 useEffect [sorted]가 수행됨
+    const sortType = event.target.value;
     setSorted(sortType);
-    // console.log(sorted);
   };
 
 
@@ -91,14 +69,6 @@ export default function BookPage() {
     setPublisher(publisher);
     setCategory("all");
   };
-
-  // const clickBook = (value:string) => () => {
-  //   setSelected(value);
-  //   setURL("http://localhost:8080/workbook/publisher");
-  //
-  //   filterResult(value); //분류에 따라 보여지는 결과 변경
-  // };
-
 
   const selectPage = (event : React.ChangeEvent<unknown>, page:number) => {
     setCurrentPage(page);
@@ -113,9 +83,29 @@ export default function BookPage() {
 
   //get result
   /*
-  1. 파라미터 3가지에 따른 문제집 9개 (한페이지당 보여줄 문제집 수 고정) -> bookItem[]
-  2. 해당 section(publisher)별로 총 결과의 수 -> number
-  3. 책 리스트 <- 이건 처음에 같이 받아온 후로 갱신 안됨
+  case 1. book page 최초 입장시
+  ~/workbook
+    1) bookItem[]
+    publisher=all
+    page = 1
+    category = all
+    sort = star(좋아요/인기순)
+    디폴트로 하는 9개의 고정 결과
+    2) 해당 디폴트 값에서 결과의 수
+    3) bookList : bookContents[]
+    왼쪽의 북 리스트
+
+
+  case 2. 변경되는 파라미터 값에 따른 결과
+  ~/workbook?publisher=${publisher}&sortType=${sortType}&category=${category}&pageNum=${pageNum}
+      1) bookItem[]
+      publisher=??
+      page = ??
+      category = ??
+      sort = ??
+      달라지는 파라미터에 대한 결과 9
+    2) 해당 파라미터 값에서 결과의 수
+
    */
 
   const [resultCnt,setResultCnt] = React.useState<number>(10);
@@ -123,61 +113,41 @@ export default function BookPage() {
   const [result, setResult] = React.useState<bookItem[]>(itemData);
   const [bookContents,setBookContents] = React.useState<bookContent[]>(bookInfo);//empty bookList
 
-  // const filterResult = (value:string) => {
-    // axios (출판사로 보내기)
-    // service.getWorkbookByPb(selected).then(res=>{
-    //   setItemDatas(res.data);
-    //   setResult(itemDatas);
-    //   setCurrentPage(1);
+
+  //case 2. 파라미터 변경시 마다 실행
+  const getWorkbooks = (publisher : string, sortType: string, pageNum: number, category: string) => async () => {
+    console.log("start2");
+    try {
+      const res = await service.getWorkbook(publisher,sorted,currentPage,category);
+      //res 가 없어서 현재 error
+      // setResult(res.data.workbooks);
+      // setResultCnt(res.data.resultNumber);
 
 
+    } catch (err){
+      console.log(err);
+    }
+   console.log("end2");
 
-      // eslint-disable-next-line no-restricted-globals
-      // location.href = `http://localhost:8080/workbook?publisher=${selected}`;
-    // })
-    // axios.get(url, { params }).then(res:bookItem[] => {
-    //   setItemDatas([...res])
-    //   setResult(itemDatas);
-    //   setCurrentPage(1);
-    // });
+  };
 
-    // 분류에 따라 결과 필터(not axios) 전체 결과 받아와서 react에서 출판사를 구분
-    // let newRes = [...itemDatas];
-    // if (value !== "all") {
-    //   newRes = itemDatas.filter(function (element) {
-    //     return element.publisher === value;
-    //   });
-    // }
-    // setResult(newRes);
-    // setCurrentPage(1); //결과 필터가 변경되면 page = 1 부터 시작
+  // case 1) 최초 1회 실행
+  const getWorkList = (publisher : string, sortType: string, pageNum: number, category: string) => async () => {
+    console.log("start2");
+    try {
+      const res = await service.getWorkbookList();
+      // res가 없어서 에러 일단 주석 
+      // setResult(res.data.workbooks);
+      // setResultCnt(res.data.resultNumber);
+      // setBookContents(res.data);
 
 
+    } catch (err){
+      console.log(err);
+    }
+    console.log("end2");
 
-  // };
-
-
-
-
-
-
-  // const getAllWorkbooks = async () => {
-  //   console.log("start2");
-  //   try {
-  //     const res = await service.getAllWorkbook();
-  //     setItemDatas(res.data);
-  //     setResult(itemDatas);
-  //   } catch (err){
-  //     console.log(err);
-  //   }
-  //  console.log("end2");
-  //
-  // };
-  //
-  // useEffect(()=>{
-  //   console.log("start");
-  //   getAllWorkbooks();
-  //   console.log("end");
-  // },[])
+  };
 
 
   //기타 변수
@@ -185,52 +155,26 @@ export default function BookPage() {
 
 
 
-  //sorted 변수 변경 시 마다 실ㅇ
-  // useEffect(() => {
-  //
-  //   if (sorted === "star") {
-  //     console.log("인기순 정렬");
-  //     Array.from(itemDatas).sort(function (a, b) {
-  //       return b.like - a.like; //인기 많은것부터
-  //     });
-  //   } else if (sorted === "level") {
-  //     console.log("난이도순 정렬");
-  //     Array.from(itemDatas).sort(function (a, b) {
-  //       return b.level - a.level; //난이도 높은 것 부터
-  //     });
-  //   }
-  //
-  //   filterResult(selected); //itemData가 변경되었으므로, result를 다시 필터해야함
-  // },[sorted] ); //sorted 변수가 변경될 떄 마다 실행
+  useEffect(()=>{
+
+    /*
+     출판사/카테고리 (왼쪽 문제집리스트를 변경한 경우 페이지를 1로 디폴트로 설정 후 api얻음)
+     */
+    setCurrentPage(1);
+  getWorkbooks(publisher, sorted, currentPage, category);
+
+  },[publisher,category])
 
 
   useEffect(()=>{
 
-  console.log("===========");
-  console.log(sorted);
-  console.log(publisher);
-  console.log(category);
-  console.log(currentPage);
+    /*
+    정렬 방법이나 페이지가 변경된 경우에 페이지를 1로 변경하지 않음
+     */
+    getWorkbooks(publisher, sorted, currentPage, category);
 
+  },[sorted,currentPage])
 
-  },[sorted,publisher,currentPage,category])
-
-
-  //pagination과 관련된 변수
-  // const [currentPage, setCurrentPage] = React.useState<number>(1);
-  // const [postsPerPage, setPostsPerPage] = React.useState<number>(3 * 3); //한페이지에 보여질 책의 수
-
-  // const indexOfLast = currentPage * postsPerPage;
-  // const indexOfFirst = indexOfLast - postsPerPage;
-  // function currentPosts(tmp:bookItem[]) {
-  //   let currentPosts : bookItem[] = [];
-  //   currentPosts = Array.from(tmp).slice(indexOfFirst, indexOfLast);
-  //   return currentPosts;
-  // }
-
-  // const changePage = (event : React.ChangeEvent<unknown>, page:number) => {
-  //   setCurrentPage(page);
-  // };
 
   return (
     <div>
