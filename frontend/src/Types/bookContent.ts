@@ -1,5 +1,5 @@
 export default interface bookContent {
     publisher: string,
-    books: string[],
+    categories: string[],
     id: number,
 }
