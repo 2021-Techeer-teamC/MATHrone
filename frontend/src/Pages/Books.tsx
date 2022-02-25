@@ -51,7 +51,7 @@ export default function BookPage() {
 
   //파라미터 (sortType/publisher/pageNum)
   //분류(book nav bar에서의 분류) 선택
-  const [publisher, setPublisher] = React.useState<string>("all"); //출판사
+  const [publisher, setPublisher] = React.useState<string>("전체"); //출판사
   const [sorted, setSorted] = React.useState<string>("star");
   const [currentPage, setCurrentPage] = React.useState<number>(1);
   const [category, setCategory] = React.useState<string>("all");
@@ -136,7 +136,7 @@ export default function BookPage() {
     console.log("start2");
     try {
       const res = await service.getWorkbookList();
-      // res가 없어서 에러 일단 주석 
+      // res가 없어서 에러 일단 주석
       // setResult(res.data.workbooks);
       // setResultCnt(res.data.resultNumber);
       // setBookContents(res.data);
@@ -184,7 +184,7 @@ export default function BookPage() {
           <div className="item" />
           <div className="item">
             <span style={{ minWidth: 120, float: "left" }}>
-              {publisher == "all" ? "전체" : publisher}({resultCnt})
+              {category == "all" ? publisher : category}({resultCnt})
             </span>
             <FormControl sx={{ minWidth: 120, float: "right" }}>
               <NativeSelect
@@ -207,7 +207,7 @@ export default function BookPage() {
               aria-labelledby="nested-list-subheader"
             >
               <ListItemButton>
-                <ListItemText primary="전체" onClick={selectPublisher("all")} />
+                <ListItemText primary="전체" onClick={selectPublisher("전체")} />
               </ListItemButton>
               {bookContents.map((value) => (
                 <div key={value.id}>
