@@ -178,6 +178,8 @@ export default function BookPage() {
 
   return (
     <div>
+      <Header title="MATHrone" sections={props.sections} />
+      <NavBar sections={props.sections} />
       <SearchBar></SearchBar>
       <Container>
         <div className="container">
@@ -252,6 +254,11 @@ export default function BookPage() {
           </div>
         </div>
       </Container>
+
+      <Footer
+        title="Footer"
+        description="Something here to give the footer a purpose!"
+      />
     </div>
   );
 }
