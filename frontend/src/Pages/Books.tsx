@@ -22,12 +22,16 @@ import { useEffect } from "react";
 import service from "../Services/service";
 import bookItem from "../Types/bookItem";
 import bookContent from "../Types/bookContent";
+import Header from "../Components/Header";
+import NavBar from "../Components/NavBar";
+import {ThemeProvider} from "@mui/material/styles";
+import Footer from "../Components/Footer";
 
 
 
 
 
-export default function BookPage() {
+export default function BookPage(props: { sections: any }) {
 
 
   //책 토글 관련
@@ -254,10 +258,9 @@ export default function BookPage() {
           </div>
         </div>
       </Container>
-
       <Footer
-        title="Footer"
-        description="Something here to give the footer a purpose!"
+          title="Footer"
+          description="Something here to give the footer a purpose!"
       />
     </div>
   );
