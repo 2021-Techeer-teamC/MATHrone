@@ -1,8 +1,8 @@
 package mathrone.backend.controller;
 
+import mathrone.backend.domain.Problem;
 import mathrone.backend.domain.WorkBookInfo;
 import mathrone.backend.service.WorkBookService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -20,4 +20,11 @@ public class WorkbookController {
     public List<WorkBookInfo> bookList(@RequestParam(value="publisher", required = false, defaultValue = "all") String publisher){
         return workBookService.findPublisher(publisher);
     }
+
+    @GetMapping("/problems") // 모든 문제 조회(Books page)
+    public List<Problem> problemList(@RequestParam(value="workbookId") String workbookId,
+                                     @RequestParam(value="chapterId") String chapterId){
+        return workBookService.findProblem(workbookId,chapterId);
+    }
+
 }
