@@ -22,7 +22,16 @@ services:
       - ${GOOGLE_APPLICATION_CREDENTIALS}:/tmp/keys/application_default_credentials.json:ro
     environment:
       - GOOGLE_APPLICATION_CREDENTIALS=/tmp/keys/application_default_credentials.json
-
+  redis:
+      image: redis:alpine
+      command: redis-server --port 6379
+      container_name: redis_boot
+      hostname: redis_boot
+      labels:
+        - "name=redis"
+        - "mode=standalone"
+      ports:
+        - 6379:6379
 networks:
   app-tier:
     driver: bridge

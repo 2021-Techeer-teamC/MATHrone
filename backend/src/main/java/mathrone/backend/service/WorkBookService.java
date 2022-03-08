@@ -1,8 +1,9 @@
 package mathrone.backend.service;
 
+import mathrone.backend.domain.Problem;
 import mathrone.backend.domain.WorkBookInfo;
+import mathrone.backend.repository.ProblemRepository;
 import mathrone.backend.repository.WorkBookRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -11,9 +12,11 @@ import java.util.List;
 public class WorkBookService {
 
     private final WorkBookRepository workBookRepository;
+    private final ProblemRepository problemRepository;
 
-    public WorkBookService(WorkBookRepository workBookRepository){
+    public WorkBookService(WorkBookRepository workBookRepository, ProblemRepository problemRepository){
         this.workBookRepository = workBookRepository;
+        this.problemRepository = problemRepository;
     }
 
     public void add(WorkBookInfo workBookInfo) {
@@ -26,4 +29,9 @@ public class WorkBookService {
         else
             return workBookRepository.findByPublisher(publisher);
     }
+
+    public List<Problem> findProblem(String workbookId, String chapterId){
+        return problemRepository.findByWorkbookIdAndChapterId(workbookId, chapterId);
+    }
+
 }

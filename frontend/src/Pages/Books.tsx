@@ -1,9 +1,5 @@
 import * as React from "react";
-import Header from "../Components/Header";
-import NavBar from "../Components/NavBar";
-import Footer from "../Components/Footer";
-
-// import axios from "axios";
+import axios, {AxiosResponse} from "axios";
 import List from "@mui/material/List";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
@@ -20,28 +16,32 @@ import Pagination from "@mui/material/Pagination";
 
 import SearchBar from "../Components/SearchBar";
 import "../App.css";
-import BookList from "../Components/BookList";
+import BookImgList from "../Components/BookImgList";
 import { useEffect } from "react";
 
-interface bookItem {
-  workbook_id: string;
-  title: string;
-  img: string;
-  publisher: string;
-  level: number;
-  like: number;
-  //sections: any;
-}
+import service from "../Services/service";
+import bookItem from "../Types/bookItem";
+import bookContent from "../Types/bookContent";
+import Header from "../Components/Header";
+import NavBar from "../Components/NavBar";
+import {ThemeProvider} from "@mui/material/styles";
+import Footer from "../Components/Footer";
 
 
-export default function BookPage(props: { sections: any; }) {
+
+
+
+export default function BookPage(props: { sections: any }) {
+
+
+  //책 토글 관련
   //책 리스트 토글마다 열림/닫힘 상태를 저장함
-  const [open, setOpen] = React.useState([false]); //각 토글들의 상태를 배열로 관리함
+  const [open, setOpen] = React.useState<boolean[]>([false]); //각 토글들의 상태를 배열로 관리함
 
   const handleClick = (value : number) => () => {
     //value : 토글의 인덱스를 받아옴(몇번째 토글이 눌렸는지)
-    const newOpen = [...open]; //상태를 저장한 open배열을 복사해옴
-    const currentBool = open[value]; //현재 눌린 토글의 상태를 받아옴
+    const newOpen:boolean[] = [...open]; //상태를 저장한 open배열을 복사해옴
+    const currentBool:boolean|undefined = open[value]; //현재 눌린 토글의 상태를 받아옴
 
     if (currentBool === undefined) {
       //존재하지 않음-> 누른적이 없음(닫힌상태)
@@ -53,82 +53,132 @@ export default function BookPage(props: { sections: any; }) {
     setOpen(newOpen); //변경된 배열을 open배열에 복사해서 상태를 변경
   };
 
+  //파라미터 (sortType/publisher/pageNum)
   //분류(book nav bar에서의 분류) 선택
-  const [selected, setSelected] = React.useState("all");
-  const [itemDatas, setItemDatas] = React.useState([...itemData]); //axios결과 임시용
-  const [result, setResult] = React.useState([...itemDatas]);
-  const [url, setURL] = React.useState("");
+  const [publisher, setPublisher] = React.useState<string>("전체"); //출판사
+  const [sorted, setSorted] = React.useState<string>("star");
+  const [currentPage, setCurrentPage] = React.useState<number>(1);
+  const [category, setCategory] = React.useState<string>("all");
 
-  const params = new URLSearchParams([["publisher", selected]]);
-
-  const clickBook = (value:string) => () => {
-    setSelected(value);
-    setURL("http://localhost:8080/workbook/publisher");
-
-    filterResult(value); //분류에 따라 보여지는 결과 변경
-  };
-
-  const filterResult = (value:string) => {
-    // axios (출판사로 보내기)
-    // axios.get(url, { params }).then((res) => {
-    //  setItemDatas([...res])
-    //   setResult(itemDatas);
-    //   setCurrentPage(1);
-    // });
-
-    //분류에 따라 결과 필터(not axios) 전체 결과 받아와서 react에서 출판사를 구분
-    let newRes = [...itemDatas];
-    if (value !== "all") {
-      newRes = itemDatas.filter(function (element) {
-        return element.publisher === value;
-      });
-    }
-    setResult(newRes);
-    setCurrentPage(1); //결과 필터가 변경되면 page = 1 부터 시작
-  };
-
+  //setting parameter
   //정렬기준(난이도순, 인기순 등)
-  const [sorted, setSorted] = React.useState("star");
+  //sortType 변경시 변수 수정
   const selectSort = (event : React.ChangeEvent<HTMLSelectElement>) => {
-    const select = event.target.value; //정렬기준을 변경하면, 정렬기준 변수를 수정함 -> 수정되면 useEffect [sorted]가 수행됨
-    setSorted(select);
-    // console.log(sorted);
+    const sortType = event.target.value;
+    setSorted(sortType);
   };
 
-  useEffect(() => {
-    //itemData의 정렬을 바꾸어서 정렬함
-    console.log(result);
 
-    if (sorted === "star") {
-      console.log("인기순 정렬");
-      itemDatas.sort(function (a, b) {
-        return b.like - a.like; //인기 많은것부터
-      });
-    } else if (sorted === "level") {
-      console.log("난이도순 정렬");
-      itemDatas.sort(function (a, b) {
-        return b.level - a.level; //난이도 높은 것 부터
-      });
-    }
+  const selectPublisher = (publisher:string) => () => {
+    setPublisher(publisher);
+    setCategory("all");
+  };
 
-    filterResult(selected); //itemData가 변경되었으므로, result를 다시 필터해야함
-  }, [sorted]); //sorted 변수가 변경될 떄 마다 실행
-
-  //pagination과 관련된 변수
-  const [currentPage, setCurrentPage] = React.useState(1);
-  const [postsPerPage, setPostsPerPage] = React.useState(3 * 3); //한페이지에 보여질 책의 수
-
-  const indexOfLast = currentPage * postsPerPage;
-  const indexOfFirst = indexOfLast - postsPerPage;
-  function currentPosts(tmp:bookItem[]) {
-    let currentPosts : bookItem[];
-    currentPosts = tmp.slice(indexOfFirst, indexOfLast);
-    return currentPosts;
-  }
-
-  const changePage = (event : React.ChangeEvent<unknown>, page:number) => {
+  const selectPage = (event : React.ChangeEvent<unknown>, page:number) => {
     setCurrentPage(page);
   };
+
+  const selectCategory = (publisher:string, category:string) => () => {
+    setCategory(category);
+    setPublisher(publisher);
+  };
+
+
+
+  //get result
+  /*
+  case 1. book page 최초 입장시
+  ~/workbook
+    1) bookItem[]
+    publisher=all
+    page = 1
+    category = all
+    sort = star(좋아요/인기순)
+    디폴트로 하는 9개의 고정 결과
+    2) 해당 디폴트 값에서 결과의 수
+    3) bookList : bookContents[]
+    왼쪽의 북 리스트
+
+
+  case 2. 변경되는 파라미터 값에 따른 결과
+  ~/workbook?publisher=${publisher}&sortType=${sortType}&category=${category}&pageNum=${pageNum}
+      1) bookItem[]
+      publisher=??
+      page = ??
+      category = ??
+      sort = ??
+      달라지는 파라미터에 대한 결과 9
+    2) 해당 파라미터 값에서 결과의 수
+
+   */
+
+  const [resultCnt,setResultCnt] = React.useState<number>(10);
+  // const [itemDatas, setItemDatas] = React.useState<bookItem[]>([]); //axios결과 임시용
+  const [result, setResult] = React.useState<bookItem[]>(itemData);
+  const [bookContents,setBookContents] = React.useState<bookContent[]>(bookInfo);//empty bookList
+
+
+  //case 2. 파라미터 변경시 마다 실행
+  const getWorkbooks = (publisher : string, sortType: string, pageNum: number, category: string) => async () => {
+    console.log("start2");
+    try {
+      const res = await service.getWorkbook(publisher,sorted,currentPage,category);
+      //res 가 없어서 현재 error
+      // setResult(res.data.workbooks);
+      // setResultCnt(res.data.resultNumber);
+
+
+    } catch (err){
+      console.log(err);
+    }
+   console.log("end2");
+
+  };
+
+  // case 1) 최초 1회 실행
+  const getWorkList = (publisher : string, sortType: string, pageNum: number, category: string) => async () => {
+    console.log("start2");
+    try {
+      const res = await service.getWorkbookList();
+      // res가 없어서 에러 일단 주석
+      // setResult(res.data.workbooks);
+      // setResultCnt(res.data.resultNumber);
+      // setBookContents(res.data);
+
+
+    } catch (err){
+      console.log(err);
+    }
+    console.log("end2");
+
+  };
+
+
+  //기타 변수
+  const [postsPerPage, setPostsPerPage] = React.useState<number>(3 * 3); //한페이지에 보여질 책의 수
+
+
+
+  useEffect(()=>{
+
+    /*
+     출판사/카테고리 (왼쪽 문제집리스트를 변경한 경우 페이지를 1로 디폴트로 설정 후 api얻음)
+     */
+    setCurrentPage(1);
+  getWorkbooks(publisher, sorted, currentPage, category);
+
+  },[publisher,category])
+
+
+  useEffect(()=>{
+
+    /*
+    정렬 방법이나 페이지가 변경된 경우에 페이지를 1로 변경하지 않음
+     */
+    getWorkbooks(publisher, sorted, currentPage, category);
+
+  },[sorted,currentPage])
+
 
   return (
     <div>
@@ -140,7 +190,7 @@ export default function BookPage(props: { sections: any; }) {
           <div className="item" />
           <div className="item">
             <span style={{ minWidth: 120, float: "left" }}>
-              {selected == "all" ? "전체" : selected}({result.length})
+              {category == "all" ? publisher : category}({resultCnt})
             </span>
             <FormControl sx={{ minWidth: 120, float: "right" }}>
               <NativeSelect
@@ -163,33 +213,35 @@ export default function BookPage(props: { sections: any; }) {
               aria-labelledby="nested-list-subheader"
             >
               <ListItemButton>
-                <ListItemText primary="전체" onClick={clickBook("all")} />
+                <ListItemText primary="전체" onClick={selectPublisher("전체")} />
               </ListItemButton>
-              {bookData.map((value) => (
-                <>
+              {bookContents.map((value) => (
+                <div key={value.id}>
                   <ListItemButton onClick={handleClick(value.id)}>
                     <ListItemText
                       primary={value.publisher}
-                      onClick={clickBook(value.publisher)}
+                      onClick={selectPublisher(value.publisher)}
                     />
                     {open[value.id] ? <ExpandLess /> : <ExpandMore />}
                   </ListItemButton>
                   <Collapse in={open[value.id]} timeout="auto" unmountOnExit>
                     <List component="div" disablePadding>
-                      {value.books.map((b) => (
+                      {value.categories.map((category) => (
+                          <div key={category}>
                         <ListItemButton sx={{ pl: 4 }}>
-                          <ListItemText primary={b} onClick={clickBook(b)} />
+                          <ListItemText primary={category} onClick={selectCategory(bookContents[value.id].publisher,category)} />
                         </ListItemButton>
+                          </div>
                       ))}
                     </List>
                   </Collapse>
-                </>
+                </div>
               ))}
             </List>
           </div>
           <div className="item">
             <Paper>
-              <BookList posts={currentPosts(result)}/>
+              <BookImgList posts={result}/>
             </Paper>
           </div>
           <div className="item"></div>
@@ -198,131 +250,106 @@ export default function BookPage(props: { sections: any; }) {
             style={{ display: "flex", justifyContent: "center" }}
           >
             <Pagination
-              count={Math.ceil(result.length / postsPerPage)}
+              count={Math.ceil(resultCnt / postsPerPage)}
               defaultPage={1}
               page={currentPage} //current page와 버튼상 보여지는 page를 동기화
-              onChange={changePage}
+              onChange={selectPage}
             />
           </div>
         </div>
       </Container>
-
       <Footer
-        title="Footer"
-        description="Something here to give the footer a purpose!"
+          title="Footer"
+          description="Something here to give the footer a purpose!"
       />
     </div>
   );
 }
 
-const itemData = [
+const itemData:bookItem[] = [
   {
-    workbook_id: "01-01-00001",
+    workbookId: "01-01-00001",
     title: "Breakfast",
-    img: "https://images.unsplash.com/photo-1551963831-b3b1ca40c98e",
+    profileImg: "https://images.unsplash.com/photo-1551963831-b3b1ca40c98e",
     publisher: "교육청",
     level: 1,
     like: 2,
   },
   {
-    workbook_id: "01-01-00002",
+    workbookId: "01-01-00002",
     title: "Burger",
-    img: "https://images.unsplash.com/photo-1551782450-a2132b4ba21d",
+    profileImg: "https://images.unsplash.com/photo-1551782450-a2132b4ba21d",
     publisher: "EBS",
     level: 3,
     like: 3,
   },
   {
-    workbook_id: "01-01-00003",
+    workbookId: "01-01-00003",
     title: "Camera",
-    img: "https://images.unsplash.com/photo-1522770179533-24471fcdba45",
+    profileImg: "https://images.unsplash.com/photo-1522770179533-24471fcdba45",
     publisher: "교육청",
     level: 1,
     like: 2,
   },
   {
-    workbook_id: "01-01-00004",
+    workbookId: "01-01-00004",
     title: "Camera",
-    img: "https://images.unsplash.com/photo-1444418776041-9c7e33cc5a9c",
+    profileImg: "https://images.unsplash.com/photo-1444418776041-9c7e33cc5a9c",
     publisher: "EBS",
     level: 2,
     like: 1,
   },
   {
-    workbook_id: "01-01-00005",
+    workbookId: "01-01-00005",
     title: "Hats",
-    img: "https://images.unsplash.com/photo-1533827432537-70133748f5c8",
+    profileImg: "https://images.unsplash.com/photo-1533827432537-70133748f5c8",
     publisher: "EBS",
     level: 2,
     like: 6,
   },
   {
-    workbook_id: "01-01-00006",
+    workbookId: "01-01-00006",
     title: "Honey",
-    img: "https://images.unsplash.com/photo-1558642452-9d2a7deb7f62",
+    profileImg: "https://images.unsplash.com/photo-1558642452-9d2a7deb7f62",
     publisher: "평가원",
     level: 2,
     like: 10,
   },
   {
-    workbook_id: "01-01-00007",
+    workbookId: "01-01-00007",
     title: "Basketball",
-    img: "https://images.unsplash.com/photo-1516802273409-68526ee1bdd6",
+    profileImg: "https://images.unsplash.com/photo-1516802273409-68526ee1bdd6",
     publisher: "평가원",
     level: 2,
     like: 7,
   },
   {
-    workbook_id: "01-01-00008",
+    workbookId: "01-01-00008",
     title: "Fern",
-    img: "https://images.unsplash.com/photo-1518756131217-31eb79b20e8f",
+    profileImg: "https://images.unsplash.com/photo-1518756131217-31eb79b20e8f",
     publisher: "EBS",
     level: 3,
     like: 12,
   },
   {
-    workbook_id: "01-01-00009",
+    workbookId: "01-01-00009",
     title: "Mushrooms",
-    img: "https://images.unsplash.com/photo-1597645587822-e99fa5d45d25",
+    profileImg: "https://images.unsplash.com/photo-1597645587822-e99fa5d45d25",
     publisher: "EBS",
     level: 2,
     like: 6,
   },
-  {
-    workbook_id: "01-01-00010",
-    title: "Tomato basil",
-    img: "https://images.unsplash.com/photo-1567306301408-9b74779a11af",
-    publisher: "평가원",
-    level: 3,
-    like: 12,
-  },
-  {
-    workbook_id: "01-01-00011",
-    title: "See star",
-    img: "https://images.unsplash.com/photo-1471357674240-e1a485acb3e1",
-    publisher: "EBS",
-    level: 3,
-    like: 4,
-  },
-  {
-    workbook_id: "01-01-00012",
-    title: "Bike",
-    img: "https://images.unsplash.com/photo-1589118949245-7d38baf380d6",
-    publisher: "평가원",
-    level: 3,
-    like: 1,
-  },
 ];
 
-const bookData = [
+const bookInfo:bookContent[] = [
   {
     publisher: "EBS",
-    books: ["수능완성", "수능특강"],
+    categories: ["수능완성", "수능특강"],
     id: 0,
   },
   {
     publisher: "교육청",
-    books: [
+    categories: [
       "3월 모의고사",
       "4월 모의고사",
       "5월 모의고사",
@@ -334,7 +361,7 @@ const bookData = [
   },
   {
     publisher: "평가원",
-    books: ["6월 모의고사", "9월 모의고사", "대학수학능력시험"],
+    categories: ["6월 모의고사", "9월 모의고사", "대학수학능력시험"],
     id: 2,
   },
 ];
