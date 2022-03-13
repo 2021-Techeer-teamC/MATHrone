@@ -1,5 +1,7 @@
 package mathrone.backend.controller;
 
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
 import mathrone.backend.service.RankService;
 import org.springframework.data.redis.core.ZSetOperations;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,7 +19,7 @@ public class RankingController {
     }
 
     @GetMapping("/rankdata") // 상위 랭킹 정보를 가져옴
-    public Set<ZSetOperations.TypedTuple<String>> getRank(){
+    public JsonArray getRank(){
         return rankService.getAllRank();
     }
 

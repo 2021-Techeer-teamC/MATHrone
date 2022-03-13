@@ -1,8 +1,12 @@
 package mathrone.backend.service;
 
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.ZSetOperations;
 import org.springframework.stereotype.Service;
+import mathrone.backend.repository.WorkBookRepository;
+
 
 import java.util.Set;
 
@@ -11,15 +15,27 @@ import java.util.Set;
 public class RankService {
 
     private final ZSetOperations<String, String> zSetOperations;
+    private final WorkBookRepository workBookRepository;
 
-    public RankService(RedisTemplate<String, String> redisTemplate) {
+    public RankService(RedisTemplate<String, String> redisTemplate, WorkBookRepository workBookRepository) {
         this.zSetOperations = redisTemplate.opsForZSet();
+        this.workBookRepository = workBookRepository;
     }
 
-    public Set<ZSetOperations.TypedTuple<String>> getAllRank(/*nickname*/){ // 리더보드에 필요한 rank 데이터 조회 현재는 전체로 되어있음
-        java.util.Set<ZSetOperations.TypedTuple<String>> rankSet = zSetOperations.reverseRangeWithScores("test", 0, -1);
-        //LinkedHashMap으로 리턴해줌
-        return rankSet;
+    public JsonArray getAllRank(/*nickname*/){ // 리더보드에 필요한 rank 데이터 조회
+        JsonArray jsonArray = new JsonArray();
+        Set<ZSetOperations.TypedTuple<String>> rankSet = zSetOperations.reverseRangeWithScores("test", 0, -1);
+        //LinkedHashMap으로 리턴함
+        for(ZSetOperations.TypedTuple<String> str : rankSet) {
+            JsonObject jsonObject = new JsonObject();
+            int temp = Integer.parseInt(str.getValue());
+            jsonObject.addProperty("score", str.getScore());
+            jsonObject.addProperty("nickname", workBookRepository.getNickname(temp));
+            jsonObject.addProperty("try", workBookRepository.getTryByUserID(temp));
+            jsonArray.add(jsonObject);
+        } // 해당 유저가 시도한 문제 수를 포함한 JSON 형식 다시 생성
+        //System.out.println(jsonArray.getClass());
+        return jsonArray;
     }
 
 //    public Set<ZSetOperations.TypedTuple<String>> getMyRank(/*nickname*/){ // 리더보드에 필요한 나의 rank 조회
