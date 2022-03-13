@@ -38,10 +38,14 @@ public class RankService {
         return jsonArray;
     }
 
-//    public Set<ZSetOperations.TypedTuple<String>> getMyRank(/*nickname*/){ // 리더보드에 필요한 나의 rank 조회
-//        //java.util.Set<ZSetOperations.TypedTuple<String>> rankSet = zSetOperations.reverseRangeWithScores("rankscore", 0, -1);
-//        //return rankSet;
-//    }
+    public JsonObject getMyRank(/*user_id*/){ // 리더보드에 필요한 나의 rank 조회
+        JsonObject jsonObject = new JsonObject();
+        jsonObject.addProperty("rank", zSetOperations.reverseRank("test", "2").toString());
+        jsonObject.addProperty("score", zSetOperations.score("test", "2"));
+        jsonObject.addProperty("nickname", workBookRepository.getNickname(2));
+        jsonObject.addProperty("try", workBookRepository.getTryByUserID(2));
+        return jsonObject;
+    }
 
     public void setRank(/*nickname*/){ // 문제를 풀었을 시에 스코어를 올려주는 용도
         zSetOperations.incrementScore("rankscore", "nickname1", 1);

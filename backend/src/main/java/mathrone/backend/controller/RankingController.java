@@ -23,10 +23,10 @@ public class RankingController {
         return rankService.getAllRank();
     }
 
-//    @GetMapping("/myrankdata") // 나의 랭킹 정보를 가져오기
-//    public Set<ZSetOperations.TypedTuple<String>> getMyRank(/*user id*/){
-//        return rankService.getMyRank(/*user id*/);
-//    }
+    @GetMapping("/myrankdata") // 나의 랭킹 정보를 가져오기
+    public JsonObject getMyRank(/*user id*/){
+        return rankService.getMyRank(/*user id*/);
+    }
 
     @PostMapping("/setdata") // 맞춘 문제에 개수 업데이트하기
     public void setRank(/*nickname*/){
