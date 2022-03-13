@@ -36,7 +36,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     public void configure(WebSecurity web) throws Exception {
         // ACL(access control list)에 url 추가
-        web.ignoring().antMatchers("/workbook/**"); // 문제 조회 test를 위해 인증없이 허가
+        web.ignoring().antMatchers("/book/**"); // 문제 조회 test를 위해 인증없이 허가
+        web.ignoring().antMatchers("/swagger-resources/**", "/v3/api-docs");    // swagger 작동을 위함
     }
 
     protected void configure(HttpSecurity http) throws Exception {
