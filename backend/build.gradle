@@ -38,6 +38,9 @@ dependencies {
 	// lombok annotation 인식 에러 해결
 	annotationProcessor ('org.projectlombok:lombok')
 
+	// swagger dependency
+	implementation 'io.springfox:springfox-boot-starter:3.0.0'
+
 	// Redis
 	implementation 'org.springframework.boot:spring-boot-starter-data-redis'
 
