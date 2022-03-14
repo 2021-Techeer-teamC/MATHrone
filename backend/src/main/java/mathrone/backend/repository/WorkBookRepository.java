@@ -2,12 +2,13 @@ package mathrone.backend.repository;
 
 import mathrone.backend.domain.WorkBookInfo;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
 @Repository
-public interface WorkBookRepository extends JpaRepository<WorkBookInfo, Long>{
+public interface WorkBookRepository extends JpaRepository<WorkBookInfo, Long> {
 
     //전체 문제집
     List<WorkBookInfo> findAll();
@@ -17,4 +18,8 @@ public interface WorkBookRepository extends JpaRepository<WorkBookInfo, Long>{
 
     //publisher와 category를 이용하여 workbook을 찾는 기능 -> Workbook Info 타입의 리스트를 반환
     List<WorkBookInfo> findByPublisherAndCategory(String publisher, String category);
+
+    //결과의 수 반환
+    Long countByPublisher(String publisher);
+    Long countByPublisherAndCategory(String publisher, String category);
 }
