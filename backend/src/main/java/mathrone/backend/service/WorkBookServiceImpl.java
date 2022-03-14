@@ -38,7 +38,7 @@ public class WorkBookServiceImpl implements WorkbookService{
     public Long countWorkbook(String publisher, String category) {
         if (publisher.equals("all"))
             return workBookRepository.count();
-        if(category.equals("all"))
+        else if(category.equals("all"))
             return workBookRepository.countByPublisher(publisher);
         else
             return workBookRepository.countByPublisherAndCategory(publisher, category);
