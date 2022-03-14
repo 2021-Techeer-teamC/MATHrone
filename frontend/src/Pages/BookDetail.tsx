@@ -29,12 +29,14 @@ export default function BookDetail({ name, sections}: WorkbookDetailProps) {
         <>
         <Header title="MATHrone" sections={sections} />
         <NavBar sections={sections} />
-        <div style={{backgroundColor: "#E2E2E2", width: "100%" }}>
-            <Card sx={{ display: 'flex' }} style={{ alignItems: "center", justifyContent: "center",backgroundColor: "#E2E2E2", width: "100%",}}>
+        <div>
+            <Card sx={{ display: 'flex',  }}
+            style={{ alignItems: "center", justifyContent: "center", 
+                    backgroundColor: "#E2E2E2", width: "100%",}}>
                 <CardMedia
-                    style={{ marginRight: "5px" }}
+                    style={{ marginRight: "20px" }}
                     component="img"
-                    sx={{ width: '208px' }}
+                    sx={{ width: '250px', borderRadius: 2, boxShadow: 7,}}
                     image="https://storage.googleapis.com/mathrone-bucket/thumbnail/sample_workbook_thumnail.png"
                     alt="workbook thumbnail"
                 />
@@ -43,10 +45,11 @@ export default function BookDetail({ name, sections}: WorkbookDetailProps) {
                     <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
                         수학 - 고등학교 3학년
                     </Typography>
-                    <Typography variant="h5" component="div">
-                        {name}
+                    <Typography variant="h4" component="div" color="text.secondary">
+                        {/*name*/}
+                        2022학년도 수능 연계교재 수능완성
                     </Typography>
-                    <LinearProgress variant='determinate' value={40} style={{color:'green'}}></LinearProgress>
+                    <LinearProgress variant='determinate' value={40} color="success" style={{borderRadius:'10px', height:'8px'}}></LinearProgress>
                     <Typography sx={{ mb: 1.5 }} color="text.secondary">
                         EBS
                     </Typography>
