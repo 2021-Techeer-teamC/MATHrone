@@ -12,12 +12,13 @@ import Header from "../Components/Header";
 import NavBar from "../Components/NavBar";
 import Footer from "../Components/Footer";
 import Trophy from "../Assets/image/trophy.png";
+import http from "../http-common";
 
 
 interface rankData {
-  user_name: string;
-  correct_count: number;
-  try_count: number;
+  score: number;
+  nickname: string;
+  try: number;
 }
 
 // interface sections {
@@ -26,17 +27,22 @@ interface rankData {
 // }
 
 export default function Rankpage(props: { sections: any; }) {
-  const [rankDatas, setRankDatas] = React.useState([...rankData]);
+  const [rankDatas, setRankDatas] = React.useState<rankData[]>([]); // api respone 담아올 변수
   const [res, setRes] = React.useState([...rankDatas]);
+  const getRankdata = () => {
+    try {
+      http.get('/rankdata').then((res: any) => {
+        setRankDatas(res.data);
+        //console.log(res.data);
+      });
+    } catch(e) {
+      console.log("error 발생");
+    }
+  };
 
   useEffect(() => {
-    // axios 요청보낼 주소 URI? 내 점수 조회를 위한 나의 user_name?
-    // axios.get(url, { my_user_name }).then((rank) => {
-    //  setItemDatas([...rank])
-    //   setResult(rankDatas);
-    // 랭크데이터 받아오기
-    setRes(rankDatas);
-  }, [])
+    getRankdata();
+  },[])
 
   return (
 
@@ -85,7 +91,7 @@ export default function Rankpage(props: { sections: any; }) {
             </div>
           </Card>
 
-          <RankList posts={res} />
+          <RankList posts={rankDatas} />
         </Card>
 
         <Card variant="outlined" sx={{ display: 'grid', gridTemplateColumns: '0.5fr 0.5fr 3fr 1fr 1fr', mt: 2, pt: 3, pb: 3, pl: 5, pr: 6 }}>
@@ -113,55 +119,55 @@ export default function Rankpage(props: { sections: any; }) {
   );
 }
 
-const rankData: rankData[] = [
-  {
-    user_name: "tester1",
-    correct_count: 904,
-    try_count: 1000,
-  },
-  {
-    user_name: "tester2",
-    correct_count: 860,
-    try_count: 1200,
-  },
-  {
-    user_name: "tester3",
-    correct_count: 123,
-    try_count: 506,
-  },
-  {
-    user_name: "tester4",
-    correct_count: 123,
-    try_count: 506,
-  },
-  {
-    user_name: "tester5",
-    correct_count: 123,
-    try_count: 506,
-  },
-  {
-    user_name: "tester6",
-    correct_count: 123,
-    try_count: 506,
-  },
-  {
-    user_name: "tester7",
-    correct_count: 123,
-    try_count: 506,
-  },
-  {
-    user_name: "tester8",
-    correct_count: 123,
-    try_count: 506,
-  },
-  {
-    user_name: "tester9",
-    correct_count: 123,
-    try_count: 506,
-  },
-  {
-    user_name: "tester10",
-    correct_count: 123,
-    try_count: 506,
-  },
-];
+// const rankData: rankData[] = [
+//   {
+//     user_name: "tester1",
+//     correct_count: 904,
+//     try_count: 1000,
+//   },
+//   {
+//     user_name: "tester2",
+//     correct_count: 860,
+//     try_count: 1200,
+//   },
+//   {
+//     user_name: "tester3",
+//     correct_count: 123,
+//     try_count: 506,
+//   },
+//   {
+//     user_name: "tester4",
+//     correct_count: 123,
+//     try_count: 506,
+//   },
+//   {
+//     user_name: "tester5",
+//     correct_count: 123,
+//     try_count: 506,
+//   },
+//   {
+//     user_name: "tester6",
+//     correct_count: 123,
+//     try_count: 506,
+//   },
+//   {
+//     user_name: "tester7",
+//     correct_count: 123,
+//     try_count: 506,
+//   },
+//   {
+//     user_name: "tester8",
+//     correct_count: 123,
+//     try_count: 506,
+//   },
+//   {
+//     user_name: "tester9",
+//     correct_count: 123,
+//     try_count: 506,
+//   },
+//   {
+//     user_name: "tester10",
+//     correct_count: 123,
+//     try_count: 506,
+//   },
+// ];

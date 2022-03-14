@@ -9,9 +9,9 @@ import Silver from "../Assets/image/silver-medal.png";
 import Bronze from "../Assets/image/bronze-medal.png";
 
 interface rankData {
-    user_name: string;
-    correct_count: number;
-    try_count: number;
+    score: number;
+    nickname: string;
+    try: number;
 }
 
 type dataList = {
@@ -63,20 +63,20 @@ const RankList = ({ posts }: dataList) => {
         <Container>
             {posts.map((data: rankData) =>
             (
-                <Card key={data.user_name} elevation={1} sx={{ display: 'grid', gridTemplateColumns: '0.5fr 0.5fr 3fr 1fr 1fr', mb: 1, p: 2 }}>
+                <Card key={data.nickname} elevation={1} sx={{ display: 'grid', gridTemplateColumns: '0.5fr 0.5fr 3fr 1fr 1fr', mb: 1, p: 2 }}>
                     <Typography variant="body1" component="p">
                         {count++}
                     </Typography>
                     <Medal rank={count}/>
                     {/* <Typography/> */}
                     <Typography variant="body1" component="p" >
-                        {data.user_name}
+                        {data.nickname}
                     </Typography>
                     <Typography variant="body1" component="p">
-                        {data.try_count}
+                        {data.score}
                     </Typography>
                     <Typography variant="body1" component="p">
-                        {data.correct_count}
+                        {data.try}
                     </Typography>
                 </Card>
             )
