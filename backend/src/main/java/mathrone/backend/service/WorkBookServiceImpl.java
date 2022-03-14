@@ -34,6 +34,17 @@ public class WorkBookServiceImpl implements WorkbookService{
             return workBookRepository.findByPublisherAndCategory(publisher, category);
     }
 
+    @Override
+    public Long countWorkbook(String publisher, String category) {
+        if (publisher.equals("all"))
+            return workBookRepository.count();
+        if(category.equals("all"))
+            return workBookRepository.countByPublisher(publisher);
+        else
+            return workBookRepository.countByPublisherAndCategory(publisher, category);
+    }
+
+
 
     //workbook service와 problemservice가 왜 함께 있는지..!?
 //    private final ProblemRepository problemRepository;
