@@ -21,19 +21,26 @@ interface rankData {
   try: number;
 }
 
-// interface sections {
-//   title: string;
-//   url: string;
-// }
+interface myRankData {
+    rank: number;
+    score: number;
+    nickname: string;
+    try: number;
+}
 
 export default function Rankpage(props: { sections: any; }) {
   const [rankDatas, setRankDatas] = React.useState<rankData[]>([]); // api respone 담아올 변수
-  const [res, setRes] = React.useState([...rankDatas]);
+  const [myRankData, setMyRankData] = React.useState<myRankData[]>([]); 
+
   const getRankdata = () => {
     try {
       http.get('/rankdata').then((res: any) => {
         setRankDatas(res.data);
         //console.log(res.data);
+      });
+      http.get('/myrankdata').then((res: any) => {
+        setMyRankData(res.data);
+        //console.log(res2.data);
       });
     } catch(e) {
       console.log("error 발생");
@@ -96,17 +103,17 @@ export default function Rankpage(props: { sections: any; }) {
 
         <Card variant="outlined" sx={{ display: 'grid', gridTemplateColumns: '0.5fr 0.5fr 3fr 1fr 1fr', mt: 2, pt: 3, pb: 3, pl: 5, pr: 6 }}>
           <Typography variant="body1" component="p">
-            10000
-          </Typography>
+            {myRankData[0].rank++}
+          </Typography> 
           <Typography />
           <Typography variant="body1" component="p">
-            its meeee
+            {myRankData[0].nickname}
           </Typography>
           <Typography variant="body1" component="p">
-            100
+            {myRankData[0].score}
           </Typography>
           <Typography variant="body1" component="p">
-            124
+            {myRankData[0].try}
           </Typography>
         </Card>
         <Footer
