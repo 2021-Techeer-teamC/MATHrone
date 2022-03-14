@@ -8,4 +8,6 @@ public interface WorkbookService {
 
     public List<WorkBookInfo> findWorkbook(String publisher, String category);
 
+    public Long countWorkbook(String publisher, String category);
+
 }
