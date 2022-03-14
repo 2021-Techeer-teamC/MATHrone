@@ -29,17 +29,17 @@ export default function BookDetail({ name, sections}: WorkbookDetailProps) {
         <>
         <Header title="MATHrone" sections={sections} />
         <NavBar sections={sections} />
-        <div style={{ backgroundColor: "#E2E2E2", width: "100%" }}>
-            <Card sx={{ display: 'flex' }} style={{ backgroundColor: "#E2E2E2", width: "100%", padding: "4%" }}>
+        <div style={{backgroundColor: "#E2E2E2", width: "100%" }}>
+            <Card sx={{ display: 'flex' }} style={{ alignItems: "center", justifyContent: "center",backgroundColor: "#E2E2E2", width: "100%",}}>
                 <CardMedia
                     style={{ marginRight: "5px" }}
                     component="img"
-                    sx={{ width: 300 }}
+                    sx={{ width: '208px' }}
                     image="https://storage.googleapis.com/mathrone-bucket/thumbnail/sample_workbook_thumnail.png"
                     alt="workbook thumbnail"
                 />
-                <CardContent style={{ textAlign: "left" }}>
-                    <h1>{params.id}</h1>
+                <CardContent style={{ textAlign: "left" }} sx={{ width: '50%' }}>
+                    {params.id}
                     <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
                         수학 - 고등학교 3학년
                     </Typography>
