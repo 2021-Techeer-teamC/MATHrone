@@ -35,8 +35,8 @@ public class WorkbookController {
         //결과에 level,like을 attach하여 리스트로 생성
         for (WorkBookInfo wb: res) {
             String level = workBookService.getLevel(wb.getWorkbookId());
-//            Long like = workBookService.getLike(wb.getWorkbookId());
-            bookItem b = new bookItem(wb.getWorkbookId(), wb.getTitle(), wb.getPublisher(), wb.getProfileImg(),level);
+            Long like = workBookService.getLike(wb.getWorkbookId());
+            bookItem b = new bookItem(wb.getWorkbookId(), wb.getTitle(), wb.getPublisher(), wb.getProfileImg(),level, like);
             result.add(b);
         }
 
@@ -45,10 +45,10 @@ public class WorkbookController {
         return result;
     }
 
-//    @GetMapping("/problems") // 모든 문제 조회(Books page)
-//    public List<Problem> problemList(@RequestParam(value="workbookId") String workbookId,
-//                                     @RequestParam(value="chapterId") String chapterId){
-//        return workBookService.findProblem(workbookId,chapterId);
-//    }
+    @GetMapping("/problems") // 모든 문제 조회(Books page)
+    public List<Problem> problemList(@RequestParam(value="workbookId") String workbookId,
+                                     @RequestParam(value="chapterId") String chapterId){
+        return workBookService.findProblem(workbookId,chapterId);
+    }
 
 }
