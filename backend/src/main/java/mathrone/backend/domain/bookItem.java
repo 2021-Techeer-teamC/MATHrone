@@ -14,7 +14,7 @@ public class bookItem {
     //bookItem에 필요한 attribute
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY) //JPA 사용시 필요
-    private int workbookId;
+    private String workbookId;
 
     @NotNull
     private String title;
@@ -25,21 +25,21 @@ public class bookItem {
     @NotNull
     private String profileImg;
 
-    private Short level;
-    private int like;
+    private String level;
+//    private Long like;
 
     //생성자
-    public bookItem(int workbookId, String title, String publisher, String profileImg, Short level, int like){
+    public bookItem(String workbookId, String title, String publisher, String profileImg, String level){
         this.workbookId=workbookId;
         this.title=title;
         this.publisher=publisher;
         this.profileImg=profileImg;
         this.level=level;
-        this.like=like;
+//        this.like=like;
     }
 
     //getter & setter
-    public int getWorkbookId() {
+    public String getWorkbookId() {
         return workbookId;
     }
 
@@ -55,12 +55,12 @@ public class bookItem {
         return profileImg;
     }
 
-    public Short getLevel() {return level;}
+    public String getLevel() {return level;}
 
-    public int getLike() {return like;}
+//    public Long getLike() {return like;}
 
 
-    public void setWorkbookId(int workbookId) {
+    public void setWorkbookId(String workbookId) {
         this.workbookId=workbookId;
     }
 
@@ -76,8 +76,8 @@ public class bookItem {
         this.profileImg=profileImg;
     }
 
-    public void setLevel(Short level) { this.level=level;}
+    public void setLevel(String level) { this.level=level;}
 
-    public void setLike(int like) { this.like=like;}
+//    public void setLike(Long like) { this.like=like;}
 
 }
