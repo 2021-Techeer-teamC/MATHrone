@@ -14,7 +14,7 @@ public interface WorkbookService {
 
     public String getLevel(String workbookId);
 
-    public Long getLike(String workbookId);
+    public Long getStar(String workbookId);
 
     public List<Problem> findProblem(String workbookId, String chapterId);
 }
