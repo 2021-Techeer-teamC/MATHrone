@@ -12,8 +12,8 @@ public class WorkbookLevelInfo {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY) //JPA 사용시 필요
-    @Column(name = "prob_level_id")
-    private int probLevelId;
+    @Column(name = "workbook_level_id")
+    private int workbookLevelId;
 
     @Column(name = "low_cnt")
     private int lowCnt;
@@ -40,8 +40,8 @@ public class WorkbookLevelInfo {
         return midCnt;
     }
 
-    public int getProbLevelId() {
-        return probLevelId;
+    public int getWorkbookLevelId(){
+        return workbookLevelId;
     }
 
     public String getWorkbookId() {
