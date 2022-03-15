@@ -13,8 +13,8 @@ import InfoPage from "./Pages/InfoPage";
 import Books from "./Pages/Books";
 import Workbook from "./Pages/BookDetail";
 import Rank from "./Pages/Rank";
-import SignIn from "./Pages/SignIn";
-import SignUp from "./Pages/SignUp";
+import SignIn from "./Pages/User/SignIn";
+import SignUp from "./Pages/User/SignUp";
 
 const theme = createTheme();
 
