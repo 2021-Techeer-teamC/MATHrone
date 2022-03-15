@@ -26,16 +26,16 @@ public class bookItem {
     private String profileImg;
 
     private String level;
-    private Long like;
+    private Long star;
 
     //생성자
-    public bookItem(String workbookId, String title, String publisher, String profileImg, String level, Long like){
+    public bookItem(String workbookId, String title, String publisher, String profileImg, String level, Long star){
         this.workbookId=workbookId;
         this.title=title;
         this.publisher=publisher;
         this.profileImg=profileImg;
         this.level=level;
-        this.like=like;
+        this.star=star;
     }
 
     //getter & setter
@@ -57,7 +57,7 @@ public class bookItem {
 
     public String getLevel() {return level;}
 
-    public Long getLike() {return like;}
+    public Long getStar() {return star;}
 
 
     public void setWorkbookId(String workbookId) {
@@ -78,6 +78,6 @@ public class bookItem {
 
     public void setLevel(String level) { this.level=level;}
 
-    public void setLike(Long like) { this.like=like;}
+    public void setStar(Long star) { this.star=star;}
 
 }
