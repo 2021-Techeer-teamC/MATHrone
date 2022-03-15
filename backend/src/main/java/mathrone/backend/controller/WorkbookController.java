@@ -18,6 +18,7 @@ public class WorkbookController {
         this.workBookService = workBookService;
     }
 
+
     @GetMapping("/workbook") // 모든 워크북 조회(Books page)
     public List<bookItem> bookList(@RequestParam(value="publisher", required = false, defaultValue = "all") String publisher,
                              @RequestParam(value="sortType", required = false, defaultValue = "star") String sortType,
@@ -35,12 +36,11 @@ public class WorkbookController {
         //결과에 level,like을 attach하여 리스트로 생성
         for (WorkBookInfo wb: res) {
             String level = workBookService.getLevel(wb.getWorkbookId());
-            Long like = workBookService.getLike(wb.getWorkbookId());
-            bookItem b = new bookItem(wb.getWorkbookId(), wb.getTitle(), wb.getPublisher(), wb.getProfileImg(),level, like);
+            Long star = workBookService.getStar(wb.getWorkbookId());
+            bookItem b = new bookItem(wb.getWorkbookId(), wb.getTitle(), wb.getPublisher(), wb.getProfileImg(),level, star);
             result.add(b);
         }
 
-        System.out.println(result);
 
         return result;
     }
