@@ -1,5 +1,6 @@
 package mathrone.backend.service;
 
+import mathrone.backend.domain.Problem;
 import mathrone.backend.domain.WorkBookInfo;
 import mathrone.backend.domain.WorkbookLevelInfo;
 
@@ -13,5 +14,7 @@ public interface WorkbookService {
 
     public String getLevel(String workbookId);
 
-//    public Long getLike(String workbookId);
+    public Long getLike(String workbookId);
+
+    public List<Problem> findProblem(String workbookId, String chapterId);
 }
