@@ -16,7 +16,7 @@ public class WorkBookInfo {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY) //JPA 사용시 필요
     @Column(name = "workbook_id")
-    private Short workbookId;
+    private String workbookId;
 
     @NotNull
     private String title;
@@ -44,7 +44,7 @@ public class WorkBookInfo {
 
     private String category;
 
-    public Short getWorkbookId() {
+    public String getWorkbookId() {
         return workbookId;
     }
 
