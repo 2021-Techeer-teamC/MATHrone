@@ -1,8 +1,10 @@
 package mathrone.backend.service;
 
+import mathrone.backend.domain.Problem;
 import mathrone.backend.domain.WorkBookInfo;
 import mathrone.backend.domain.WorkbookLevelInfo;
 import mathrone.backend.repository.LevelRepository;
+import mathrone.backend.repository.ProblemRepository;
 import mathrone.backend.repository.StarRepository;
 import mathrone.backend.repository.WorkBookRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,12 +18,16 @@ public class WorkBookServiceImpl implements WorkbookService{
     //레포지토리 -> db에 접근
     private final WorkBookRepository workBookRepository;
     private final LevelRepository levelRepository;
+    private final StarRepository starRepository;
+    private final ProblemRepository problemRepository;
 
     //생성자
     @Autowired
-    public WorkBookServiceImpl(WorkBookRepository workBookRepository, LevelRepository levelRepository){
+    public WorkBookServiceImpl(WorkBookRepository workBookRepository, ProblemRepository problemRepository, LevelRepository levelRepository,StarRepository starRepository){
         this.workBookRepository = workBookRepository;
         this.levelRepository = levelRepository;
+        this.starRepository = starRepository;
+        this.problemRepository = problemRepository;
     }
 
 
@@ -64,19 +70,15 @@ public class WorkBookServiceImpl implements WorkbookService{
 
     }
 
-//    @Override
-//    public Long getLike(String workbookId){
-//        return StarRepository.countByWorkbookId(workbookId);
-//    }
+    @Override
+    public Long getLike(String workbookId){
+        return starRepository.countByWorkbookId(workbookId);
+    }
 
 
-
-
-    //workbook service와 problemservice가 왜 함께 있는지..!?
-//    private final ProblemRepository problemRepository;
-
-//    public List<Problem> findProblem(String workbookId, String chapterId){
-//        return problemRepository.findByWorkbookIdAndChapterId(workbookId, chapterId);
-//    }
+    @Override
+    public List<Problem> findProblem(String workbookId, String chapterId){
+        return problemRepository.findByWorkbookIdAndChapterId(workbookId, chapterId);
+    }
 
 }
