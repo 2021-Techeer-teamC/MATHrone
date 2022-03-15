@@ -5,7 +5,7 @@ import mathrone.backend.domain.WorkBookInfo;
 import mathrone.backend.domain.WorkbookLevelInfo;
 import mathrone.backend.repository.LevelRepository;
 import mathrone.backend.repository.ProblemRepository;
-import mathrone.backend.repository.StarRepository;
+import mathrone.backend.repository.UserWorkbookRepository;
 import mathrone.backend.repository.WorkBookRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,15 +18,15 @@ public class WorkBookServiceImpl implements WorkbookService{
     //레포지토리 -> db에 접근
     private final WorkBookRepository workBookRepository;
     private final LevelRepository levelRepository;
-    private final StarRepository starRepository;
+    private final UserWorkbookRepository userWorkbookRepository;
     private final ProblemRepository problemRepository;
 
     //생성자
     @Autowired
-    public WorkBookServiceImpl(WorkBookRepository workBookRepository, ProblemRepository problemRepository, LevelRepository levelRepository,StarRepository starRepository){
+    public WorkBookServiceImpl(WorkBookRepository workBookRepository, ProblemRepository problemRepository, LevelRepository levelRepository, UserWorkbookRepository userWorkbookRepository){
         this.workBookRepository = workBookRepository;
         this.levelRepository = levelRepository;
-        this.starRepository = starRepository;
+        this.userWorkbookRepository = userWorkbookRepository;
         this.problemRepository = problemRepository;
     }
 
@@ -71,8 +71,8 @@ public class WorkBookServiceImpl implements WorkbookService{
     }
 
     @Override
-    public Long getLike(String workbookId){
-        return starRepository.countByWorkbookId(workbookId);
+    public Long getStar(String workbookId){
+        return userWorkbookRepository.countByWorkbookIdAndWorkbookStar(workbookId, true); //좋아요 표시 눌린것만
     }
 
 
