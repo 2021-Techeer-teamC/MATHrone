@@ -1,8 +1,10 @@
 package mathrone.backend.service;
 
 import lombok.RequiredArgsConstructor;
+import mathrone.backend.config.CacheKey;
 import mathrone.backend.domain.UserInfo;
 import mathrone.backend.repository.UserRepository;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -11,9 +13,8 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-
 /*
-Repository를 통해 database로부터 필요한 user 정보를 가져오는 service
+    Repository를 통해 database로부터 필요한 user 정보를 가져오는 service
 */
 @Service
 @RequiredArgsConstructor
@@ -22,9 +23,10 @@ public class CustomUserDetailsService implements UserDetailsService {
     private final UserRepository userRepository;
 
     @Override
+    @Cacheable(value = CacheKey.USER, key = "#email", unless = "#result == null")
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         UserInfo isExist = userRepository.findByEmail(email).orElseThrow( () ->
-                new UsernameNotFoundException("not found"));
+                new UsernameNotFoundException("유저를 찾을 수 없습니다. 이메일을 다시 확인해주세요."));
 
         return User.builder()
             .username(isExist.getId())

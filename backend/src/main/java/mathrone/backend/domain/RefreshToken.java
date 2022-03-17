@@ -4,39 +4,44 @@ package mathrone.backend.domain;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-
 import javax.persistence.*;
 import java.util.Date;
 
 @Getter
 @NoArgsConstructor
-@Table(name = "refresh_token")
+@Table(name = "refreshtoken")
 @Entity
 public class RefreshToken {
 
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY) //JPA 사용시 필요)
-    @Column(name = "token_id")
-    private int tokenId;
-
+    @Id
     @Column(name = "user_id")
     private String userId;
 
     @Column(name = "refresh_token")
     private String refreshToken;
 
-    @Column(name = "valid_util")
-    private Date validUtil;
+    @Column(name = "expiration")
+    private Date expiration;
 
-    public RefreshToken updateValue(String refreshToken, Date validUtil) {
+    @Builder
+    public RefreshToken(String userid,String refreshToken, Date expiration) {
+        this.userId = userid;
         this.refreshToken = refreshToken;
-        this.validUtil = validUtil;
+        this.expiration = expiration;
+    }
+
+    public RefreshToken updateValue(String refreshToken, Date expiration) {
+        this.refreshToken = refreshToken;
+        this.expiration = expiration;
         return this;
     }
 
-    @Builder
-    public RefreshToken(String userId, String refreshToken, Date validUtil) {
-        this.userId = userId;
-        this.refreshToken = refreshToken;
-        this.validUtil = validUtil;
+    public RefreshRedis transferRedisToken() {
+        return RefreshRedis.builder()
+                .userId(this.userId)
+                .refreshToken(this.refreshToken)
+                .expiration(this.expiration.getTime())
+                .build();
     }
+
 }

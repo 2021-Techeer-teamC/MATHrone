@@ -9,6 +9,7 @@ import java.util.Collection;
 import java.util.Date;
 import java.util.stream.Collectors;
 
+import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import mathrone.backend.controller.dto.TokenDto;
 import mathrone.backend.controller.dto.UserResponseDto;
@@ -34,6 +35,7 @@ public class TokenProvider{
     private static final String BEARER_TYPE = "bearer";     // token 인증 타입(jwt 토큰을 의미)
     private static final long ACCESS_TOKEN_EXPIRE_TIME = 1000 * 60 * 30;            // 30분
     private static final long REFRESH_TOKEN_EXPIRE_TIME = 1000 * 60 * 60 * 24 * 7;  // 7일
+//    private static final long REFRESH_TOKEN_EXPIRE_TIME = 1000 * 60 * 5;  // reissue test용
 
     // key는 HS512 알고리즘을 사용함
     private final Key key;
@@ -76,18 +78,6 @@ public class TokenProvider{
                 .accessTokenExpiresIn(accessTokenExpires.getTime())
                 .refreshToken(refreshToken)
                 .userInfo(UserResponseDto.builder().id(authentication.getName()).build())
-                .build();
-    }
-
-    public RefreshToken generateRefreshToken(TokenDto tokenDto) {
-        long now = (new Date()).getTime();
-
-        Date RefreshTokenExpires = new Date(now + REFRESH_TOKEN_EXPIRE_TIME);
-
-        return RefreshToken.builder()
-                .userId((String) tokenDto.getUserInfo().getId())
-                .refreshToken(tokenDto.getRefreshToken())
-                .validUtil(RefreshTokenExpires)
                 .build();
     }
 
@@ -140,7 +130,7 @@ public class TokenProvider{
         return false;
     }
 
-    public static long getRefreshTokenExpireTime() {
-        return REFRESH_TOKEN_EXPIRE_TIME;
+    public static Date getRefreshTokenExpireTime() {
+        return new Date(new Date().getTime()+REFRESH_TOKEN_EXPIRE_TIME);
     }
 }

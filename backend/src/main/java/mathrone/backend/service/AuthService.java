@@ -8,6 +8,7 @@ import mathrone.backend.controller.dto.UserResponseDto;
 import mathrone.backend.domain.RefreshToken;
 import mathrone.backend.domain.UserInfo;
 import mathrone.backend.login.TokenProvider;
+import mathrone.backend.repository.RefreshTokenRedisRepository;
 import mathrone.backend.repository.RefreshTokenRepository;
 import mathrone.backend.repository.UserRepository;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -17,7 +18,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.util.Date;
 
 @Service
 @RequiredArgsConstructor
@@ -28,6 +28,7 @@ public class AuthService {
     private final PasswordEncoder passwordEncoder;
     private final TokenProvider tokenProvider;
     private final RefreshTokenRepository refreshTokenRepository;
+    private final RefreshTokenRedisRepository refreshTokenRedisRepository;
 
     @Transactional
     public UserResponseDto signup(UserRequestDto userRequestDto){
@@ -50,11 +51,18 @@ public class AuthService {
         // 3. token 생성
         TokenDto tokenDto = tokenProvider.generateToken(authentication);
 
-        // 4. refresh token 생성
-        RefreshToken refreshToken = tokenProvider.generateRefreshToken(tokenDto);
+        // 4. refresh token 생성 ( database 및 redis 저장을 위한 refresh token )
+        RefreshToken refreshToken = RefreshToken.builder()
+                .userid(authentication.getName())
+                .refreshToken(tokenDto.getRefreshToken())
+                .expiration(tokenProvider.getRefreshTokenExpireTime())
+                .build();
 
-        // 5. 토큰 저장 테이블에 저장이나, 테스트를 위해 임시로 로컬 저장 방식으로 구현하기.
-//        refreshTokenRepository.save(refreshToken);
+        // 5. 토큰 저장 테이블 저장
+        refreshTokenRepository.save(refreshToken);
+
+        // 6. redis 저장
+        refreshTokenRedisRepository.save(refreshToken.transferRedisToken());
 
         return tokenDto;
     }
@@ -71,21 +79,23 @@ public class AuthService {
         Authentication authentication = tokenProvider.getAuthentication(tokenRequestDto.getAccessToken());
 
         // 3. 저장소에서 Member ID 를 기반으로 Refresh Token 값 가져오기
-        // 현재 로컬로 구현 예정
-//        RefreshToken refreshToken = refreshTokenRepository.findByUserId(authentication.getName())
-//                .orElseThrow(() -> new RuntimeException("로그아웃 된 사용자입니다."));
-//
-//        // 4. Refresh Token 일치 여부 검사
-//        if (!refreshToken.getValue().equals(tokenRequestDto.getRefreshToken())){
-//            throw new RuntimeException("토큰의 유저 정보가 일치하지 않습니다.");
-//        }
+        RefreshToken refreshToken = refreshTokenRepository.findByUserId(authentication.getName())
+                .orElseThrow(() -> new RuntimeException("로그아웃 된 사용자입니다."));
+
+        // 4. Refresh Token 일치 여부 검사
+        if (!refreshToken.getRefreshToken().equals(tokenRequestDto.getRefreshToken())){
+            throw new RuntimeException("토큰의 유저 정보가 일치하지 않습니다.");
+        }
 
         // 5. 새로운 토큰 생성
         TokenDto tokenDto = tokenProvider.generateToken(authentication);
 
         // 6. 저장소 정보 업데이트
-//        RefreshToken newRefreshToken = refreshToken.updateValue(tokenDto.getRefreshToken());
-//        refreshTokenRepository.save(newRefreshToken);
+        RefreshToken newRefreshToken = refreshToken.updateValue(tokenDto.getRefreshToken(),
+                tokenProvider.getRefreshTokenExpireTime());
+
+        refreshTokenRepository.save(newRefreshToken);
+        refreshTokenRedisRepository.save(newRefreshToken.transferRedisToken());
 
         return tokenDto;
     }
