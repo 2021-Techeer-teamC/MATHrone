@@ -1,16 +1,19 @@
 package mathrone.backend.service;
 
 import mathrone.backend.domain.Problem;
+import mathrone.backend.domain.PubCatPair;
 import mathrone.backend.domain.WorkBookInfo;
 import mathrone.backend.domain.WorkbookLevelInfo;
 import mathrone.backend.repository.LevelRepository;
 import mathrone.backend.repository.ProblemRepository;
 import mathrone.backend.repository.UserWorkbookRepository;
 import mathrone.backend.repository.WorkBookRepository;
+import org.apache.commons.lang3.tuple.Pair;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class WorkBookServiceImpl implements WorkbookService{
@@ -79,6 +82,11 @@ public class WorkBookServiceImpl implements WorkbookService{
     @Override
     public List<Problem> findProblem(String workbookId, String chapterId){
         return problemRepository.findByWorkbookIdAndChapterId(workbookId, chapterId);
+    }
+
+    @Override
+    public List<PubCatPair> getPublisherAndCategoryList(){
+        return workBookRepository.findGroupByPublisherAndCategory();
     }
 
 }
