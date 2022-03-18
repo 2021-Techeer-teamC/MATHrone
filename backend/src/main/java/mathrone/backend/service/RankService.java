@@ -29,6 +29,7 @@ public class RankService {
         for(ZSetOperations.TypedTuple<String> str : rankSet) {
             JsonObject jsonObject = new JsonObject();
             int temp = Integer.parseInt(str.getValue());
+            jsonObject.addProperty("user_id", temp);
             jsonObject.addProperty("score", str.getScore());
             jsonObject.addProperty("nickname", workBookRepository.getNickname(temp));
             jsonObject.addProperty("try", workBookRepository.getTryByUserID(temp));
@@ -40,7 +41,7 @@ public class RankService {
 
     public JsonObject getMyRank(/*user_id*/){ // 리더보드에 필요한 나의 rank 조회
         JsonObject jsonObject = new JsonObject();
-        jsonObject.addProperty("rank", zSetOperations.reverseRank("test", "2").toString());
+        jsonObject.addProperty("rank", zSetOperations.reverseRank("test", "2"));
         jsonObject.addProperty("score", zSetOperations.score("test", "2"));
         jsonObject.addProperty("nickname", workBookRepository.getNickname(2));
         jsonObject.addProperty("try", workBookRepository.getTryByUserID(2));
