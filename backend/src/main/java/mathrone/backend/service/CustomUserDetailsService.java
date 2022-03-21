@@ -23,7 +23,7 @@ public class CustomUserDetailsService implements UserDetailsService {
     private final UserRepository userRepository;
 
     @Override
-    @Cacheable(value = CacheKey.USER, key = "#email", unless = "#result == null")
+//    @Cacheable(value = CacheKey.USER, key = "#email", unless = "#result == null")
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         UserInfo isExist = userRepository.findByEmail(email).orElseThrow( () ->
                 new UsernameNotFoundException("유저를 찾을 수 없습니다. 이메일을 다시 확인해주세요."));
@@ -33,9 +33,5 @@ public class CustomUserDetailsService implements UserDetailsService {
             .password(isExist.getPassword())
             .roles("USER")
             .build();
-    }
-
-    public List<UserInfo> allUser(){
-        return userRepository.findAll();
     }
 }

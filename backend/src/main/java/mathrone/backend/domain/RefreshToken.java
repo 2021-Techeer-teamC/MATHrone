@@ -40,7 +40,8 @@ public class RefreshToken {
         return RefreshRedis.builder()
                 .userId(this.userId)
                 .refreshToken(this.refreshToken)
-                .expiration(this.expiration.getTime())
+                // Redis의 TimeToLive annotation 단위는 int, 즉 초로 계산함
+                .expiration((this.expiration.getTime()-(new Date().getTime()))/1000)
                 .build();
     }
 

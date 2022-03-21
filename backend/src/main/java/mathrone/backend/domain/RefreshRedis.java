@@ -3,12 +3,12 @@ package mathrone.backend.domain;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
+import mathrone.backend.login.TokenProvider;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.redis.core.RedisHash;
 import org.springframework.data.redis.core.TimeToLive;
 
-@RedisHash("RefreshToken")
+@RedisHash(value = "RefreshToken")
 @AllArgsConstructor
 @Builder
 @Getter
@@ -21,3 +21,4 @@ public class RefreshRedis {
     @TimeToLive
     private Long expiration;
 }
+
