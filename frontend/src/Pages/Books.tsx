@@ -27,8 +27,7 @@ import NavBar from "../Components/NavBar";
 import {ThemeProvider} from "@mui/material/styles";
 import Footer from "../Components/Footer";
 
-
-
+import NavBarTest from "./Navbar";
 
 
 export default function BookPage(props: { sections: any }) {
@@ -206,7 +205,7 @@ export default function BookPage(props: { sections: any }) {
               </NativeSelect>
             </FormControl>
           </div>
-          <div className="item">
+          {/* <div className="item">
             <List
               sx={{ width: "100%", maxWidth: 250, bgcolor: "background.paper" }}
               component="nav"
@@ -238,7 +237,12 @@ export default function BookPage(props: { sections: any }) {
                 </div>
               ))}
             </List>
-          </div>
+            
+            <NavBarTest></NavBarTest>
+          </div> */}
+
+          <NavBarTest></NavBarTest>
+
           <div className="item">
             <Paper>
               <BookImgList posts={result}/>
@@ -365,3 +369,5 @@ const bookInfo:bookContent[] = [
     id: 2,
   },
 ];
+
+
