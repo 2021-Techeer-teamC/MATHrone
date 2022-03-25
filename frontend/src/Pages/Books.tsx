@@ -152,6 +152,10 @@ export default function BookPage(props: { sections: any }) {
 
   };
 
+  const handleNavClick = (data: string) =>{
+    console.log("books.tsx");
+  }
+
 
   //기타 변수
   const [postsPerPage, setPostsPerPage] = React.useState<number>(3 * 3); //한페이지에 보여질 책의 수
@@ -241,7 +245,7 @@ export default function BookPage(props: { sections: any }) {
             <NavBarTest></NavBarTest>
           </div> */}
 
-          <NavBarTest></NavBarTest>
+          <NavBarTest onNavClick={handleNavClick}></NavBarTest>
 
           <div className="item">
             <Paper>

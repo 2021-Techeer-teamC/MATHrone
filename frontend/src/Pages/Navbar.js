@@ -8,8 +8,9 @@ import ButtonGroup from '@mui/material/ButtonGroup';
 import Box from '@mui/material/Box';
 
 import React, { useEffect, useRef, useState } from "react";
+import { PinDropSharp } from "@mui/icons-material";
 
-export default function NavBarTest() {
+export default function NavBarTest(props) {
     const [navItem, setNavItem] = useState("")
     const navBarRef = useRef()
 
@@ -111,6 +112,7 @@ export default function NavBarTest() {
                 <div
                     className="item"
                     onMouseOver={() => openSubMenu(item.name)}
+                    onClick={props.onNavClick}
                 >
                     {item.name}
                     {item.childs && <span>{">"}</span>}
