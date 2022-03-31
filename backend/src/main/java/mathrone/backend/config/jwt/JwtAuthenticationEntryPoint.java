@@ -1,4 +1,4 @@
-package mathrone.backend.login;
+package mathrone.backend.config.jwt;
 
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.AuthenticationEntryPoint;

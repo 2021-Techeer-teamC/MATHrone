@@ -1,4 +1,4 @@
-package mathrone.backend.login;
+package mathrone.backend.util;
 
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.io.Decoders;
@@ -9,12 +9,10 @@ import java.util.Collection;
 import java.util.Date;
 import java.util.stream.Collectors;
 
-import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import mathrone.backend.controller.dto.TokenDto;
 import mathrone.backend.controller.dto.UserResponseDto;
-import mathrone.backend.domain.RefreshToken;
-import mathrone.backend.service.CustomUserDetailsService;
+import mathrone.backend.config.security.CustomUserDetailsService;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -29,10 +27,10 @@ import org.springframework.stereotype.Component;
 @Slf4j
 @Component
 @PropertySource("classpath:/keys/jwtKey.properties")
-public class TokenProvider{
+public class TokenProviderUtil {
 
     private static final String AUTHORITIES_KEY = "auth";
-    private static final String BEARER_TYPE = "bearer";     // token 인증 타입(jwt 토큰을 의미)
+    private static final String BEARER_TYPE = "Bearer";     // token 인증 타입(jwt 토큰을 의미)
     private static final long ACCESS_TOKEN_EXPIRE_TIME = 1000 * 60 * 60 * 24;       // 1일
     private static final long REFRESH_TOKEN_EXPIRE_TIME = 1000 * 60 * 60 * 24 * 7;  // 7일
 
@@ -40,8 +38,8 @@ public class TokenProvider{
     private final Key key;
     private final CustomUserDetailsService customUserDetailsService;
 
-    public TokenProvider(CustomUserDetailsService customUserDetailsService
-                         ,@Value("${key}") String secretKey
+    public TokenProviderUtil(CustomUserDetailsService customUserDetailsService
+                         , @Value("${key}") String secretKey
     ){
         this.customUserDetailsService = customUserDetailsService;
         byte[] keyBytes = Decoders.BASE64.decode(secretKey);
@@ -129,7 +127,16 @@ public class TokenProvider{
         return false;
     }
 
+
     public static Date getRefreshTokenExpireTime() {
         return new Date(new Date().getTime()+REFRESH_TOKEN_EXPIRE_TIME);
+    }
+
+    // logout token의 expiration 계산
+    public long getRemainExpiration(String token){
+        Date currentTime = parseClaims(token).getExpiration();
+        Date now = new Date();
+        // redis의 단위는 초로, 밀리초를 초로 변환하는 과정의 오차를 감안하기 위해 1초 더함.
+        return ((currentTime.getTime() - now.getTime())/1000)+1;
     }
 }

@@ -1,9 +1,11 @@
-package mathrone.backend.domain;
+package mathrone.backend.domain.token;
 
 
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.springframework.data.redis.core.TimeToLive;
+
 import javax.persistence.*;
 import java.util.Date;
 
@@ -36,9 +38,9 @@ public class RefreshToken {
         return this;
     }
 
-    public RefreshRedis transferRedisToken() {
-        return RefreshRedis.builder()
-                .userId(this.userId)
+    public RefreshTokenRedis transferRedisToken() {
+        return RefreshTokenRedis.builder()
+                .id(this.userId)
                 .refreshToken(this.refreshToken)
                 // Redis의 TimeToLive annotation 단위는 int, 즉 초로 계산함
                 .expiration((this.expiration.getTime()-(new Date().getTime()))/1000)
