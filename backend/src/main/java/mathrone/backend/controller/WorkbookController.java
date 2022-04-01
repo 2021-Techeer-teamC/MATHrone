@@ -22,7 +22,7 @@ public class WorkbookController {
     }
 
 
-    @GetMapping("/workbook") // 모든 워크북 조회(Books page)
+    @GetMapping("/workbook/books") // 모든 워크북 조회(Books page)
     public List<bookItem> bookList(@RequestParam(value="publisher", required = false, defaultValue = "all") String publisher,
                                       @RequestParam(value="sortType", required = false, defaultValue = "star") String sortType,
                                       @RequestParam(value="pageNum", required = false, defaultValue = "1") int pageNum,
@@ -73,6 +73,14 @@ public class WorkbookController {
     public List<Problem> problemList(@RequestParam(value="workbookId") String workbookId,
                                      @RequestParam(value="chapterId") String chapterId){
         return workBookService.findProblem(workbookId,chapterId);
+    }
+
+    @GetMapping("/workbook/info") // 모든 워크북 조회(Books page)
+    public Long bookCount(@RequestParam(value="publisher", required = false, defaultValue = "all") String publisher,
+                         @RequestParam(value="category", required = false, defaultValue = "all") String category)
+    {
+        //결과의 수 반환
+        return workBookService.countWorkbook(publisher,category);
     }
 
 }
