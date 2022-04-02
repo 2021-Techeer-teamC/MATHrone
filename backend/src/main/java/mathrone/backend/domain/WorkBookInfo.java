@@ -16,7 +16,7 @@ public class WorkBookInfo {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY) //JPA 사용시 필요
     @Column(name = "workbook_id")
-    private int workbookId;
+    private String workbookId;
 
     @NotNull
     private String title;
@@ -42,7 +42,7 @@ public class WorkBookInfo {
     @Type(type = "int-array")
     private Integer[] chapterId;
 
-    public int getWorkbookId() {
+    public String getWorkbookId() {
         return workbookId;
     }
 
