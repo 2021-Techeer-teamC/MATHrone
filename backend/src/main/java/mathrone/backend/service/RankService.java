@@ -43,7 +43,7 @@ public class RankService {
     public ObjectNode getMyRank(Integer user_id){ // 리더보드에 필요한 나의 rank 조회
         ObjectMapper mapper = new ObjectMapper();
         ObjectNode node = mapper.createObjectNode();
-        node.put("rank", zSetOperations.reverseRank("test", user_id.toString()));
+        node.put("rank", zSetOperations.reverseRank("test", user_id.toString()) + 1);
         node.put("score", zSetOperations.score("test", user_id.toString()));
         node.put("nickname", userInfoRepository.findByUserId(user_id).getNickname());
         node.put("try", userInfoRepository.getTryByUserID(user_id));
