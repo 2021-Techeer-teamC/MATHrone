@@ -28,28 +28,20 @@ public class WorkbookController {
     }
 
 
-    @GetMapping("/workbook/books") // 모든 워크북 조회(Books page)
+    //workbook API
+    @GetMapping("/workbook") // 모든 워크북 조회(Books page)
     public List<bookItem> bookList(@RequestParam(value="publisher", required = false, defaultValue = "all") String publisher,
                                    @RequestParam(value="sortType", required = false, defaultValue = "star") String sortType,
                                    @RequestParam(value="category", required = false, defaultValue = "all") String category,
                                    @RequestParam(value="pageNum", required = false, defaultValue = "1") Integer pageNum){
 
-        Pageable paging = PageRequest.of(pageNum,9);
+        Pageable paging = PageRequest.of(pageNum-1,9,Sort.by("workbookId")); //page 0부터임!
 
         //1. 결과로 반환할 bookItem 리스트 (임시)
         List<bookItem> result = new ArrayList<bookItem>();
 
         //파라미터 기반으로 결과 탐색
         List<WorkBookInfo> res = workBookService.findWorkbook(publisher,category,paging);
-
-        System.out.println("=====================================================");
-        for (WorkBookInfo wb :res) {
-            System.out.println(wb.getWorkbookId());
-            System.out.println(wb.getPublisher());
-            System.out.println(wb.getCategory());
-        }
-        System.out.println("=====================================================");
-
 
         //결과에 level,like을 attach하여 리스트로 생성
         for (WorkBookInfo wb: res) {
@@ -78,11 +70,6 @@ public class WorkbookController {
         return result;
     }
 
-    @GetMapping("/problems") // 모든 문제 조회(Books page)
-    public List<Problem> problemList(@RequestParam(value="workbookId") String workbookId,
-                                     @RequestParam(value="chapterId") String chapterId){
-        return workBookService.findProblem(workbookId,chapterId);
-    }
 
     @GetMapping("/workbook/info") // 모든 워크북 조회(Books page)
     public Long bookCount(@RequestParam(value="publisher", required = false, defaultValue = "all") String publisher,
@@ -147,11 +134,16 @@ public class WorkbookController {
             contentList.add(b);//add output list
         }
 
-
-
-
-
         return contentList;
     }
+
+
+    //problem API
+    @GetMapping("/problems") // 모든 문제 조회(Books page)
+    public List<Problem> problemList(@RequestParam(value="workbookId") String workbookId,
+                                     @RequestParam(value="chapterId") String chapterId){
+        return workBookService.findProblem(workbookId,chapterId);
+    }
+
 
 }
