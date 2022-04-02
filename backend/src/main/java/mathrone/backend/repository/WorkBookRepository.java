@@ -9,4 +9,5 @@ import java.util.List;
 @Repository
 public interface WorkBookRepository extends JpaRepository<WorkBookInfo, Long>{
     List<WorkBookInfo> findByPublisher(String publisher);
+    WorkBookInfo findByWorkbookId(String workbookId);
 }
