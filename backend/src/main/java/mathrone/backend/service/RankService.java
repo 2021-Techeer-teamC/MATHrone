@@ -1,11 +1,12 @@
 package mathrone.backend.service;
 
-import com.google.gson.JsonArray;
-import com.google.gson.JsonObject;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ArrayNode;
+import com.fasterxml.jackson.databind.node.ObjectNode;
+import mathrone.backend.repository.UserInfoRepository;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.ZSetOperations;
 import org.springframework.stereotype.Service;
-import mathrone.backend.repository.WorkBookRepository;
 
 
 import java.util.Set;
@@ -15,37 +16,38 @@ import java.util.Set;
 public class RankService {
 
     private final ZSetOperations<String, String> zSetOperations;
-    private final WorkBookRepository workBookRepository;
+    private final UserInfoRepository userInfoRepository;
 
-    public RankService(RedisTemplate<String, String> redisTemplate, WorkBookRepository workBookRepository) {
+    public RankService(RedisTemplate<String, String> redisTemplate, UserInfoRepository userInfoRepository) {
         this.zSetOperations = redisTemplate.opsForZSet();
-        this.workBookRepository = workBookRepository;
+        this.userInfoRepository = userInfoRepository;
     }
 
-    public JsonArray getAllRank(/*nickname*/){ // 리더보드에 필요한 rank 데이터 조회
-        JsonArray jsonArray = new JsonArray();
+    public ArrayNode getAllRank(){ // 리더보드에 필요한 rank 데이터 조회
+        ObjectMapper mapper = new ObjectMapper();
+        ArrayNode arrayNode = mapper.createArrayNode();
         Set<ZSetOperations.TypedTuple<String>> rankSet = zSetOperations.reverseRangeWithScores("test", 0, -1);
         //LinkedHashMap으로 리턴함
         for(ZSetOperations.TypedTuple<String> str : rankSet) {
-            JsonObject jsonObject = new JsonObject();
+            ObjectNode node = mapper.createObjectNode();
             int temp = Integer.parseInt(str.getValue());
-            jsonObject.addProperty("user_id", temp);
-            jsonObject.addProperty("score", str.getScore());
-            jsonObject.addProperty("nickname", workBookRepository.getNickname(temp));
-            jsonObject.addProperty("try", workBookRepository.getTryByUserID(temp));
-            jsonArray.add(jsonObject);
+            node.put("user_id", temp);
+            node.put("score", str.getScore());
+            node.put("nickname", userInfoRepository.findByUserId(temp).getNickname());
+            node.put("try", userInfoRepository.getTryByUserID(temp));
+            arrayNode.add(node);
         } // 해당 유저가 시도한 문제 수를 포함한 JSON 형식 다시 생성
-        //System.out.println(jsonArray.getClass());
-        return jsonArray;
+        return arrayNode;
     }
 
-    public JsonObject getMyRank(/*user_id*/){ // 리더보드에 필요한 나의 rank 조회
-        JsonObject jsonObject = new JsonObject();
-        jsonObject.addProperty("rank", zSetOperations.reverseRank("test", "2"));
-        jsonObject.addProperty("score", zSetOperations.score("test", "2"));
-        jsonObject.addProperty("nickname", workBookRepository.getNickname(2));
-        jsonObject.addProperty("try", workBookRepository.getTryByUserID(2));
-        return jsonObject;
+    public ObjectNode getMyRank(Integer user_id){ // 리더보드에 필요한 나의 rank 조회
+        ObjectMapper mapper = new ObjectMapper();
+        ObjectNode node = mapper.createObjectNode();
+        node.put("rank", zSetOperations.reverseRank("test", user_id.toString()));
+        node.put("score", zSetOperations.score("test", user_id.toString()));
+        node.put("nickname", userInfoRepository.findByUserId(user_id).getNickname());
+        node.put("try", userInfoRepository.getTryByUserID(user_id));
+        return node;
     }
 
     public void setRank(/*nickname*/){ // 문제를 풀었을 시에 스코어를 올려주는 용도
