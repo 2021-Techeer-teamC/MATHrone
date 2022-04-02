@@ -6,12 +6,15 @@ import mathrone.backend.domain.*;
 import mathrone.backend.service.WorkBookServiceImpl;
 import org.apache.commons.lang3.tuple.Pair;
 import org.hibernate.criterion.Order;
+
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;//자료형 때문에 오류였음.. awt.print.Pageable아님
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.web.bind.annotation.*;
 
-import java.awt.print.Pageable;
+
+
 import java.util.*;
 
 @RestController
@@ -26,44 +29,53 @@ public class WorkbookController {
 
 
     @GetMapping("/workbook/books") // 모든 워크북 조회(Books page)
-    public Integer bookList(@RequestParam(value="publisher", required = false, defaultValue = "all") String publisher,
-                                      @RequestParam(value="sortType", required = false, defaultValue = "star") String sortType,
-                                      @RequestParam(value="category", required = false, defaultValue = "all") String category,
-                                       @RequestParam(value="pageNum", required = false, defaultValue = "1") Integer pageNum
-                                       ){
+    public List<bookItem> bookList(@RequestParam(value="publisher", required = false, defaultValue = "all") String publisher,
+                                   @RequestParam(value="sortType", required = false, defaultValue = "star") String sortType,
+                                   @RequestParam(value="category", required = false, defaultValue = "all") String category,
+                                   @RequestParam(value="pageNum", required = false, defaultValue = "1") Integer pageNum){
+
+        Pageable paging = PageRequest.of(pageNum,9);
 
         //1. 결과로 반환할 bookItem 리스트 (임시)
         List<bookItem> result = new ArrayList<bookItem>();
 
         //파라미터 기반으로 결과 탐색
-//        Page<WorkBookInfo> res = workBookService.findWorkbook(publisher,category,pageNum);
+        List<WorkBookInfo> res = workBookService.findWorkbook(publisher,category,paging);
+
+        System.out.println("=====================================================");
+        for (WorkBookInfo wb :res) {
+            System.out.println(wb.getWorkbookId());
+            System.out.println(wb.getPublisher());
+            System.out.println(wb.getCategory());
+        }
+        System.out.println("=====================================================");
 
 
         //결과에 level,like을 attach하여 리스트로 생성
-//        for (WorkBookInfo wb: res) {
-//            String level = workBookService.getLevel(wb.getWorkbookId());
-//            Long star = workBookService.getStar(wb.getWorkbookId());
-//            bookItem b = new bookItem(wb.getWorkbookId(), wb.getTitle(), wb.getPublisher(), wb.getProfileImg(),level, star);
-//            result.add(b);
-//        }
-//
-//        //정렬 반영
-//        if(sortType.equals("star")){//좋아요 높은 순
-//            Collections.sort(result, new Comparator<bookItem>() {
-//                public int compare(bookItem o1, bookItem o2) {
-//                    return o2.getStar().compareTo(o1.getStar());
-//                }
-//            });
-//        }
-//        else{//level 난이도 높은 순
-//            Collections.sort(result, new Comparator<bookItem>() {
-//                public int compare(bookItem o1, bookItem o2) {
-//                    return o2.getLevel().compareTo(o1.getLevel());
-//                }
-//            });
-//        }
+        for (WorkBookInfo wb: res) {
+            String level = workBookService.getLevel(wb.getWorkbookId());
+            Long star = workBookService.getStar(wb.getWorkbookId());
+            bookItem b = new bookItem(wb.getWorkbookId(), wb.getTitle(), wb.getPublisher(), wb.getProfileImg(),level, star);
+            result.add(b);
+        }
 
-        return 1;
+        //정렬 반영
+        if(sortType.equals("star")){//좋아요 높은 순
+            Collections.sort(result, new Comparator<bookItem>() {
+                public int compare(bookItem o1, bookItem o2) {
+                    return o2.getStar().compareTo(o1.getStar());
+                }
+            });
+        }
+        else{//level 난이도 높은 순
+            Collections.sort(result, new Comparator<bookItem>() {
+                public int compare(bookItem o1, bookItem o2) {
+                    return o2.getLevel().compareTo(o1.getLevel());
+                }
+            });
+        }
+
+        return result;
     }
 
     @GetMapping("/problems") // 모든 문제 조회(Books page)
