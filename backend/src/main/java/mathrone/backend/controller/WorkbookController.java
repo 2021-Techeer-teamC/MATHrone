@@ -2,10 +2,7 @@ package mathrone.backend.controller;
 
 import com.google.api.gax.paging.Page;
 import jnr.ffi.annotations.In;
-import mathrone.backend.domain.Problem;
-import mathrone.backend.domain.PubCatPair;
-import mathrone.backend.domain.WorkBookInfo;
-import mathrone.backend.domain.bookItem;
+import mathrone.backend.domain.*;
 import mathrone.backend.service.WorkBookServiceImpl;
 import org.apache.commons.lang3.tuple.Pair;
 import org.hibernate.criterion.Order;
@@ -86,26 +83,22 @@ public class WorkbookController {
 
 
     @GetMapping("workbook/list")
-    public void workbookList(){
+    public List<bookContent> workbookList(){
         //Nav bar
-//        List<bookContent> contentList = new ArrayList<bookContent>();
+        List<bookContent> contentList = new ArrayList<bookContent>(); //output
 
         //group by 한 결과 받아오기
         List<PubCatPair> res = workBookService.getPublisherAndCategoryList();
 
+        //정렬 (출판사 순으로 정렬->같은 출판사끼리 모으기, 가나 2가지 기능)
         Collections.sort(res, Comparator.comparing(p -> p.getPublisher()));
-
-        for (PubCatPair sample:res) {
-            System.out.println(sample.getPublisher()+" "+sample.getCategory());
-        }
 
         //Map을 이용해서 출판사, 카테고리 리스트 로 정렬 -> 리스트는 key find effective x
         HashMap<String,LinkedList<String>> navList = new HashMap<>();
 
         String pastPub="";
-        LinkedList<String> valueList = new LinkedList<>();
+        LinkedList<String> valueList = new LinkedList<>();//카테고리 리스트
 
-//        Map< String, LinkedList<String> > listMap = new HashMap<>();
 
 
         int cnt=0;
@@ -118,77 +111,35 @@ public class WorkbookController {
             if(cnt==0){
                 pastPub=p;
             }
-            System.out.println("=========<<"+cnt+">>=========");
-            System.out.println("past : "+ pastPub);
-            System.out.println("now : " + p);
-            System.out.println("category : " + c);
 
             if(pastPub.equals(p)){ //같은 것일때
-                System.out.println("=======same : expand value list=====");
-                System.out.println("category is "+c);
                 valueList.add(c);
-                System.out.println("value list is expended the lenght is : "+valueList.size());
-                System.out.println("==================");
-
             }
             else{
-                System.out.println("========diff : add it to the map =======");
-                System.out.println("value list is now ... ");
-                System.out.println(valueList);
-                System.out.println("size is "+valueList.size());
-                System.out.println("BEFORE : publisher is "+pastPub);
-                navList.put(pastPub, new LinkedList<>(valueList));//value에 값 추가 -> 이렇게 안하면 벨류 바뀔때마다 바뀜;
-                System.out.println("AFTER : publisher is "+pastPub);
-                System.out.println("========PUTPUTPUTPUT111111==============");
-                System.out.println(navList);
-                System.out.println("=======================================");
-                valueList.clear();
-                System.out.println("========PUTPUTPUTPUT222222==============");
-                System.out.println(navList);
-                System.out.println("=======================================");
-                valueList.add(c);
-                System.out.println("========PUTPUTPUTPUT33333==============");
-                System.out.println(navList);
-                System.out.println("=======================================");
+                navList.put(pastPub, new LinkedList<>(valueList));//value에 값 추가 -> new로 새 객체에 담지 않으면 value 바뀔때마다 map값도 바뀜;
+                valueList.clear();//재활용
+                valueList.add(c);//이번턴 category
                 pastPub=p;
-                System.out.println("AFTER22 : publisher is "+pastPub);
-                System.out.println("===============");
             }
-
             cnt++;
-
-            System.out.println("=======================================");
-            System.out.println(navList);
-            System.out.println("=======================================");
 
         }
         navList.put(pastPub,valueList);//value에 값 추가
 
-        navList.put("a",new LinkedList<String>(Arrays.asList("ab","cd","de")));
-        navList.put("B",new LinkedList<String>(Arrays.asList("ab","cd","de")));
-
-        System.out.println("EBS");
-        System.out.println(navList.get("EBS"));
-        System.out.println("평가원");
-        System.out.println(navList.get("평가원"));
-        System.out.println("교육청");
-        System.out.println(navList.get("교육청"));
         //id를 위한 int 값
-        int i=0;
+        long i=0;
         for (Map.Entry<String, LinkedList<String>> entry:navList.entrySet()) {//java map순회 방법
             String p = entry.getKey(); //publisher(key)
             LinkedList<String> c = entry.getValue();//publisher에 해당하는 categories
-            System.out.println(p);
-            System.out.println(c);
-//            bookContent b = new bookContent(i++,p,c);
-//            contentList.add(b);
+            bookContent b = new bookContent(i++,p,c);//new bookContents
+            contentList.add(b);//add output list
         }
 
 
 
 
 
-//        return res;
+        return contentList;
     }
 
 }
