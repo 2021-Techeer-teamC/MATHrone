@@ -42,15 +42,15 @@ public class MainPageService {
             int high = workbookLevelInfo.getHighCnt();
             if (low > mid){
                 if (low > high)
-                    temp.put("level", "low");
+                    temp.put("level", 1);
                 else
-                    temp.put("level", "high");
+                    temp.put("level", 3);
             }
             else {
                 if (mid > high)
-                    temp.put("level", "mid");
+                    temp.put("level", 2);
                 else
-                    temp.put("level", "high");
+                    temp.put("level", 3);
             }
             temp.put("star", userWorkbookRelInfo.getWorkbookStar());
             arrayNode.add(temp);
