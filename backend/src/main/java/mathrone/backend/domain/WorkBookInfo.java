@@ -42,6 +42,8 @@ public class WorkBookInfo {
     @Type(type = "int-array")
     private Integer[] chapterId;
 
+    private String category;
+
     public String getWorkbookId() {
         return workbookId;
     }
@@ -77,4 +79,6 @@ public class WorkBookInfo {
     public Integer[] getChapter_id() {
         return chapterId;
     }
+
+    public String getCategory(){return category;}
 }

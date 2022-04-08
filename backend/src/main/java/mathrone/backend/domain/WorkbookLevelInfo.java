@@ -1,75 +1,54 @@
 package mathrone.backend.domain;
 
-import com.sun.istack.NotNull;
-import lombok.NoArgsConstructor;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import com.sun.istack.NotNull;
+import jnr.ffi.annotations.In;
+import lombok.NoArgsConstructor;
+import javax.persistence.*;
 
 @NoArgsConstructor
 @Entity
 @Table(name = "workbook_level")
 public class WorkbookLevelInfo {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY) //JPA 사용시 필요
     @Column(name = "workbook_level_id")
-    int workbookLevelId;
+    private int workbookLevelId;
 
     @NotNull
     @Column(name = "low_cnt")
-    int lowCnt;
+    private int lowCnt;
 
-    @NotNull
+    @NotNull      
     @Column(name = "mid_cnt")
-    int midCnt;
+    private int midCnt;
 
-    @NotNull
+    @NotNull      
     @Column(name = "high_cnt")
-    int highCnt;
+    private int highCnt;
 
-    @NotNull
+    @NotNull      
     @Column(name = "workbook_id")
-    String workbookId;
+    private String workbookId;
 
 
-    public String getWorkbookId() {
-        return workbookId;
-    }
-
-    public void setWorkbookId(String workbookId) {
-        this.workbookId = workbookId;
-    }
-
-    public int getWorkbookLevelId() {
-        return workbookLevelId;
-    }
-
-    public void setWorkbookLevelId(int workbookLevelId) {
-        this.workbookLevelId = workbookLevelId;
+    public int getHighCnt() {
+        return highCnt;
     }
 
     public int getLowCnt() {
         return lowCnt;
     }
 
-    public void setLowCnt(int lowCnt) {
-        this.lowCnt = lowCnt;
-    }
-
     public int getMidCnt() {
         return midCnt;
     }
 
-    public void setMidCnt(int midCnt) {
-        this.midCnt = midCnt;
+    public int getWorkbookLevelId(){
+        return workbookLevelId;
     }
 
-    public int getHighCnt() {
-        return highCnt;
-    }
-
-    public void setHighCnt(int highCnt) {
-        this.highCnt = highCnt;
+    public String getWorkbookId() {
+        return workbookId;
     }
 }
