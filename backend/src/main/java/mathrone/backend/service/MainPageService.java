@@ -1,17 +1,16 @@
 package mathrone.backend.service;
 
-//import com.google.gson.JsonArray;
-//import com.google.gson.JsonObject;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
-import mathrone.backend.domain.UserWorkbookRelInfo;
-import mathrone.backend.domain.WorkBookInfo;
-import mathrone.backend.domain.WorkbookLevelInfo;
+import mathrone.backend.domain.*;
 import mathrone.backend.repository.UserWorkbookRelRepository;
 import mathrone.backend.repository.WorkBookRepository;
 import mathrone.backend.repository.WorkbookLevelRepository;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class MainPageService {
@@ -25,36 +24,30 @@ public class MainPageService {
         this.workbookLevelRepository = workbookLevelRepository;
     }
 
-
-    public ArrayNode getTryingBook(int userId){
-        ObjectMapper mapper = new ObjectMapper();
-        ArrayNode arrayNode = mapper.createArrayNode();
+    public List<itemData> getTryingBook(int userId){
+        List<itemData> result = new ArrayList<itemData>();
         for(UserWorkbookRelInfo userWorkbookRelInfo: workBookRelRepository.findByUserIdAndWorkbookTry(1)){
             WorkBookInfo workBookInfo = workBookRepository.findByWorkbookId(userWorkbookRelInfo.getWorkbookId());
-            ObjectNode temp = mapper.createObjectNode();
-            temp.put("workbook_id", workBookInfo.getWorkbookId());
-            temp.put("title", workBookInfo.getTitle());
-            temp.put("img", workBookInfo.getProfileImg());
-            temp.put("publisher",  workBookInfo.getPublisher());
             WorkbookLevelInfo workbookLevelInfo = workbookLevelRepository.findByWorkbookId(workBookInfo.getWorkbookId());
             int low = workbookLevelInfo.getLowCnt();
             int mid = workbookLevelInfo.getMidCnt();
             int high = workbookLevelInfo.getHighCnt();
+            String b;
             if (low > mid){
                 if (low > high)
-                    temp.put("level", 1);
+                    b = "1";
                 else
-                    temp.put("level", 3);
+                    b = "3";
             }
             else {
                 if (mid > high)
-                    temp.put("level", 2);
+                    b = "2";
                 else
-                    temp.put("level", 3);
+                    b = "3";
             }
-            temp.put("star", userWorkbookRelInfo.getWorkbookStar());
-            arrayNode.add(temp);
+            itemData a = new itemData(workBookInfo.getWorkbookId(), workBookInfo.getTitle(), workBookInfo.getProfileImg(), workBookInfo.getPublisher(), b, userWorkbookRelInfo.getWorkbookStar());
+            result.add(a);
         }
-        return arrayNode;
+        return result;
     }
 }
