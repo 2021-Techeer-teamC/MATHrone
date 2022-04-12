@@ -26,6 +26,7 @@ import Header from "../Components/Header";
 import NavBar from "../Components/NavBar";
 import {ThemeProvider} from "@mui/material/styles";
 import Footer from "../Components/Footer";
+import {getTableSortLabelUtilityClass} from "@mui/material";
 
 
 
@@ -55,7 +56,7 @@ export default function BookPage(props: { sections: any }) {
 
   //파라미터 (sortType/publisher/pageNum)
   //분류(book nav bar에서의 분류) 선택
-  const [publisher, setPublisher] = React.useState<string>("전체"); //출판사
+  const [publisher, setPublisher] = React.useState<string>("all"); //출판사
   const [sorted, setSorted] = React.useState<string>("star");
   const [currentPage, setCurrentPage] = React.useState<number>(1);
   const [category, setCategory] = React.useState<string>("all");
@@ -66,21 +67,37 @@ export default function BookPage(props: { sections: any }) {
   const selectSort = (event : React.ChangeEvent<HTMLSelectElement>) => {
     const sortType = event.target.value;
     setSorted(sortType);
+    console.log(category);
+    console.log(publisher);
+    console.log(currentPage);
+    console.log(sorted);
   };
 
 
   const selectPublisher = (publisher:string) => () => {
     setPublisher(publisher);
     setCategory("all");
+    console.log(category);
+    console.log(publisher);
+    console.log(currentPage);
+    console.log(sorted);
   };
 
   const selectPage = (event : React.ChangeEvent<unknown>, page:number) => {
     setCurrentPage(page);
+    console.log(category);
+    console.log(publisher);
+    console.log(currentPage);
+    console.log(sorted);
   };
 
   const selectCategory = (publisher:string, category:string) => () => {
     setCategory(category);
     setPublisher(publisher);
+    console.log(category);
+    console.log(publisher);
+    console.log(currentPage);
+    console.log(sorted);
   };
 
 
@@ -118,14 +135,14 @@ export default function BookPage(props: { sections: any }) {
   const [bookContents,setBookContents] = React.useState<bookContent[]>(bookInfo);//empty bookList
 
 
-  //case 2. 파라미터 변경시 마다 실행
-  const getWorkbooks = (publisher : string, sortType: string, pageNum: number, category: string) => async () => {
-    console.log("start2");
+  //1. 9개의 결과를 가져오는 API (workbook?pub....)
+  const getWorkbooks = async () => {
+    console.log("GET 9 RESULT?????");
     try {
       const res = await service.getWorkbook(publisher,sorted,currentPage,category);
       //res 가 없어서 현재 error
-      // setResult(res.data.workbooks);
-      // setResultCnt(res.data.resultNumber);
+      console.log(res.data);
+      setResult(res.data);
 
 
     } catch (err){
@@ -135,13 +152,14 @@ export default function BookPage(props: { sections: any }) {
 
   };
 
-  // case 1) 최초 1회 실행
-  const getWorkList = (publisher : string, sortType: string, pageNum: number, category: string) => async () => {
-    console.log("start2");
+  //
+  const getWorkList = async () => {
+    console.log("GET LIST");
     try {
       const res = await service.getWorkbookList();
       // res가 없어서 에러 일단 주석
-      // setResult(res.data.workbooks);
+      console.log(res.data);
+      // setResult(res.data);
       // setResultCnt(res.data.resultNumber);
       // setBookContents(res.data);
 
@@ -164,8 +182,10 @@ export default function BookPage(props: { sections: any }) {
     /*
      출판사/카테고리 (왼쪽 문제집리스트를 변경한 경우 페이지를 1로 디폴트로 설정 후 api얻음)
      */
+    console.log("use effect changing pub/cat");
     setCurrentPage(1);
-  getWorkbooks(publisher, sorted, currentPage, category);
+    getWorkbooks();
+    console.log("use effect END changing pub/cat");
 
   },[publisher,category])
 
@@ -175,7 +195,8 @@ export default function BookPage(props: { sections: any }) {
     /*
     정렬 방법이나 페이지가 변경된 경우에 페이지를 1로 변경하지 않음
      */
-    getWorkbooks(publisher, sorted, currentPage, category);
+    console.log("use effect changing page");
+    getWorkbooks();
 
   },[sorted,currentPage])
 
@@ -213,7 +234,7 @@ export default function BookPage(props: { sections: any }) {
               aria-labelledby="nested-list-subheader"
             >
               <ListItemButton>
-                <ListItemText primary="전체" onClick={selectPublisher("전체")} />
+                <ListItemText primary="all" onClick={selectPublisher("all")} />
               </ListItemButton>
               {bookContents.map((value) => (
                 <div key={value.id}>
