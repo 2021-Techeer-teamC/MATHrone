@@ -67,168 +67,105 @@ export default function BookPage(props: { sections: any }) {
   const selectSort = (event : React.ChangeEvent<HTMLSelectElement>) => {
     const sortType = event.target.value;
     setSorted(sortType);
-    console.log(category);
-    console.log(publisher);
-    console.log(currentPage);
-    console.log(sorted);
   };
 
-
+  //좌측 리스트에서 출판사 변경시
+  //publisher변경 시 수정
   const selectPublisher = (publisher:string) => () => {
     setPublisher(publisher);
-    setCategory("all");
-    console.log(category);
-    console.log(publisher);
-    console.log(currentPage);
-    console.log(sorted);
+    setCategory("all");//publisher가 변경되는 경우 category는 all
   };
 
+  //page를 변경하는 경
   const selectPage = (event : React.ChangeEvent<unknown>, page:number) => {
     setCurrentPage(page);
-    console.log(category);
-    console.log(publisher);
-    console.log(currentPage);
-    console.log(sorted);
   };
 
+  //category를 선택한 경우-> pulisher도 변경될 수 있음 유의
   const selectCategory = (publisher:string, category:string) => () => {
     setCategory(category);
     setPublisher(publisher);
-    console.log(category);
-    console.log(publisher);
-    console.log(currentPage);
-    console.log(sorted);
   };
 
 
 
-  //get result
-  /*
-  case 1. book page 최초 입장시
-  ~/workbook
-    1) bookItem[]
-    publisher=all
-    page = 1
-    category = all
-    sort = star(좋아요/인기순)
-    디폴트로 하는 9개의 고정 결과
-    2) 해당 디폴트 값에서 결과의 수
-    3) bookList : bookContents[]
-    왼쪽의 북 리스트
 
-
-  case 2. 변경되는 파라미터 값에 따른 결과
-  ~/workbook?publisher=${publisher}&sortType=${sortType}&category=${category}&pageNum=${pageNum}
-      1) bookItem[]
-      publisher=??
-      page = ??
-      category = ??
-      sort = ??
-      달라지는 파라미터에 대한 결과 9
-    2) 해당 파라미터 값에서 결과의 수
-
-   */
-
-  const [resultCnt,setResultCnt] = React.useState<number>(0);
-  // const [itemDatas, setItemDatas] = React.useState<bookItem[]>([]); //axios결과 임시용
-  const [result, setResult] = React.useState<bookItem[]>([]);
-  const [bookContents,setBookContents] = React.useState<bookContent[]>([]);//empty bookList
+  //3개의 API전송으로 받아지는 결과
+  const [resultCnt,setResultCnt] = React.useState<number>(0);//결과의 수
+  const [result, setResult] = React.useState<bookItem[]>([]);//실제 결과 (9개)
+  const [bookContents,setBookContents] = React.useState<bookContent[]>([]);//좌측 북리스트
 
 
   //1. 9개의 결과를 가져오는 API (workbook?pub....)
   const getWorkbooks = async () => {
-    console.log("GET 9 RESULT?????");
     try {
-      const res = await service.getWorkbook(publisher,sorted,currentPage,category);
-      //res 가 없어서 현재 error
-      console.log(res.data);
-      setResult(res.data);
-
-
+      const res = await service.getWorkbook(publisher,sorted,currentPage,category);//api에 필요한 파라미터들 4가지에 따라 달라 -> 이 파라미터가 변경될 떄마다 함수 실행 필요(useEffect)
+      setResult(res.data);//결과를 받아서 결과 변수에 저장
     } catch (err){
       console.log(err);
     }
-   console.log("end2");
-
   };
 
-  //
+  //2. 좌측 리스트를 받아오는 API(workbook/list)
   const getWorkList = async () => {
-    console.log("GET LIST");
     try {
       const res = await service.getWorkbookList();
-      // res가 없어서 에러 일단 주석
-      console.log(res.data);
-      // setResult(res.data);
-      // setResultCnt(res.data.resultNumber);
       setBookContents(res.data);
-
     } catch (err){
       console.log(err);
     }
-    console.log("end2");
-
   };
 
+  //3. 결과의 수를 가져오는 API(workbook/info?pub..)
   const getWorkbookInfo = async () => {
-    console.log("get workbook info");
     try{
-      const res = await service.getWorkbookInfo(publisher,category);
-      console.log("갯수");
-      console.log(res.data);
+      const res = await service.getWorkbookInfo(publisher,category);//2가지 파라미터에 따라 달라짐 -> 이 파라미터가 변경될 떄마다 함수 실행 필요(useEffect)
       setResultCnt(res.data);
     } catch (err){
       console.log(err);
     }
-    console.log("end2");
   }
 
 
-  //기타 변수
-  const [postsPerPage, setPostsPerPage] = React.useState<number>(3 * 3); //한페이지에 보여질 책의 수
-  const [wholePage, setWholePage] = React.useState<number>(Math.ceil(resultCnt/postsPerPage));
+  //페이지 관련 변수들
+  const [postsPerPage, setPostsPerPage] = React.useState<number>(3 * 3); //한페이지에 보여질 책의 수 (변경 가능하나 default)
+  const [wholePage, setWholePage] = React.useState<number>(Math.ceil(resultCnt/postsPerPage)); // 결과의 수 / 9 개 올림
 
 
+  //출판사/ 카테고라가 변경되는 경우 -> 보여지는 결과가 달라짐 , 결과의 갯수가 달라짐
   useEffect(()=>{
 
     /*
      출판사/카테고리 (왼쪽 문제집리스트를 변경한 경우 페이지를 1로 디폴트로 설정 후 api얻음)
      */
-    console.log("use effect changing pub/cat");
-    setCurrentPage(1);
+    setCurrentPage(1);//default
     getWorkbooks();
     getWorkbookInfo();
-    console.log("use effect END changing pub/cat");
-
 
   },[publisher,category])
 
-
+  //정렬 방법/ 페이지 가 변경되는 경우 -> 보여지는 결과만 달라짐
   useEffect(()=>{
 
     /*
     정렬 방법이나 페이지가 변경된 경우에 페이지를 1로 변경하지 않음
      */
-    console.log("use effect changing page");
     getWorkbooks();
 
   },[sorted,currentPage])
 
+  //결과가 변경되는 경우 총 페이지 수가 변경되어야 함
   useEffect(()=>{
-
-    console.log("내가 원하는거 ");
-    console.log(resultCnt);
-    console.log(postsPerPage);
-
     setWholePage(Math.ceil(resultCnt/postsPerPage));
-    console.log("페이지 수 ");
-    console.log(wholePage);
-
   },[resultCnt])
 
 
+  //페이지 최초 로딩시
   useEffect(()=>{
-
+    /*
+      1. (default:전체) all출판사 , all카테고리 , star좋아요순 , 1page 를 기본으로 9개의 결과
+      2. 위의
+    */
     getWorkbooks();
     getWorkbookInfo();
     getWorkList();
@@ -246,6 +183,7 @@ export default function BookPage(props: { sections: any }) {
           <div className="item" />
           <div className="item">
             <span style={{ minWidth: 120, float: "left" }}>
+              {/*category를 선택한 경우 category를 publisher를 선택한 경우 publisher를... + all은 전체로 보여져야함 */}
               {category == "all" ? publisher=="all"?"전체":publisher : category}({resultCnt})
             </span>
             <FormControl sx={{ minWidth: 120, float: "right" }}>
@@ -269,6 +207,7 @@ export default function BookPage(props: { sections: any }) {
               aria-labelledby="nested-list-subheader"
             >
               <ListItemButton>
+                {/*보여지는 것은 전체->변수는 all*/}
                 <ListItemText primary="전체" onClick={selectPublisher("all")} />
               </ListItemButton>
               {bookContents.map((value) => (
