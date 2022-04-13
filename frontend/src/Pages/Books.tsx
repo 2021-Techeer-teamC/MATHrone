@@ -237,7 +237,7 @@ export default function BookPage(props: { sections: any }) {
           <div className="item" />
           <div className="item">
             <span style={{ minWidth: 120, float: "left" }}>
-              {category == "all" ? publisher : category}({resultCnt})
+              {category == "all" ? publisher=="all"?"전체":publisher : category}({resultCnt})
             </span>
             <FormControl sx={{ minWidth: 120, float: "right" }}>
               <NativeSelect
@@ -260,7 +260,7 @@ export default function BookPage(props: { sections: any }) {
               aria-labelledby="nested-list-subheader"
             >
               <ListItemButton>
-                <ListItemText primary="all" onClick={selectPublisher("all")} />
+                <ListItemText primary="전체" onClick={selectPublisher("all")} />
               </ListItemButton>
               {bookContents.map((value) => (
                 <div key={value.id}>
