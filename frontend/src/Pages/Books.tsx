@@ -177,9 +177,6 @@ export default function BookPage(props: { sections: any }) {
       console.log("갯수");
       console.log(res.data);
       setResultCnt(res.data);
-      setWholePage(Math.ceil(resultCnt/postsPerPage));
-      console.log("페이지 수 ");
-      console.log(wholePage);
     } catch (err){
       console.log(err);
     }
@@ -203,6 +200,7 @@ export default function BookPage(props: { sections: any }) {
     getWorkbookInfo();
     console.log("use effect END changing pub/cat");
 
+
   },[publisher,category])
 
 
@@ -215,6 +213,18 @@ export default function BookPage(props: { sections: any }) {
     getWorkbooks();
 
   },[sorted,currentPage])
+
+  useEffect(()=>{
+
+    console.log("내가 원하는거 ");
+    console.log(resultCnt);
+    console.log(postsPerPage);
+
+    setWholePage(Math.ceil(resultCnt/postsPerPage));
+    console.log("페이지 수 ");
+    console.log(wholePage);
+
+  },[resultCnt])
 
 
   return (
