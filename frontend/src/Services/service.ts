@@ -14,7 +14,7 @@ class DataService{
 
     //2. 출판사/category별 문제의 총 갯수
     getWorkbookInfo(publisher: string, category: string){
-        return http.get<bookItem[]>(`/workbook/info?publisher=${publisher}&category=${category}`);
+        return http.get<number>(`/workbook/info?publisher=${publisher}&category=${category}`);
     }
 
     //3. 문제집 리스트를 반환
