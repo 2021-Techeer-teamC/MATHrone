@@ -129,7 +129,7 @@ export default function BookPage(props: { sections: any }) {
 
    */
 
-  const [resultCnt,setResultCnt] = React.useState<number>(10);
+  const [resultCnt,setResultCnt] = React.useState<number>(0);
   // const [itemDatas, setItemDatas] = React.useState<bookItem[]>([]); //axios결과 임시용
   const [result, setResult] = React.useState<bookItem[]>(itemData);
   const [bookContents,setBookContents] = React.useState<bookContent[]>(bookInfo);//empty bookList
@@ -163,7 +163,6 @@ export default function BookPage(props: { sections: any }) {
       // setResultCnt(res.data.resultNumber);
       // setBookContents(res.data);
 
-
     } catch (err){
       console.log(err);
     }
@@ -171,10 +170,26 @@ export default function BookPage(props: { sections: any }) {
 
   };
 
+  const getWorkbookInfo = async () => {
+    console.log("get workbook info");
+    try{
+      const res = await service.getWorkbookInfo(publisher,category);
+      console.log("갯수");
+      console.log(res.data);
+      setResultCnt(res.data);
+      setWholePage(Math.ceil(resultCnt/postsPerPage));
+      console.log("페이지 수 ");
+      console.log(wholePage);
+    } catch (err){
+      console.log(err);
+    }
+    console.log("end2");
+  }
+
 
   //기타 변수
   const [postsPerPage, setPostsPerPage] = React.useState<number>(3 * 3); //한페이지에 보여질 책의 수
-
+  const [wholePage, setWholePage] = React.useState<number>(Math.ceil(resultCnt/postsPerPage));
 
 
   useEffect(()=>{
@@ -185,6 +200,7 @@ export default function BookPage(props: { sections: any }) {
     console.log("use effect changing pub/cat");
     setCurrentPage(1);
     getWorkbooks();
+    getWorkbookInfo();
     console.log("use effect END changing pub/cat");
 
   },[publisher,category])
@@ -271,7 +287,7 @@ export default function BookPage(props: { sections: any }) {
             style={{ display: "flex", justifyContent: "center" }}
           >
             <Pagination
-              count={Math.ceil(resultCnt / postsPerPage)}
+              count={wholePage}
               defaultPage={1}
               page={currentPage} //current page와 버튼상 보여지는 page를 동기화
               onChange={selectPage}
