@@ -161,7 +161,7 @@ export default function BookPage(props: { sections: any }) {
       console.log(res.data);
       // setResult(res.data);
       // setResultCnt(res.data.resultNumber);
-      // setBookContents(res.data);
+      setBookContents(res.data);
 
     } catch (err){
       console.log(err);
@@ -225,6 +225,15 @@ export default function BookPage(props: { sections: any }) {
     console.log(wholePage);
 
   },[resultCnt])
+
+
+  useEffect(()=>{
+
+    getWorkbooks();
+    getWorkbookInfo();
+    getWorkList();
+
+  },[])
 
 
   return (
