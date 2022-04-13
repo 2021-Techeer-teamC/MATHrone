@@ -131,8 +131,8 @@ export default function BookPage(props: { sections: any }) {
 
   const [resultCnt,setResultCnt] = React.useState<number>(0);
   // const [itemDatas, setItemDatas] = React.useState<bookItem[]>([]); //axios결과 임시용
-  const [result, setResult] = React.useState<bookItem[]>(itemData);
-  const [bookContents,setBookContents] = React.useState<bookContent[]>(bookInfo);//empty bookList
+  const [result, setResult] = React.useState<bookItem[]>([]);
+  const [bookContents,setBookContents] = React.useState<bookContent[]>([]);//empty bookList
 
 
   //1. 9개의 결과를 가져오는 API (workbook?pub....)
