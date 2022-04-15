@@ -45,8 +45,10 @@ dependencies {
 	// Redis
 	implementation 'org.springframework.boot:spring-boot-starter-data-redis'
 
-	testImplementation 'org.springframework.boot:spring-boot-starter-test'
-	testImplementation 'org.apache.httpcomponents:httpclient'
+  implementation 'org.junit.jupiter:junit-jupiter:5.4.2'
+  
+  testImplementation 'org.springframework.boot:spring-boot-starter-test'
+  testImplementation 'org.apache.httpcomponents:httpclient'
 }
 
 dependencyManagement {
