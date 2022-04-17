@@ -1,37 +1,28 @@
 package mathrone.backend.service;
 
+import com.google.api.gax.paging.Page;
 import mathrone.backend.domain.Problem;
+import mathrone.backend.domain.PubCatPair;
 import mathrone.backend.domain.WorkBookInfo;
-import mathrone.backend.repository.ProblemRepository;
-import mathrone.backend.repository.WorkBookRepository;
-import org.springframework.stereotype.Service;
+import mathrone.backend.domain.WorkbookLevelInfo;
+import org.apache.commons.lang3.tuple.Pair;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 
 import java.util.List;
+import java.util.Map;
 
-@Service
-public class WorkBookService {
+interface WorkbookService {
 
-    private final WorkBookRepository workBookRepository;
-    private final ProblemRepository problemRepository;
+    public List<WorkBookInfo> findWorkbook(String publisher, String category, Pageable pageable);
 
-    public WorkBookService(WorkBookRepository workBookRepository, ProblemRepository problemRepository){
-        this.workBookRepository = workBookRepository;
-        this.problemRepository = problemRepository;
-    }
+    public Long countWorkbook(String publisher, String category);
 
-    public void add(WorkBookInfo workBookInfo) {
-        workBookRepository.save(workBookInfo);
-    }
+    public String getLevel(String workbookId);
 
-    public  List<WorkBookInfo> findPublisher(String publisher) {
-        if (publisher.equals("all"))
-            return workBookRepository.findAll();
-        else
-            return workBookRepository.findByPublisher(publisher);
-    }
+    public Long getStar(String workbookId);
 
-    public List<Problem> findProblem(String workbookId, String chapterId){
-        return problemRepository.findByWorkbookIdAndChapterId(workbookId, chapterId);
-    }
+    public List<Problem> findProblem(String workbookId, String chapterId);
 
+    public List<PubCatPair> getPublisherAndCategoryList();
 }

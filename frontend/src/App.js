@@ -11,10 +11,10 @@ import CssBaseline from "@mui/material/CssBaseline";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import InfoPage from "./Pages/InfoPage";
 import Books from "./Pages/Books";
-import Workbook from "./Pages/BookDetail";
+import BookDetail from "./Pages/BookDetail";
 import Rank from "./Pages/Rank";
-import SignIn from "./Pages/SignIn";
-import SignUp from "./Pages/SignUp";
+import SignIn from "./Pages/User/SignIn";
+import SignUp from "./Pages/User/SignUp";
 
 const theme = createTheme();
 
@@ -36,7 +36,7 @@ function App() {
             <Route path="/signup" exact element={<SignUp/>} />
             <Route path="/info" exact element={<InfoPage sections={sections}/>} />
             <Route path="/books" exact element={<Books sections={sections}/>} />
-            <Route path="/workbook" exact element={<Workbook sections={sections}/>} />
+            <Route path="/books/:id" element={<BookDetail sections={sections}/>} />
             <Route path="/rank" exact element={<Rank sections={sections}/>} />
           </Routes>
         </ThemeProvider>
