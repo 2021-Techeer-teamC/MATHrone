@@ -13,6 +13,8 @@ import Container from "@mui/material/Container";
 import FormControl from "@mui/material/FormControl";
 import NativeSelect from "@mui/material/NativeSelect";
 import Pagination from "@mui/material/Pagination";
+import CircularProgress from '@mui/material/CircularProgress';
+import Box from '@mui/material/Box';
 
 import SearchBar from "../Components/SearchBar";
 import "../App.css";
@@ -94,16 +96,18 @@ export default function BookPage(props: { sections: any }) {
   const [resultCnt,setResultCnt] = React.useState<number>(0);//결과의 수
   const [result, setResult] = React.useState<bookItem[]>([]);//실제 결과 (9개)
   const [bookContents,setBookContents] = React.useState<bookContent[]>([]);//좌측 북리스트
-
+  const [isLoading,setIsLoading] = React.useState<boolean>(false);
 
   //1. 9개의 결과를 가져오는 API (workbook?pub....)
   const getWorkbooks = async () => {
+    setIsLoading(true);
     try {
       const res = await service.getWorkbook(publisher,sorted,currentPage,category);//api에 필요한 파라미터들 4가지에 따라 달라 -> 이 파라미터가 변경될 떄마다 함수 실행 필요(useEffect)
       setResult(res.data);//결과를 받아서 결과 변수에 저장
     } catch (err){
       console.log(err);
     }
+    setIsLoading(false);
   };
 
   //2. 좌측 리스트를 받아오는 API(workbook/list)
@@ -236,7 +240,13 @@ export default function BookPage(props: { sections: any }) {
           </div>
           <div className="item">
             <Paper>
-              <BookImgList posts={result}/>
+              {isLoading?
+                  <Box sx={{ display: 'flex' }}>
+                    <CircularProgress />
+                  </Box>
+                  :
+                <BookImgList posts={result}/>
+              }
             </Paper>
           </div>
           <div className="item"></div>
