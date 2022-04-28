@@ -1,8 +1,6 @@
 package mathrone.backend.service;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.node.ArrayNode;
-import com.fasterxml.jackson.databind.node.ObjectNode;
+import mathrone.backend.controller.dto.CarouselResponseDto;
 import mathrone.backend.domain.*;
 import mathrone.backend.repository.UserWorkbookRelRepository;
 import mathrone.backend.repository.WorkBookRepository;
@@ -10,6 +8,7 @@ import mathrone.backend.repository.WorkbookLevelRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 @Service
@@ -49,5 +48,13 @@ public class MainPageService {
             result.add(a);
         }
         return result;
+    }
+
+    public List<CarouselResponseDto> getCarousel() {
+        List<WorkBookInfo> booklist = workBookRepository.findAll();
+        List<CarouselResponseDto> listToCarousel = new LinkedList<>();
+        while(!booklist.isEmpty())
+            listToCarousel.add(booklist.remove(0).toCarousel());
+        return listToCarousel;
     }
 }

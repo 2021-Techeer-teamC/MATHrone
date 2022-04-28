@@ -27,6 +27,9 @@ dependencies {
 	implementation group: 'com.vladmihalcea', name: 'hibernate-types-52', version: '2.10.4'
 	implementation 'com.google.cloud:spring-cloud-gcp-starter'
 
+	// lombok annotation 인식 에러 해결
+	annotationProcessor ('org.projectlombok:lombok')
+
 	// swagger dependency
 	implementation 'io.springfox:springfox-boot-starter:3.0.0'
 	implementation 'org.springframework.boot:spring-boot-starter-data-redis'
