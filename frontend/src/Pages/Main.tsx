@@ -1,9 +1,8 @@
 import * as React from "react";
 import CssBaseline from "@mui/material/CssBaseline";
 import Container from "@mui/material/Container";
-import Paper from "@mui/material/Paper";
 
-import "../Assets/styles/components.css"
+import "../Assets/styles/components.css";
 
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 
@@ -17,13 +16,7 @@ import Header from "../Components/Header";
 import NavBar from "../Components/NavBar";
 import Footer from "../Components/Footer";
 
-import {
-  BrowserRouter as Router,
-  Routes,
-  Route,
-  Redirect,
-  Link,
-} from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 
 import InfoPage from "./InfoPage";
 import Books from "./Books";
@@ -46,7 +39,7 @@ import MainCarousel from "../Components/MainCarousel";
 
 const theme = createTheme();
 
-export default function Main(props) {
+export default function Main(props: { sections: any }) {
   //화면 크기
   const size = {
     width: window.innerWidth || document.body.clientWidth,
@@ -57,13 +50,13 @@ export default function Main(props) {
 
   return (
     <ThemeProvider theme={theme}>
-      <Header title="MATHrone" />
+      <Header title="MATHrone" sections={props.sections} />
       <NavBar sections={props.sections} />
       <CssBaseline />
       <Container maxWidth="lg">
-        <main class="main2">
+        <main className="main2">
           <div
-            class="carousel"
+            className="carousel"
             style={{
               alignItems: "center",
               justifyContent: "center",
@@ -71,7 +64,7 @@ export default function Main(props) {
           >
             <MainCarousel posts={addData} />
           </div>
-          <div class="slider" style={{ paddingTop: "30px" }}>
+          <div className="slider" style={{ paddingTop: "30px" }}>
             <Typography
               component="h2"
               variant="h5"
@@ -86,7 +79,7 @@ export default function Main(props) {
             </Typography>
             <BookSlider posts={itemData} />
           </div>
-          <div class="slider2" style={{ paddingTop: "30px" }}>
+          <div className="slider2" style={{ paddingTop: "30px" }}>
             <Typography
               component="h2"
               variant="h5"
@@ -102,10 +95,10 @@ export default function Main(props) {
 
             <BookSlider posts={recData} />
           </div>
-          <div class="probA">
+          <div className="probA">
             <ProbList data={tryData} title={"오늘 가장 많이 시도한 문제"} />
           </div>
-          <div class="probB">
+          <div className="probB">
             <ProbList data={recData} title={"추천 문제"} />
           </div>
         </main>
@@ -377,4 +370,21 @@ const tryData = [
   },
 ];
 
-const recData = [];
+const recData = [
+  {
+    problem_id: "09-01-00001",
+    problem_num: "2",
+    workbook_title: "rec1",
+    level: 1,
+    subject: "미적분",
+    chapter: "수열의 극한",
+  },
+  {
+    problem_id: "09-01-00002",
+    problem_num: "4",
+    workbook_title: "rec2",
+    level: 3,
+    subject: "미적분",
+    chapter: "수열의 극한",
+  },
+];
