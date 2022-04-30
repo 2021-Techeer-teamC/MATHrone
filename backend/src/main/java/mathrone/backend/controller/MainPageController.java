@@ -1,8 +1,6 @@
 package mathrone.backend.controller;
 
-import com.fasterxml.jackson.databind.node.ArrayNode;
-import com.google.gson.JsonArray;
-import mathrone.backend.domain.itemData;
+import mathrone.backend.domain.userWorkbookData;
 import mathrone.backend.service.MainPageService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -20,7 +18,7 @@ public class MainPageController {
     }
 
     @GetMapping("/main/workbook/try") // 상위 랭킹 정보를 가져옴
-    public List<itemData> gettryinglist(){
+    public List<userWorkbookData> gettryinglist(){
         return mainPageService.getTryingBook(1);
     }
 }
