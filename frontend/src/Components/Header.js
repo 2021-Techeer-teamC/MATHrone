@@ -7,6 +7,7 @@ import LinkM from "@mui/material/Link";
 import { Link } from "react-router-dom";
 import { styled } from '@mui/material/styles';
 import { grey, teal } from '@mui/material/colors';
+import Logo from '../Components/Logo';
 import "../Assets/styles/components.css"
 
 const RegisterButton = styled(Button)(({ theme }) => ({
@@ -30,16 +31,10 @@ const LoginButton = styled(Button)(({ theme }) => ({
 }));
 
 function Header(props) {
-  const { title } = props;
-
   return (
       <Box style={{ width: '100%' }} sx={{ flexGrow: 1 }}>
         <div style={{ width: '100%', backgroundColor: 'none', border: 'none' }} className="header">
-          <div className="headerTitle">
-            <Link to="/../" style={{ textDecoration: 'none', color: '#151515' }}>
-              {title}<span style={{ color: '#BCDCC4' }}><strong>.</strong></span>
-            </Link>
-          </div>
+          <Logo/>
 
           <Box sx={{ flexGrow: 1 }} />
 
