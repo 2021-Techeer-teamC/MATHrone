@@ -93,7 +93,7 @@ export default function Main(props: { sections: any }) {
               {"  즐겨 찾기"}
             </Typography>
 
-            <BookSlider posts={recData} />
+            <BookSlider posts={itemData} />
           </div>
           <div className="probA">
             <ProbList data={tryData} title={"오늘 가장 많이 시도한 문제"} />
@@ -370,21 +370,4 @@ const tryData = [
   },
 ];
 
-const recData = [
-  {
-    problem_id: "09-01-00001",
-    problem_num: "2",
-    workbook_title: "rec1",
-    level: 1,
-    subject: "미적분",
-    chapter: "수열의 극한",
-  },
-  {
-    problem_id: "09-01-00002",
-    problem_num: "4",
-    workbook_title: "rec2",
-    level: 3,
-    subject: "미적분",
-    chapter: "수열의 극한",
-  },
-];
+const recData: object[] = [];
