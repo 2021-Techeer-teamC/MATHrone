@@ -145,5 +145,8 @@ public class WorkbookController {
         return workBookService.findProblem(workbookId,chapterId);
     }
 
-
+    @GetMapping("/problem")
+    public Problem problemInquiry(@RequestParam(value = "problemId") String problemId){
+        return workBookService.findProblembyId(problemId);
+    }
 }

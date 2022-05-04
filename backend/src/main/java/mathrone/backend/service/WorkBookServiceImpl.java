@@ -92,4 +92,7 @@ public class WorkBookServiceImpl implements WorkbookService{
         return workBookRepository.findGroupByPublisherAndCategory();
     }
 
+    public Problem findProblembyId(String problemId) {
+        return problemRepository.findByProblemId(problemId);
+    }
 }
