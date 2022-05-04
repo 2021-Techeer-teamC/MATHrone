@@ -220,7 +220,7 @@ export default function StickyHeadTable() {
           </TableBody>
         </Table>
       </TableContainer>
-      <Button style={{ marginTop:"30px", borderRadius: 10, backgroundColor: "#c7c7c7", padding: "9px 18px", fontSize: "12px" }}
+      <Button style={{ width:"100%", marginTop:"10px", borderRadius: 10, backgroundColor: "#dfdfdf", padding: "9px 18px", fontSize: "16px", color: "black" }}
              variant="contained">
         Submit
       </Button>
