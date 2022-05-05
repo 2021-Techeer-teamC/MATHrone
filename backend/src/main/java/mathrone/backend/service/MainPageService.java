@@ -21,6 +21,10 @@ public class MainPageService {
         this.workbookLevelRepository = workbookLevelRepository;
     }
 
+    public WorkBookInfo getWorkbookByWorkbookId(String workbookId){
+        return workBookRepository.findByWorkbookId(workbookId);
+    }
+
     public List<userWorkbookData> getTryingBook(int userId){
         List<userWorkbookData> result = new ArrayList<userWorkbookData>();
         for(UserWorkbookRelInfo userWorkbookRelInfo: workBookRelRepository.findByUserIdAndWorkbookTry(1)){
@@ -47,4 +51,12 @@ public class MainPageService {
         }
         return result;
     }
+
+
+    public List<UserWorkbookRelInfo> getStarBook(int userId){
+        return workBookRelRepository.findByUserIdAndWorkbookStar(userId);
+    }
+
+
+
 }
