@@ -19,7 +19,7 @@ import java.util.Map;
 @Repository
 public interface WorkBookRepository extends JpaRepository<WorkBookInfo, Long> {
 
-//    전체 문제집
+    // 전체 문제집
     Page<WorkBookInfo> findAll(Pageable pageable);
 
     //publisher를 이용하여 workbook을 찾는 기능 -> category가 관계(all) 없는 경우
@@ -34,4 +34,10 @@ public interface WorkBookRepository extends JpaRepository<WorkBookInfo, Long> {
 
     @Query( value = "SELECT publisher, category FROM workbook GROUP BY publisher, category", nativeQuery = true)
     List<PubCatPair> findGroupByPublisherAndCategory();
+    
+    // publisher에 따라 workbook 전부 조회
+    List<WorkBookInfo> findByPublisher(String publisher);
+  
+    // workbookId로 해당 workbook 조회
+    WorkBookInfo findByWorkbookId(String workbookId);
 }
