@@ -27,8 +27,7 @@ import NavBar from "../Components/NavBar";
 import {ThemeProvider} from "@mui/material/styles";
 import Footer from "../Components/Footer";
 
-
-
+import WorkbookSidebar from "../Components/WorkbookSidebar";
 
 
 export default function BookPage(props: { sections: any }) {
@@ -69,7 +68,8 @@ export default function BookPage(props: { sections: any }) {
   };
 
 
-  const selectPublisher = (publisher:string) => () => {
+  const selectPublisher = (publisher:string) => {
+    console.log('pub hi');
     setPublisher(publisher);
     setCategory("all");
   };
@@ -78,11 +78,10 @@ export default function BookPage(props: { sections: any }) {
     setCurrentPage(page);
   };
 
-  const selectCategory = (publisher:string, category:string) => () => {
+  const selectCategory = (publisher:string, category:string) => {
     setCategory(category);
     setPublisher(publisher);
   };
-
 
 
   //get result
@@ -206,39 +205,9 @@ export default function BookPage(props: { sections: any }) {
               </NativeSelect>
             </FormControl>
           </div>
-          <div className="item">
-            <List
-              sx={{ width: "100%", maxWidth: 250, bgcolor: "background.paper" }}
-              component="nav"
-              aria-labelledby="nested-list-subheader"
-            >
-              <ListItemButton>
-                <ListItemText primary="전체" onClick={selectPublisher("전체")} />
-              </ListItemButton>
-              {bookContents.map((value) => (
-                <div key={value.id}>
-                  <ListItemButton onClick={handleClick(value.id)}>
-                    <ListItemText
-                      primary={value.publisher}
-                      onClick={selectPublisher(value.publisher)}
-                    />
-                    {open[value.id] ? <ExpandLess /> : <ExpandMore />}
-                  </ListItemButton>
-                  <Collapse in={open[value.id]} timeout="auto" unmountOnExit>
-                    <List component="div" disablePadding>
-                      {value.categories.map((category) => (
-                          <div key={category}>
-                        <ListItemButton sx={{ pl: 4 }}>
-                          <ListItemText primary={category} onClick={selectCategory(bookContents[value.id].publisher,category)} />
-                        </ListItemButton>
-                          </div>
-                      ))}
-                    </List>
-                  </Collapse>
-                </div>
-              ))}
-            </List>
-          </div>
+
+          <WorkbookSidebar lists={bookContents} onPublisherClick={selectPublisher} onCategoryClick={selectCategory}/>
+
           <div className="item">
             <Paper>
               <BookImgList posts={result}/>
@@ -365,3 +334,5 @@ const bookInfo:bookContent[] = [
     id: 2,
   },
 ];
+
+

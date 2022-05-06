@@ -23,8 +23,8 @@ public class MainPageService {
         this.workbookLevelRepository = workbookLevelRepository;
     }
 
-    public List<itemData> getTryingBook(int userId){
-        List<itemData> result = new ArrayList<itemData>();
+    public List<userWorkbookData> getTryingBook(int userId){
+        List<userWorkbookData> result = new ArrayList<userWorkbookData>();
         for(UserWorkbookRelInfo userWorkbookRelInfo: workBookRelRepository.findByUserIdAndWorkbookTry(1)){
             WorkBookInfo workBookInfo = workBookRepository.findByWorkbookId(userWorkbookRelInfo.getWorkbookId());
             WorkbookLevelInfo workbookLevelInfo = workbookLevelRepository.findByWorkbookId(workBookInfo.getWorkbookId());
@@ -44,7 +44,7 @@ public class MainPageService {
                 else
                     b = "3";
             }
-            itemData a = new itemData(workBookInfo.getWorkbookId(), workBookInfo.getTitle(), workBookInfo.getProfileImg(), workBookInfo.getPublisher(), b, userWorkbookRelInfo.getWorkbookStar());
+            userWorkbookData a = new userWorkbookData(workBookInfo.getWorkbookId(), workBookInfo.getTitle(), workBookInfo.getProfileImg(), workBookInfo.getPublisher(), b, userWorkbookRelInfo.getWorkbookStar());
             result.add(a);
         }
         return result;

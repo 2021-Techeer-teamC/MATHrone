@@ -10,7 +10,7 @@ import javax.persistence.Id;
 
 @Entity
 @NoArgsConstructor
-public class itemData {
+public class userWorkbookData {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private String workbookId;
@@ -27,7 +27,7 @@ public class itemData {
     private String level;
     private Boolean star;
 
-    public itemData(String workbookId, String title, String img, String publisher, String level, Boolean star){
+    public userWorkbookData(String workbookId, String title, String img, String publisher, String level, Boolean star){
         this.workbookId=workbookId;
         this.title=title;
         this.publisher=publisher;
