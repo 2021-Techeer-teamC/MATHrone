@@ -1,47 +1,64 @@
 package mathrone.backend.domain;
 
 import com.sun.istack.NotNull;
+import com.vladmihalcea.hibernate.type.array.IntArrayType;
+import lombok.Builder;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
+import org.hibernate.annotations.TypeDef;
 
 import javax.persistence.*;
 
 @NoArgsConstructor
 @Entity
 @Table(name = "user_info")
+@TypeDef(name = "int-array", typeClass = IntArrayType.class)
+@Getter
+@Setter
 public class UserInfo {
-    @Id
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY) //JPA 사용시 필요)
     @Column(name = "user_id")
-    int userId;
+    private int userId;
 
     @NotNull
-    String id;
+    private String id;
 
     @NotNull
-    String password;
+    private String password;
 
     @NotNull
-    String nickname;
+    private String nickname;
 
     @Column(name = "profile_img")
-    String profileImg;
+    private String profileImg;
 
     @NotNull
-    int exp;
+    private int exp = 0;
 
     @NotNull
-    Boolean premium;
+    private boolean premium;
 
     @NotNull
-    String email;
+    private String email;
 
     @Column(name = "phone_num")
-    String phoneNum;
+    private String phoneNum;
 
     @Column(name = "user_img")
-    String userImg;
+    private String userImg;
+  
+    private String role;
 
-    String role;
-
+    @Builder
+    public UserInfo(String email, String password, String role, String id, String nickname) {
+        this.email = email;
+        this.password = password;
+        this.role = role;
+        this.id = id;
+        this.nickname = nickname;
+    }
+  
     public int getUserId() {
         return userId;
     }
