@@ -2,7 +2,7 @@ package mathrone.backend.controller;
 
 import mathrone.backend.domain.*;
 import mathrone.backend.service.MainPageService;
-import mathrone.backend.service.WorkBookServiceImpl;
+import mathrone.backend.service.WorkBookService;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -10,12 +10,13 @@ import java.util.List;
 
 
 @RestController
+@RequestMapping("/main")
 public class MainPageController {
 
     private final MainPageService mainPageService;
-    private final WorkBookServiceImpl workBookService;
+    private final WorkBookService workBookService;
 
-    public MainPageController(MainPageService mainPageService, WorkBookServiceImpl workBookService) {
+    public MainPageController(MainPageService mainPageService, WorkBookService workBookService) {
         this.mainPageService = mainPageService;
         this.workBookService = workBookService;
     }

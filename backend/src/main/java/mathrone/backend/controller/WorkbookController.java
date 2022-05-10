@@ -3,7 +3,7 @@ package mathrone.backend.controller;
 import com.google.api.gax.paging.Page;
 import jnr.ffi.annotations.In;
 import mathrone.backend.domain.*;
-import mathrone.backend.service.WorkBookServiceImpl;
+import mathrone.backend.service.WorkBookService;
 import org.apache.commons.lang3.tuple.Pair;
 import org.hibernate.criterion.Order;
 
@@ -21,9 +21,9 @@ import java.util.*;
 public class WorkbookController {
 
 
-    private final WorkBookServiceImpl workBookService;
+    private final WorkBookService workBookService;
 
-    public WorkbookController(WorkBookServiceImpl workBookService){
+    public WorkbookController(WorkBookService workBookService){
         this.workBookService = workBookService;
     }
 
