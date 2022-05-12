@@ -28,11 +28,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     private static final String[] AUTH_LIST = {
             "/v3/api-docs",
-//            "/configuration/ui",
             "/swagger-resources/**",
-//            "/configuration/security",
             "/swagger-ui/**",
             "/webjars/**",
+            "/problem/**"
     };
 
     @Bean   // user password 암호화

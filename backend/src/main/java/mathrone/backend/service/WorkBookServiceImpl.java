@@ -25,15 +25,13 @@ public class WorkBookServiceImpl implements WorkbookService{
     private final WorkBookRepository workBookRepository;
     private final LevelRepository levelRepository;
     private final UserWorkbookRepository userWorkbookRepository;
-    private final ProblemRepository problemRepository;
 
     //생성자
     @Autowired
-    public WorkBookServiceImpl(WorkBookRepository workBookRepository, ProblemRepository problemRepository, LevelRepository levelRepository, UserWorkbookRepository userWorkbookRepository){
+    public WorkBookServiceImpl(WorkBookRepository workBookRepository, LevelRepository levelRepository, UserWorkbookRepository userWorkbookRepository){
         this.workBookRepository = workBookRepository;
         this.levelRepository = levelRepository;
         this.userWorkbookRepository = userWorkbookRepository;
-        this.problemRepository = problemRepository;
     }
 
 
@@ -81,18 +79,8 @@ public class WorkBookServiceImpl implements WorkbookService{
         return userWorkbookRepository.countByWorkbookIdAndWorkbookStar(workbookId, true); //좋아요 표시 눌린것만
     }
 
-
-    @Override
-    public List<Problem> findProblem(String workbookId, String chapterId){
-        return problemRepository.findByWorkbookIdAndChapterId(workbookId, chapterId);
-    }
-
     @Override
     public List<PubCatPair> getPublisherAndCategoryList(){
         return workBookRepository.findGroupByPublisherAndCategory();
-    }
-
-    public Problem findProblembyId(String problemId) {
-        return problemRepository.findByProblemId(problemId);
     }
 }
