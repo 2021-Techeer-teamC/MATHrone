@@ -45,11 +45,11 @@ export default function Result(props: { sections: any; }) {
                 </Box>
                 <Table style={{ width: '50%', margin: 'auto' }}>
                     <TableHead>
-                        <TableRow >
-                            <TableCell align="center" padding='none'>No.</TableCell>
-                            <TableCell align="center" padding='none'>정답</TableCell>
-                            <TableCell align="center" padding='none'>나의 답</TableCell>
-                            <TableCell align="center" padding='none'></TableCell>
+                        <TableRow style={{backgroundColor:'#d2d2d2'}}>
+                            <TableCell align="center" padding='none'> No. </TableCell>
+                            <TableCell align="center" padding='none'> 정 답 </TableCell>
+                            <TableCell align="center" padding='none'> 나의 답 </TableCell>
+                            <TableCell align="center" padding='none'> 결 과 </TableCell>
                         </TableRow>
                     </TableHead>
                     <TableBody>
@@ -66,15 +66,17 @@ export default function Result(props: { sections: any; }) {
                                     {answerData.my_answer}
                                 </TableCell>
                                 <TableCell align="center" padding='none'>
-                                    <Box sx={{ display: "flex", alignContent: 'center'}}>
-                                        {answerData.my_answer === answerData.answer? 
-                                        <Card sx={{ backgroundColor:'#44BB5E', p: 'none', width: '50%', alignItems: 'center'}}>
-                                            <Typography>정답</Typography>
-                                        </Card>:
-                                        <Card sx={{ backgroundColor: '#B44545', p: 'none', width: '50%'}}>
-                                            <Typography>오답</Typography>
-                                        </Card>
-                                        }
+                                    <Box>
+                                        <Box sx={{ display: "flex", justifyContent: "center"}}>
+                                            {answerData.my_answer === answerData.answer? 
+                                            <Card sx={{ backgroundColor:'#44BB5E', p: 'none', width: '50%'}}>
+                                                <Typography>정답</Typography>
+                                            </Card>:
+                                            <Card sx={{ backgroundColor: '#B44545', p: 'none', width: '50%'}}>
+                                                <Typography>오답</Typography>
+                                            </Card>
+                                            }
+                                        </Box>
                                     </Box>
                                 </TableCell>
                             </TableRow>
