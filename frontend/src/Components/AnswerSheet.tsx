@@ -9,7 +9,7 @@ import Radio from '@mui/material/Radio';
 import { Box, Button } from '@mui/material';
 
 interface problemData {
-  problem_id: string;
+    problem_id: string;
 	prob_num: number;
 	chapter_id: string;
 	prob_img: string;
@@ -180,6 +180,10 @@ export default function StickyHeadTable() {
     console.log(inputs);
   };
 
+  const submitAnswer = (inputs:any) => {
+      // answersheet 데이터 채점을 위해 전송
+  }
+
   return (
     <Box ml={2} sx={{ width: '100%', overflow: 'hidden'}}>
       <TableContainer sx={{ maxHeight: 600 }}>
@@ -221,7 +225,10 @@ export default function StickyHeadTable() {
         </Table>
       </TableContainer>
       <Button style={{ width:"100%", marginTop:"10px", borderRadius: 10, backgroundColor: "#dfdfdf", padding: "9px 18px", fontSize: "16px", color: "black" }}
-             variant="contained">
+             variant="contained" 
+             onClick={() => {
+                submitAnswer(inputs);
+              }}>
         Submit
       </Button>
     </Box>
