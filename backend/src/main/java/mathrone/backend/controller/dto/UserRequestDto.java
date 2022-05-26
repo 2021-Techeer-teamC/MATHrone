@@ -14,9 +14,6 @@ public class UserRequestDto {
 
     private String email;
     private String password;
-    private String id;
-    private String nickname;
-    private String token;
 
     public UsernamePasswordAuthenticationToken of(){
         return new UsernamePasswordAuthenticationToken(email, password);
