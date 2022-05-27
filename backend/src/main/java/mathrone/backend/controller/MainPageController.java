@@ -19,7 +19,7 @@ public class MainPageController {
         this.mainPageService = mainPageService;
     }
 
-    @GetMapping("/main/workbook/try") // 상위 랭킹 정보를 가져옴
+    @GetMapping("/main/workbook/try")
     public List<userWorkbookData> getTryingList(@RequestParam(value="userId", required = false) Integer userId){
         return mainPageService.getTryingBook(userId);
     }
