@@ -41,13 +41,13 @@ function Header(props) {
           <Box sx={{ display: { xs: 'flex' } }}>
             <Grid container spacing={1}>
               <Grid item xs={6} md={7}>
-                <Link to="/../SignUp" style={{ textDecoration: 'none' }}>
+                <Link to="/../signup" style={{ textDecoration: 'none' }}>
                   <RegisterButton>회원가입</RegisterButton>
                 </Link>
 
               </Grid>
               <Grid item xs={6} md={5}>
-                <Link to="/../SignIn" style={{ textDecoration: 'none' }}>
+                <Link to="/../signin" style={{ textDecoration: 'none' }}>
                   <LoginButton>로그인</LoginButton>
                 </Link>
               </Grid>
