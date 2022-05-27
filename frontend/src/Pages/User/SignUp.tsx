@@ -28,7 +28,11 @@ export default function SignUP() {
     try {
       const { data } = await axios.post<CreateSignUpesponse>(
         "http://localhost:8080/user/signup",
-        { email: user_data.get("email"), password: user_data.get("password") },
+        {
+          id: user_data.get("ID"),
+          email: user_data.get("email"),
+          password: user_data.get("password"),
+        },
         {
           headers: {
             "Content-Type": "application/json",
