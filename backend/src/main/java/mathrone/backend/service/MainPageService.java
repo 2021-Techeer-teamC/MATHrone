@@ -25,26 +25,26 @@ public class MainPageService {
 
     public List<userWorkbookData> getTryingBook(int userId){
         List<userWorkbookData> result = new ArrayList<userWorkbookData>();
-        for(UserWorkbookRelInfo userWorkbookRelInfo: workBookRelRepository.findByUserIdAndWorkbookTry(1)){
+        for(UserWorkbookRelInfo userWorkbookRelInfo: workBookRelRepository.findByUserIdAndWorkbookTry(userId)){
             WorkBookInfo workBookInfo = workBookRepository.findByWorkbookId(userWorkbookRelInfo.getWorkbookId());
-            WorkbookLevelInfo workbookLevelInfo = workbookLevelRepository.findByWorkbookId(workBookInfo.getWorkbookId());
-            int low = workbookLevelInfo.getLowCnt();
-            int mid = workbookLevelInfo.getMidCnt();
-            int high = workbookLevelInfo.getHighCnt();
-            String b;
-            if (low > mid){
-                if (low > high)
-                    b = "1";
-                else
-                    b = "3";
-            }
-            else {
-                if (mid > high)
-                    b = "2";
-                else
-                    b = "3";
-            }
-            userWorkbookData a = new userWorkbookData(workBookInfo.getWorkbookId(), workBookInfo.getTitle(), workBookInfo.getProfileImg(), workBookInfo.getPublisher(), b, userWorkbookRelInfo.getWorkbookStar());
+//            WorkbookLevelInfo workbookLevelInfo = workbookLevelRepository.findByWorkbookId(workBookInfo.getWorkbookId());
+//            int low = workbookLevelInfo.getLowCnt();
+//            int mid = workbookLevelInfo.getMidCnt();
+//            int high = workbookLevelInfo.getHighCnt();
+//            String b;
+//            if (low > mid){
+//                if (low > high)
+//                    b = "1";
+//                else
+//                    b = "3";
+//            }
+//            else {
+//                if (mid > high)
+//                    b = "2";
+//                else
+//                    b = "3";
+//            }
+            userWorkbookData a = new userWorkbookData(workBookInfo.getWorkbookId(), workBookInfo.getTitle(), workBookInfo.getProfileImg(), workBookInfo.getPublisher(), getLevel(workBookInfo.getWorkbookId()), userWorkbookRelInfo.getWorkbookStar());
             result.add(a);
         }
         return result;
