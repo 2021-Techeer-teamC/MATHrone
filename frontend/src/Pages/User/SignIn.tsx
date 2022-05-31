@@ -13,19 +13,54 @@ import LogoIcon from "../../Components/Logo";
 import Typography from "@mui/material/Typography";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { SignInDiv } from "./style.js";
-import React from "react";
+import axios from "axios";
 
 const theme = createTheme();
 
-export default function SignInSide() {
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    const data = new FormData(event.currentTarget);
+type CreateUserResponse = {
+  grantType: string;
+  accessToken: string;
+  refreshToken: string;
+  accessTokenExpiresIn: number;
+  userInfo: {
+    id: string;
+  };
+};
 
-    console.log({
-      email: data.get("email"),
-      password: data.get("password"),
-    });
+export default function SignInSide() {
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    const user_data = new FormData(event.currentTarget);
+
+    try {
+      const { data } = await axios.post<CreateUserResponse>(
+        "http://localhost:8080/user/login",
+        { email: user_data.get("email"), password: user_data.get("password") },
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Accept: "application/json",
+          },
+        }
+      );
+
+      console.log(JSON.stringify(data));
+
+      return data;
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        console.log("error message: ", error.message);
+        return error.message;
+      } else {
+        console.log("unexpected error: ", error);
+        return "An unexpected error occurred";
+      }
+    }
+
+    // console.log({
+    //   email: data.get("email"),
+    //   password: data.get("password"),
+    // });
   };
 
   return (
