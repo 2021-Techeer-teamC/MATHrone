@@ -16,6 +16,7 @@ import Rank from "./Pages/Rank";
 import SignIn from "./Pages/User/SignIn";
 import SignUp from "./Pages/User/SignUp";
 import ProblemDetail from './Pages/ProblemDetail';
+import Result from './Pages/Result';
 
 const theme = createTheme();
 
@@ -40,6 +41,7 @@ function App() {
             <Route path="/books/:id" element={<BookDetail sections={sections}/>} />
             <Route path="/rank" exact element={<Rank sections={sections}/>} />
             <Route path="/problemdetail" exact element={<ProblemDetail sections={sections}/>} /> {/*임시 테스트용*/}
+            <Route path="/result" exact element={<Result sections={sections}/>} /> {/*임시 테스트용*/}
           </Routes>
         </ThemeProvider>
       </div>

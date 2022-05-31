@@ -12,9 +12,17 @@ type Props = {
   };
 
 export default function Chart(props: Props) {
+    const [selected, setSelected] = useState<number | undefined>(0);
+    const [hovered, setHovered] = useState<number | undefined>(undefined);
     const lineWidth = 60;
 
     const data = props.data.map((entry, i) => {
+        if (hovered === i) {
+            return {
+              ...entry,
+              color: 'grey',
+            };
+          }
         return entry;
       });
 
@@ -29,6 +37,8 @@ export default function Chart(props: Props) {
             }}
             radius={PieChart.defaultProps.radius - 6}
             lineWidth={60}
+            segmentsStyle={{ transition: 'stroke .3s', cursor: 'pointer' }}
+            segmentsShift={(index) => (index === selected ? 6 : 1)}
             animate
             label={({ dataEntry }) => Math.round(dataEntry.percentage) + '%'}
             labelPosition={100 - lineWidth / 2}
@@ -37,6 +47,15 @@ export default function Chart(props: Props) {
                 opacity: 0.75,
                 pointerEvents: 'none',
             }}
+            onClick={(_, index) => {
+                setSelected(index === selected ? undefined : index);
+              }}
+              onMouseOver={(_, index) => {
+                setHovered(index);
+              }}
+              onMouseOut={() => {
+                setHovered(undefined);
+              }}
         />
     )
 }
