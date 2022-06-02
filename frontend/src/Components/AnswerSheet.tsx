@@ -8,6 +8,10 @@ import TableRow from '@mui/material/TableRow';
 import Radio from '@mui/material/Radio';
 import { Box, Button, TextField } from '@mui/material';
 import { width } from '@mui/system';
+import { MenuItem, ControlledMenu } from '@szhsin/react-menu';
+import '@szhsin/react-menu/dist/index.css';
+import '@szhsin/react-menu/dist/transitions/slide.css';
+import http from "../http-common";
 
 interface problemData {
     problem_id: string;
@@ -58,7 +62,7 @@ const probData: problemData[] = [
         prob_img: "https://storage.googleapis.com/mathrone-bucket/problem/suwan_na_2021/02-01-00005.png",
         level_of_diff: 2,
         category: true,
-        
+
     },
     {
         problem_id: "01-01-00006",
@@ -185,7 +189,8 @@ const probData: problemData[] = [
 
 const AnswerSheet = (props: any, popup: boolean) => {
 
-    const { onClose } = props;
+    const ref = React.useRef(null);
+    const [isOpen, setOpen] = React.useState(false);
     const [inputs, setInputs] = React.useState([] =
         probData.map((probData: problemData) =>
         (
@@ -202,24 +207,12 @@ const AnswerSheet = (props: any, popup: boolean) => {
                 answer.problem_id === prob_num ? { ...answer, my_answer: value } : answer
             )
         );
-        // console.log(inputs);
     };
 
-    const submitAnswer = (inputs: any) => {
-        // answersheet 데이터 채점을 위해 전송
+    const submitAnswer = (inputs: any) => async () => {
+        return http.post("URI");
+        // answersheet 데이터를 보내고 답을 포함한 데이터 받아오기
     }
-
-    const styles = () => ({
-        textField: {
-            width: '90%',        
-            paddingBottom: 0,
-            paddingTop: 0,
-            fontWeight: 500
-        },
-        input: {
-            color: 'white'
-        }
-    });
 
     return (
         <Box ml={2} sx={{ width: '100%', overflow: 'hidden' }}>
@@ -238,48 +231,54 @@ const AnswerSheet = (props: any, popup: boolean) => {
                     {probData.map((probData: problemData) =>
                     (
                         <TableBody key={probData.prob_num}>
-                            {probData.category === false ? 
-                            <TableRow>
-                                <TableCell component="th" scope="row" align="center" padding='none'> {probData.prob_num} </TableCell>
-                                <TableCell colSpan={5} align="center" padding="none">
-                                        <TextField sx={{ pt: '0px' }} value={inputs[probData.prob_num - 1].my_answer} onChange={(e) => onChange(e.target.value, probData.problem_id)} 
-                                            type="number" size="small" variant="standard" inputProps={{ style: {padding: 5} }} 
+                            {probData.category === false ?
+                                <TableRow>
+                                    <TableCell component="th" scope="row" align="center" padding='none'> {probData.prob_num} </TableCell>
+                                    <TableCell colSpan={5} align="center" padding="none">
+                                        <TextField sx={{ pt: '0px' }} value={inputs[probData.prob_num - 1].my_answer} onChange={(e) => onChange(e.target.value, probData.problem_id)}
+                                            type="number" size="small" variant="standard" inputProps={{ style: { padding: 5 } }}
                                         />
-                                </TableCell>
-                            </TableRow>:
-                            <TableRow>
-                                <TableCell component="th" scope="row" align="center" padding='none'> {probData.prob_num} </TableCell>
-                                <TableCell align="center" padding='none'>
-                                    <Radio checked={parseInt(inputs[probData.prob_num - 1].my_answer) === 1} onChange={(e) => onChange(e.target.value, probData.problem_id)} value={1} name="radio-buttons" inputProps={{ 'aria-label': '1' }} />
-                                </TableCell>
-                                <TableCell align="center" padding='none'>
-                                    <Radio checked={parseInt(inputs[probData.prob_num - 1].my_answer) === 2} onChange={(e) => onChange(e.target.value, probData.problem_id)} value={2} name="radio-buttons" inputProps={{ 'aria-label': '2' }} />
-                                </TableCell>
-                                <TableCell align="center" padding='none'>
-                                    <Radio checked={parseInt(inputs[probData.prob_num - 1].my_answer) === 3} onChange={(e) => onChange(e.target.value, probData.problem_id)} value={3} name="radio-buttons" inputProps={{ 'aria-label': '3' }} />
-                                </TableCell>
-                                <TableCell align="center" padding='none'>
-                                    <Radio checked={parseInt(inputs[probData.prob_num - 1].my_answer) === 4} onChange={(e) => onChange(e.target.value, probData.problem_id)} value={4} name="radio-buttons" inputProps={{ 'aria-label': '4' }} />
-                                </TableCell>
-                                <TableCell align="center" padding='none'>
-                                    <Radio checked={parseInt(inputs[probData.prob_num - 1].my_answer) === 5} onChange={(e) => onChange(e.target.value, probData.problem_id)} value={5} name="radio-buttons" inputProps={{ 'aria-label': '5' }} />
-                                </TableCell>
-                            </TableRow>
-                        }
+                                    </TableCell>
+                                </TableRow> :
+                                <TableRow>
+                                    <TableCell component="th" scope="row" align="center" padding='none'> {probData.prob_num} </TableCell>
+                                    <TableCell align="center" padding='none'>
+                                        <Radio checked={parseInt(inputs[probData.prob_num - 1].my_answer) === 1} onChange={(e) => onChange(e.target.value, probData.problem_id)} value={1} name="radio-buttons" inputProps={{ 'aria-label': '1' }} />
+                                    </TableCell>
+                                    <TableCell align="center" padding='none'>
+                                        <Radio checked={parseInt(inputs[probData.prob_num - 1].my_answer) === 2} onChange={(e) => onChange(e.target.value, probData.problem_id)} value={2} name="radio-buttons" inputProps={{ 'aria-label': '2' }} />
+                                    </TableCell>
+                                    <TableCell align="center" padding='none'>
+                                        <Radio checked={parseInt(inputs[probData.prob_num - 1].my_answer) === 3} onChange={(e) => onChange(e.target.value, probData.problem_id)} value={3} name="radio-buttons" inputProps={{ 'aria-label': '3' }} />
+                                    </TableCell>
+                                    <TableCell align="center" padding='none'>
+                                        <Radio checked={parseInt(inputs[probData.prob_num - 1].my_answer) === 4} onChange={(e) => onChange(e.target.value, probData.problem_id)} value={4} name="radio-buttons" inputProps={{ 'aria-label': '4' }} />
+                                    </TableCell>
+                                    <TableCell align="center" padding='none'>
+                                        <Radio checked={parseInt(inputs[probData.prob_num - 1].my_answer) === 5} onChange={(e) => onChange(e.target.value, probData.problem_id)} value={5} name="radio-buttons" inputProps={{ 'aria-label': '5' }} />
+                                    </TableCell>
+                                </TableRow>
+                            }
                         </TableBody>
                     )
                     )}
                 </Table>
             </TableContainer>
-            <Button style={{ width: "100%", marginTop: "10px", borderRadius: 10, backgroundColor: "#dfdfdf", padding: "9px 18px", fontSize: "16px", color: "black" }}
-                variant="contained"
-                onClick={() => {
-                    console.log(inputs);
-                    // onClose(true);
-                    // submitAnswer(inputs);
-                }}>
-                Submit
-            </Button>
+            <div
+                style={{ width: "100%", marginTop: "10px", borderRadius: 10, backgroundColor: "#dfdfdf", padding: "9px 18px", fontSize: "16px", color: "black" }}
+                ref={ref} className="btn" onMouseEnter={() => setOpen(true)}>
+                Sumbit
+            </div>
+            <ControlledMenu
+                state={isOpen ? 'open' : 'closed'}
+                anchorRef={ref}
+                onMouseLeave={() => setOpen(false)}
+                onClose={() => setOpen(false)}
+                direction={'top'}
+                align={'center'}>
+                <MenuItem onClick={() => { submitAnswer(inputs); }}> 푼 것만 채점 </MenuItem>
+                <MenuItem onClick={() => { submitAnswer(inputs); }}> 전부 다 채점 </MenuItem>
+            </ControlledMenu>
         </Box>
     );
 }
