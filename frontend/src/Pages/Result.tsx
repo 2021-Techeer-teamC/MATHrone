@@ -58,7 +58,6 @@ export default function Result(props: { sections: any; }) {
     return (
         <div>
             <Header title="MATHrone" sections={props.sections} />
-            <NavBar sections={props.sections} />
             <Box sx={{ display: 'block' }}>
                 <Box sx={{ display: 'flex', justifyContent: 'center', margin: '3%' }}>
                     <Chart data={score}/>
@@ -100,7 +99,6 @@ export default function Result(props: { sections: any; }) {
                     </TableBody>
                 </Table>
             </Box>
-            <Footer title="Footer" description="Something here to give the footer a purpose!" />
         </div>
     );
 }

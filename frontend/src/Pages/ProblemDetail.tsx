@@ -30,7 +30,6 @@ export default function ProblemDetail (props: { sections: any; }) {
     return (
         <Box>
             <Header title="MATHrone" sections={props.sections}/>
-            <NavBar sections={props.sections}/>
             <Grid container spacing={0}>
                 <Grid item xs={2}>
                     <AnswerSheet/>
@@ -41,7 +40,6 @@ export default function ProblemDetail (props: { sections: any; }) {
                 </Grid>
                 <Grid item xs={2}/>
             </Grid>
-            <Footer title="Footer" description="Something here to give the footer a purpose!"/>
         </Box>
     );
   }
