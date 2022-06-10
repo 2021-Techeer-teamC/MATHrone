@@ -46,6 +46,11 @@ export default function SignInSide() {
 
       console.log(JSON.stringify(data));
 
+      window.location.href = "/";
+
+      localStorage.setItem("accessToken", data.accessToken);
+      localStorage.setItem("userId", data.userInfo.id);
+
       return data;
     } catch (error) {
       if (axios.isAxiosError(error)) {

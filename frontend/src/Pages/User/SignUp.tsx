@@ -15,6 +15,7 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 import Logo from "../../Components/Logo";
 import { SignUpDiv } from "./style.js";
 import axios from "axios";
+import { WindowTwoTone } from "@mui/icons-material";
 
 type CreateSignUpesponse = {
   id: string;
@@ -43,6 +44,8 @@ export default function SignUP() {
 
       console.log(JSON.stringify(data));
 
+      window.location.href = "/signin";
+
       return data;
     } catch (error) {
       if (axios.isAxiosError(error)) {
@@ -53,12 +56,6 @@ export default function SignUP() {
         return "An unexpected error occurred";
       }
     }
-
-    // console.log({
-    //   id: user_data.get("ID"),
-    //   email: user_data.get("email"),
-    //   password: user_data.get("password"),
-    // });
   };
   const theme = createTheme();
 
