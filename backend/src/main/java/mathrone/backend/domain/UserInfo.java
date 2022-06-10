@@ -27,9 +27,6 @@ public class UserInfo {
     @NotNull
     private String password;
 
-    @NotNull
-    private String nickname;
-
     @Column(name = "profile_img")
     private String profileImg;
 
@@ -51,99 +48,10 @@ public class UserInfo {
     private String role;
 
     @Builder
-    public UserInfo(String email, String password, String role, String id, String nickname) {
+    public UserInfo(String email, String password, String role, String id) {
         this.email = email;
         this.password = password;
         this.role = role;
         this.id = id;
-        this.nickname = nickname;
-    }
-  
-    public int getUserId() {
-        return userId;
-    }
-
-    public void setUser_id(int user_id) {
-        this.userId = user_id;
-    }
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public String getNickname() {
-        return nickname;
-    }
-
-    public void setNickname(String nickname) {
-        this.nickname = nickname;
-    }
-
-    public String getProfileImg() {
-        return profileImg;
-    }
-
-    public void setProfileImg(String profileImg) {
-        this.profileImg = profileImg;
-    }
-
-    public int getExp() {
-        return exp;
-    }
-
-    public void setExp(int exp) {
-        this.exp = exp;
-    }
-
-    public Boolean getPremium() {
-        return premium;
-    }
-
-    public void setPremium(Boolean premium) {
-        this.premium = premium;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getPhoneNum() {
-        return phoneNum;
-    }
-
-    public void setPhoneNum(String phoneNum) {
-        this.phoneNum = phoneNum;
-    }
-
-    public String getUserImg() {
-        return userImg;
-    }
-
-    public void setUserImg(String userImg) {
-        this.userImg = userImg;
-    }
-
-    public String getRole() {
-        return role;
-    }
-
-    public void setRole(String role) {
-        this.role = role;
     }
 }
