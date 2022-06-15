@@ -1,4 +1,4 @@
-export type signInUserItem = {
+export interface signInUserItem {
     grantType: string;
     accessToken: string;
     refreshToken: string;
@@ -6,8 +6,8 @@ export type signInUserItem = {
     userInfo: {
       id: string;
     };
-};
+}
 
-export type signUpUserItem = {
+export interface signUpUserItem {
     id: string;
-};
+}

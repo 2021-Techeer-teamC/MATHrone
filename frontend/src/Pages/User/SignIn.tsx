@@ -13,59 +13,32 @@ import LogoIcon from "../../Components/Logo";
 import Typography from "@mui/material/Typography";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { SignInDiv } from "./style.js";
-import axios from "axios";
+import userService from "../../Services/userService";
 
 const theme = createTheme();
-
-type CreateUserResponse = {
-  grantType: string;
-  accessToken: string;
-  refreshToken: string;
-  accessTokenExpiresIn: number;
-  userInfo: {
-    id: string;
-  };
-};
 
 export default function SignInSide() {
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    const user_data = new FormData(event.currentTarget);
+    const user_data: any = new FormData(event.currentTarget);
 
     try {
-      const { data } = await axios.post<CreateUserResponse>(
-        "http://localhost:8080/user/login",
-        { email: user_data.get("email"), password: user_data.get("password") },
-        {
-          headers: {
-            "Content-Type": "application/json",
-            Accept: "application/json",
-          },
-        }
+      const res = await userService.signIn(
+        user_data.get("email"),
+        user_data.get("password")
       );
 
-      console.log(JSON.stringify(data));
+      console.log(JSON.stringify(res));
 
       window.location.href = "/";
 
-      localStorage.setItem("accessToken", data.accessToken);
-      localStorage.setItem("userId", data.userInfo.id);
+      localStorage.setItem("accessToken", res.data.accessToken);
+      localStorage.setItem("userId", res.data.userInfo.id);
 
-      return data;
+      return res;
     } catch (error) {
-      if (axios.isAxiosError(error)) {
-        console.log("error message: ", error.message);
-        return error.message;
-      } else {
-        console.log("unexpected error: ", error);
-        return "An unexpected error occurred";
-      }
+      console.log("error");
     }
-
-    // console.log({
-    //   email: data.get("email"),
-    //   password: data.get("password"),
-    // });
   };
 
   return (
