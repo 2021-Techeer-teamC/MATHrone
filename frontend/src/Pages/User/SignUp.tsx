@@ -12,46 +12,27 @@ import {
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import Logo from "../../Components/Logo";
 import { SignUpDiv } from "./style.js";
-import axios from "axios";
-
-type CreateSignUpesponse = {
-  id: string;
-};
+import userService from "../../Services/userService";
 
 export default function SignUP() {
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    const user_data = new FormData(event.currentTarget);
+    const user_data: any = new FormData(event.currentTarget);
 
     try {
-      const { data } = await axios.post<CreateSignUpesponse>(
-        "http://localhost:8080/user/signup",
-        {
-          id: user_data.get("ID"),
-          email: user_data.get("email"),
-          password: user_data.get("password"),
-        },
-        {
-          headers: {
-            "Content-Type": "application/json",
-            Accept: "application/json",
-          },
-        }
+      const res = await userService.signUp(
+        user_data.get("ID"),
+        user_data.get("email"),
+        user_data.get("password")
       );
 
-      console.log(JSON.stringify(data));
+      console.log(JSON.stringify(res));
 
       window.location.href = "/signin";
 
-      return data;
+      return res;
     } catch (error) {
-      if (axios.isAxiosError(error)) {
-        console.log("error message: ", error.message);
-        return error.message;
-      } else {
-        console.log("unexpected error: ", error);
-        return "An unexpected error occurred";
-      }
+      console.log("error");
     }
   };
   const theme = createTheme();
