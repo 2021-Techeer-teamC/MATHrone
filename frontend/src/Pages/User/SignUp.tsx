@@ -4,8 +4,6 @@ import {
   CssBaseline,
   TextField,
   FormControl,
-  FormControlLabel,
-  Checkbox,
   Grid,
   Box,
   Typography,
@@ -15,7 +13,6 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 import Logo from "../../Components/Logo";
 import { SignUpDiv } from "./style.js";
 import axios from "axios";
-import { WindowTwoTone } from "@mui/icons-material";
 
 type CreateSignUpesponse = {
   id: string;
