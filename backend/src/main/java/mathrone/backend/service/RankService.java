@@ -33,7 +33,6 @@ public class RankService {
             int temp = Integer.parseInt(str.getValue());
             node.put("user_id", temp);
             node.put("score", str.getScore());
-            node.put("nickname", userInfoRepository.findByUserId(temp).getNickname());
             node.put("try", userInfoRepository.getTryByUserID(temp));
             arrayNode.add(node);
         } // 해당 유저가 시도한 문제 수를 포함한 JSON 형식 다시 생성
@@ -45,7 +44,6 @@ public class RankService {
         ObjectNode node = mapper.createObjectNode();
         node.put("rank", zSetOperations.reverseRank("test", user_id.toString()) + 1);
         node.put("score", zSetOperations.score("test", user_id.toString()));
-        node.put("nickname", userInfoRepository.findByUserId(user_id).getNickname());
         node.put("try", userInfoRepository.getTryByUserID(user_id));
         return node;
     }

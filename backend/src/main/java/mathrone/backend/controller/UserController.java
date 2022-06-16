@@ -17,18 +17,18 @@ import java.util.List;
 public class UserController {
     private final AuthService authService;
 
-    @GetMapping("delUser")
+    @GetMapping("/delUser")
     public ResponseEntity<Void> deleteUser(@RequestParam String email){
         authService.deleteUser(email);
         return ResponseEntity.ok().build();
     }
 
-    @GetMapping("allUser")
+    @GetMapping("/allUser")
     public ResponseEntity<List<UserInfo>> allUser() {
         return ResponseEntity.ok(authService.allUser());
     }
 
-    @GetMapping("getRefreshList")
+    @GetMapping("/getRefreshList")
     public ResponseEntity<List<RefreshToken>> getRefreshList(){
         return ResponseEntity.ok(authService.getRefreshList());
     }
@@ -39,8 +39,10 @@ public class UserController {
     }
 
     @PostMapping(value = "/logout", headers = {"Content-type=application/json"})
-    public ResponseEntity<Void> logout( @RequestBody TokenRequestDto tokenRequestDto
+    public ResponseEntity<Void> logout( @RequestHeader String accessToken,
+        @RequestHeader String refreshToken
     ){
+        TokenRequestDto tokenRequestDto = new TokenRequestDto(accessToken,refreshToken);
         authService.logout(tokenRequestDto);
         return ResponseEntity.ok().build();
     }
@@ -51,7 +53,9 @@ public class UserController {
     }
 
     @PostMapping(value = "/reissue")
-    public ResponseEntity<TokenDto> reissue (@RequestBody TokenRequestDto tokenRequestDto){
+    public ResponseEntity<TokenDto> reissue (@RequestHeader String accessToken,
+        @RequestHeader String refreshToken){
+        TokenRequestDto tokenRequestDto = new TokenRequestDto(accessToken,refreshToken);
         return ResponseEntity.ok(authService.reissue(tokenRequestDto));
     }
 

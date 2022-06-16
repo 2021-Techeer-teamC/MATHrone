@@ -33,6 +33,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             "/webjars/**",
             "/book/**",
             "/main/**",
+            "/problem/**"
     };
 
     @Bean   // user password 암호화
