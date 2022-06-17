@@ -32,6 +32,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             "/swagger-ui/**",
             "/webjars/**",
             "/user/**",
+            "/problem/**"
     };
 
     @Bean // user password 암호화

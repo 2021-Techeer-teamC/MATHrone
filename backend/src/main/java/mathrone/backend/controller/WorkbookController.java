@@ -138,13 +138,4 @@ public class WorkbookController {
         return contentList;
     }
 
-
-    //problem API
-    @GetMapping("/problems") // 모든 문제 조회(Books page)
-    public List<Problem> problemList(@RequestParam(value="workbookId") String workbookId,
-                                     @RequestParam(value="chapterId") String chapterId){
-        return workBookService.findProblem(workbookId,chapterId);
-    }
-
-
 }
