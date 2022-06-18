@@ -1,11 +1,5 @@
-import { ComponentProps, useEffect, useState } from 'react';
+import { ComponentProps, useState } from 'react';
 import { PieChart } from 'react-minimal-pie-chart';
-
-interface answerData {
-    problem_id: string;
-    my_answer: number;
-    answer: number;
-}
 
 type Props = {
     data: ComponentProps<typeof PieChart>['data'];

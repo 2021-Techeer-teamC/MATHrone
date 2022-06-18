@@ -4,6 +4,7 @@ import { Box } from "@mui/system";
 import Card from '@mui/material/Card';
 import { Grid, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from "@mui/material";
 import Chart from "../Components/Chart";
+import Footer from "../Components/Footer";
 
 interface answerData {
     problem_id: string;
@@ -220,6 +221,10 @@ export default function Result(props: { sections: any; }) {
                     </Box>
                 </Grid>
             </Grid>
+            <Footer
+                title="Footer"
+                description="Something here to give the footer a purpose!"
+            />
         </div>
     );
 }

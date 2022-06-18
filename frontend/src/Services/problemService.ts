@@ -1,0 +1,18 @@
+import answersList from "../Types/Answers";
+import axios from "axios";
+
+class gradingService {
+    postAnswer(answer: any){
+        return axios.post<answersList>(
+            "http://localhost:8080/****", // api 주소
+            {answer},   // body에 들어갈 데이터
+            {
+                headers: {
+                  "Content-Type": "application/json",
+                  "Accept": "application/json",
+                },
+            } // header 정의
+        )
+    }
+}
+export default new gradingService();

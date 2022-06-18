@@ -6,12 +6,11 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Radio from '@mui/material/Radio';
-import { Box, Button, TextField } from '@mui/material';
-import { width } from '@mui/system';
+import { Box, TextField } from '@mui/material';
 import { MenuItem, ControlledMenu } from '@szhsin/react-menu';
 import '@szhsin/react-menu/dist/index.css';
 import '@szhsin/react-menu/dist/transitions/slide.css';
-import http from "../http-common";
+import grading from '../Services/problemService';
 
 interface problemData {
     problem_id: string;
@@ -22,177 +21,176 @@ interface problemData {
     category: boolean;
 }
 
-const probData: problemData[] = [
-    {
-        problem_id: "01-01-00001",
-        prob_num: 1,
-        chapter_id: "01",
-        prob_img: "https://storage.googleapis.com/mathrone-bucket/problem/suwan_na_2021/02-01-00001.png",
-        level_of_diff: 2,
-        category: true,
-    },
-    {
-        problem_id: "01-01-00002",
-        prob_num: 2,
-        chapter_id: "01",
-        prob_img: "https://storage.googleapis.com/mathrone-bucket/problem/suwan_na_2021/02-01-00002.png",
-        level_of_diff: 2,
-        category: true,
-    },
-    {
-        problem_id: "01-01-00003",
-        prob_num: 3,
-        chapter_id: "01",
-        prob_img: "https://storage.googleapis.com/mathrone-bucket/problem/suwan_na_2021/02-01-00003.png",
-        level_of_diff: 2,
-        category: true,
-    },
-    {
-        problem_id: "01-01-00004",
-        prob_num: 4,
-        chapter_id: "01",
-        prob_img: "https://storage.googleapis.com/mathrone-bucket/problem/suwan_na_2021/02-01-00004.png",
-        level_of_diff: 2,
-        category: true,
-    },
-    {
-        problem_id: "01-01-00005",
-        prob_num: 5,
-        chapter_id: "01",
-        prob_img: "https://storage.googleapis.com/mathrone-bucket/problem/suwan_na_2021/02-01-00005.png",
-        level_of_diff: 2,
-        category: true,
+// const probData: problemData[] = [
+//     {
+//         problem_id: "01-01-00001",
+//         prob_num: 1,
+//         chapter_id: "01",
+//         prob_img: "https://storage.googleapis.com/mathrone-bucket/problem/suwan_na_2021/02-01-00001.png",
+//         level_of_diff: 2,
+//         category: true,
+//     },
+//     {
+//         problem_id: "01-01-00002",
+//         prob_num: 2,
+//         chapter_id: "01",
+//         prob_img: "https://storage.googleapis.com/mathrone-bucket/problem/suwan_na_2021/02-01-00002.png",
+//         level_of_diff: 2,
+//         category: true,
+//     },
+//     {
+//         problem_id: "01-01-00003",
+//         prob_num: 3,
+//         chapter_id: "01",
+//         prob_img: "https://storage.googleapis.com/mathrone-bucket/problem/suwan_na_2021/02-01-00003.png",
+//         level_of_diff: 2,
+//         category: true,
+//     },
+//     {
+//         problem_id: "01-01-00004",
+//         prob_num: 4,
+//         chapter_id: "01",
+//         prob_img: "https://storage.googleapis.com/mathrone-bucket/problem/suwan_na_2021/02-01-00004.png",
+//         level_of_diff: 2,
+//         category: true,
+//     },
+//     {
+//         problem_id: "01-01-00005",
+//         prob_num: 5,
+//         chapter_id: "01",
+//         prob_img: "https://storage.googleapis.com/mathrone-bucket/problem/suwan_na_2021/02-01-00005.png",
+//         level_of_diff: 2,
+//         category: true,
 
-    },
-    {
-        problem_id: "01-01-00006",
-        prob_num: 6,
-        chapter_id: "01",
-        prob_img: "https://storage.googleapis.com/mathrone-bucket/problem/suwan_na_2021/02-01-00006.png",
-        level_of_diff: 2,
-        category: true,
-    },
-    {
-        problem_id: "01-01-00007",
-        prob_num: 7,
-        chapter_id: "01",
-        prob_img: "https://storage.googleapis.com/mathrone-bucket/problem/suwan_na_2021/02-01-00007.png",
-        level_of_diff: 2,
-        category: false,
-    },
-    {
-        problem_id: "01-01-00008",
-        prob_num: 8,
-        chapter_id: "01",
-        prob_img: "https://storage.googleapis.com/mathrone-bucket/problem/suwan_na_2021/02-01-00008.png",
-        level_of_diff: 2,
-        category: true,
-    },
-    {
-        problem_id: "01-01-00009",
-        prob_num: 9,
-        chapter_id: "01",
-        prob_img: "https://storage.googleapis.com/mathrone-bucket/problem/suwan_na_2021/02-01-00009.png",
-        level_of_diff: 2,
-        category: true,
-    },
-    {
-        problem_id: "01-01-00010",
-        prob_num: 10,
-        chapter_id: "01",
-        prob_img: "https://storage.googleapis.com/mathrone-bucket/problem/suwan_na_2021/02-01-00010.png",
-        level_of_diff: 2,
-        category: false,
-    },
-    {
-        problem_id: "01-01-00011",
-        prob_num: 11,
-        chapter_id: "01",
-        prob_img: "https://storage.googleapis.com/mathrone-bucket/problem/suwan_na_2021/02-01-00001.png",
-        level_of_diff: 2,
-        category: true,
-    },
-    {
-        problem_id: "01-01-00012",
-        prob_num: 12,
-        chapter_id: "01",
-        prob_img: "https://storage.googleapis.com/mathrone-bucket/problem/suwan_na_2021/02-01-00002.png",
-        level_of_diff: 2,
-        category: false,
-    },
-    {
-        problem_id: "01-01-00013",
-        prob_num: 13,
-        chapter_id: "01",
-        prob_img: "https://storage.googleapis.com/mathrone-bucket/problem/suwan_na_2021/02-01-00003.png",
-        level_of_diff: 2,
-        category: true,
-    },
-    {
-        problem_id: "01-01-00014",
-        prob_num: 14,
-        chapter_id: "01",
-        prob_img: "https://storage.googleapis.com/mathrone-bucket/problem/suwan_na_2021/02-01-00004.png",
-        level_of_diff: 2,
-        category: true,
-    },
-    {
-        problem_id: "01-01-00015",
-        prob_num: 15,
-        chapter_id: "01",
-        prob_img: "https://storage.googleapis.com/mathrone-bucket/problem/suwan_na_2021/02-01-00005.png",
-        level_of_diff: 2,
-        category: true,
-    },
-    {
-        problem_id: "01-01-00016",
-        prob_num: 16,
-        chapter_id: "01",
-        prob_img: "https://storage.googleapis.com/mathrone-bucket/problem/suwan_na_2021/02-01-00006.png",
-        level_of_diff: 2,
-        category: false,
-    },
-    {
-        problem_id: "01-01-00017",
-        prob_num: 17,
-        chapter_id: "01",
-        prob_img: "https://storage.googleapis.com/mathrone-bucket/problem/suwan_na_2021/02-01-00007.png",
-        level_of_diff: 2,
-        category: true,
-    },
-    {
-        problem_id: "01-01-00018",
-        prob_num: 18,
-        chapter_id: "01",
-        prob_img: "https://storage.googleapis.com/mathrone-bucket/problem/suwan_na_2021/02-01-00008.png",
-        level_of_diff: 2,
-        category: false,
-    },
-    {
-        problem_id: "01-01-00019",
-        prob_num: 19,
-        chapter_id: "01",
-        prob_img: "https://storage.googleapis.com/mathrone-bucket/problem/suwan_na_2021/02-01-00009.png",
-        level_of_diff: 2,
-        category: true,
-    },
-    {
-        problem_id: "01-01-00020",
-        prob_num: 20,
-        chapter_id: "01",
-        prob_img: "https://storage.googleapis.com/mathrone-bucket/problem/suwan_na_2021/02-01-00010.png",
-        level_of_diff: 2,
-        category: true,
-    },
-];
+//     },
+//     {
+//         problem_id: "01-01-00006",
+//         prob_num: 6,
+//         chapter_id: "01",
+//         prob_img: "https://storage.googleapis.com/mathrone-bucket/problem/suwan_na_2021/02-01-00006.png",
+//         level_of_diff: 2,
+//         category: true,
+//     },
+//     {
+//         problem_id: "01-01-00007",
+//         prob_num: 7,
+//         chapter_id: "01",
+//         prob_img: "https://storage.googleapis.com/mathrone-bucket/problem/suwan_na_2021/02-01-00007.png",
+//         level_of_diff: 2,
+//         category: false,
+//     },
+//     {
+//         problem_id: "01-01-00008",
+//         prob_num: 8,
+//         chapter_id: "01",
+//         prob_img: "https://storage.googleapis.com/mathrone-bucket/problem/suwan_na_2021/02-01-00008.png",
+//         level_of_diff: 2,
+//         category: true,
+//     },
+//     {
+//         problem_id: "01-01-00009",
+//         prob_num: 9,
+//         chapter_id: "01",
+//         prob_img: "https://storage.googleapis.com/mathrone-bucket/problem/suwan_na_2021/02-01-00009.png",
+//         level_of_diff: 2,
+//         category: true,
+//     },
+//     {
+//         problem_id: "01-01-00010",
+//         prob_num: 10,
+//         chapter_id: "01",
+//         prob_img: "https://storage.googleapis.com/mathrone-bucket/problem/suwan_na_2021/02-01-00010.png",
+//         level_of_diff: 2,
+//         category: false,
+//     },
+//     {
+//         problem_id: "01-01-00011",
+//         prob_num: 11,
+//         chapter_id: "01",
+//         prob_img: "https://storage.googleapis.com/mathrone-bucket/problem/suwan_na_2021/02-01-00001.png",
+//         level_of_diff: 2,
+//         category: true,
+//     },
+//     {
+//         problem_id: "01-01-00012",
+//         prob_num: 12,
+//         chapter_id: "01",
+//         prob_img: "https://storage.googleapis.com/mathrone-bucket/problem/suwan_na_2021/02-01-00002.png",
+//         level_of_diff: 2,
+//         category: false,
+//     },
+//     {
+//         problem_id: "01-01-00013",
+//         prob_num: 13,
+//         chapter_id: "01",
+//         prob_img: "https://storage.googleapis.com/mathrone-bucket/problem/suwan_na_2021/02-01-00003.png",
+//         level_of_diff: 2,
+//         category: true,
+//     },
+//     {
+//         problem_id: "01-01-00014",
+//         prob_num: 14,
+//         chapter_id: "01",
+//         prob_img: "https://storage.googleapis.com/mathrone-bucket/problem/suwan_na_2021/02-01-00004.png",
+//         level_of_diff: 2,
+//         category: true,
+//     },
+//     {
+//         problem_id: "01-01-00015",
+//         prob_num: 15,
+//         chapter_id: "01",
+//         prob_img: "https://storage.googleapis.com/mathrone-bucket/problem/suwan_na_2021/02-01-00005.png",
+//         level_of_diff: 2,
+//         category: true,
+//     },
+//     {
+//         problem_id: "01-01-00016",
+//         prob_num: 16,
+//         chapter_id: "01",
+//         prob_img: "https://storage.googleapis.com/mathrone-bucket/problem/suwan_na_2021/02-01-00006.png",
+//         level_of_diff: 2,
+//         category: false,
+//     },
+//     {
+//         problem_id: "01-01-00017",
+//         prob_num: 17,
+//         chapter_id: "01",
+//         prob_img: "https://storage.googleapis.com/mathrone-bucket/problem/suwan_na_2021/02-01-00007.png",
+//         level_of_diff: 2,
+//         category: true,
+//     },
+//     {
+//         problem_id: "01-01-00018",
+//         prob_num: 18,
+//         chapter_id: "01",
+//         prob_img: "https://storage.googleapis.com/mathrone-bucket/problem/suwan_na_2021/02-01-00008.png",
+//         level_of_diff: 2,
+//         category: false,
+//     },
+//     {
+//         problem_id: "01-01-00019",
+//         prob_num: 19,
+//         chapter_id: "01",
+//         prob_img: "https://storage.googleapis.com/mathrone-bucket/problem/suwan_na_2021/02-01-00009.png",
+//         level_of_diff: 2,
+//         category: true,
+//     },
+//     {
+//         problem_id: "01-01-00020",
+//         prob_num: 20,
+//         chapter_id: "01",
+//         prob_img: "https://storage.googleapis.com/mathrone-bucket/problem/suwan_na_2021/02-01-00010.png",
+//         level_of_diff: 2,
+//         category: true,
+//     },
+// ];
 
-
-const AnswerSheet = (props: any, popup: boolean) => {
+const AnswerSheet = (props: { propsdata: problemData[] }) => {
 
     const ref = React.useRef(null);
     const [isOpen, setOpen] = React.useState(false);
     const [inputs, setInputs] = React.useState([] =
-        probData.map((probData: problemData) =>
+        props.propsdata.map((probData: problemData) =>
         (
             {
                 problem_id: probData.problem_id,
@@ -210,7 +208,15 @@ const AnswerSheet = (props: any, popup: boolean) => {
     };
 
     const submitAnswer = (inputs: any) => async () => {
-        return http.post("URI");
+        try{
+            const res = await grading.postAnswer(inputs);
+            window.location.href = "/result";
+
+            return res;
+        }
+        catch(error) {
+            console.log(error);
+        }
         // answersheet 데이터를 보내고 답을 포함한 데이터 받아오기
     }
 
@@ -228,7 +234,7 @@ const AnswerSheet = (props: any, popup: boolean) => {
                             <TableCell align="center" padding='none'>⑤</TableCell>
                         </TableRow>
                     </TableHead>
-                    {probData.map((probData: problemData) =>
+                    {props.propsdata.map((probData: problemData) =>
                     (
                         <TableBody key={probData.prob_num}>
                             {probData.category === false ?
