@@ -33,11 +33,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             "/webjars/**",
             "/book/**",
             "/main/**",
+            "/user/**",
             "/problem/**"
     };
 
-    @Bean   // user password 암호화
-    public PasswordEncoder passwordEncoder(){
+    @Bean // user password 암호화
+    public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
 
@@ -46,7 +47,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         // ACL(access control list)에 url 추가
         web.ignoring().antMatchers("/book/**"); // 문제 조회 test를 위해 추가
         web.ignoring().antMatchers("/swagger-ui/**",
-                "/swagger-resources/**","/v3/api-docs/**"); // debug시 swagger 사용을 위해 추가
+                "/swagger-resources/**", "/v3/api-docs/**"); // debug시 swagger 사용을 위해 추가
     }
 
     protected void configure(HttpSecurity http) throws Exception {
@@ -71,7 +72,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .anyRequest().authenticated()
 
                 .and()
-                .apply(new JwtSecurityConfig(tokenProviderUtil, logoutAccessTokenRedisRepository))
-                ;
+                .apply(new JwtSecurityConfig(tokenProviderUtil, logoutAccessTokenRedisRepository));
     }
 }
