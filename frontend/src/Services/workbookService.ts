@@ -3,7 +3,7 @@ import bookContent from "../Types/bookContent";
 import axios from "axios";
 
 
-class DataService{
+class WorkbookService{
 
 //Books.txs
 
@@ -23,4 +23,4 @@ class DataService{
     }
 }
 
-export default new DataService();
+export default new WorkbookService();
