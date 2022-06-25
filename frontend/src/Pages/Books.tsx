@@ -1,5 +1,5 @@
 import * as React from "react";
-import axios, {AxiosResponse} from "axios";
+import axios, { AxiosResponse } from "axios";
 import List from "@mui/material/List";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
@@ -19,28 +19,25 @@ import "../App.css";
 import BookImgList from "../Components/BookImgList";
 import { useEffect } from "react";
 
-import service from "../Services/service";
+import workbookService from "../Services/workbookService";
 import bookItem from "../Types/bookItem";
 import bookContent from "../Types/bookContent";
 import Header from "../Components/Header";
 import NavBar from "../Components/NavBar";
-import {ThemeProvider} from "@mui/material/styles";
+import { ThemeProvider } from "@mui/material/styles";
 import Footer from "../Components/Footer";
 
 import WorkbookSidebar from "../Components/WorkbookSidebar";
 
-
 export default function BookPage(props: { sections: any }) {
-
-
   //책 토글 관련
   //책 리스트 토글마다 열림/닫힘 상태를 저장함
   const [open, setOpen] = React.useState<boolean[]>([false]); //각 토글들의 상태를 배열로 관리함
 
-  const handleClick = (value : number) => () => {
+  const handleClick = (value: number) => () => {
     //value : 토글의 인덱스를 받아옴(몇번째 토글이 눌렸는지)
-    const newOpen:boolean[] = [...open]; //상태를 저장한 open배열을 복사해옴
-    const currentBool:boolean|undefined = open[value]; //현재 눌린 토글의 상태를 받아옴
+    const newOpen: boolean[] = [...open]; //상태를 저장한 open배열을 복사해옴
+    const currentBool: boolean | undefined = open[value]; //현재 눌린 토글의 상태를 받아옴
 
     if (currentBool === undefined) {
       //존재하지 않음-> 누른적이 없음(닫힌상태)
@@ -62,27 +59,25 @@ export default function BookPage(props: { sections: any }) {
   //setting parameter
   //정렬기준(난이도순, 인기순 등)
   //sortType 변경시 변수 수정
-  const selectSort = (event : React.ChangeEvent<HTMLSelectElement>) => {
+  const selectSort = (event: React.ChangeEvent<HTMLSelectElement>) => {
     const sortType = event.target.value;
     setSorted(sortType);
   };
 
-
-  const selectPublisher = (publisher:string) => {
-    console.log('pub hi');
+  const selectPublisher = (publisher: string) => {
+    console.log("pub hi");
     setPublisher(publisher);
     setCategory("all");
   };
 
-  const selectPage = (event : React.ChangeEvent<unknown>, page:number) => {
+  const selectPage = (event: React.ChangeEvent<unknown>, page: number) => {
     setCurrentPage(page);
   };
 
-  const selectCategory = (publisher:string, category:string) => {
+  const selectCategory = (publisher: string, category: string) => {
     setCategory(category);
     setPublisher(publisher);
   };
-
 
   //get result
   /*
@@ -111,73 +106,67 @@ export default function BookPage(props: { sections: any }) {
 
    */
 
-  const [resultCnt,setResultCnt] = React.useState<number>(10);
+  const [resultCnt, setResultCnt] = React.useState<number>(10);
   // const [itemDatas, setItemDatas] = React.useState<bookItem[]>([]); //axios결과 임시용
   const [result, setResult] = React.useState<bookItem[]>(itemData);
-  const [bookContents,setBookContents] = React.useState<bookContent[]>(bookInfo);//empty bookList
-
+  const [bookContents, setBookContents] =
+    React.useState<bookContent[]>(bookInfo); //empty bookList
 
   //case 2. 파라미터 변경시 마다 실행
-  const getWorkbooks = (publisher : string, sortType: string, pageNum: number, category: string) => async () => {
-    console.log("start2");
-    try {
-      const res = await service.getWorkbook(publisher,sorted,currentPage,category);
-      //res 가 없어서 현재 error
-      // setResult(res.data.workbooks);
-      // setResultCnt(res.data.resultNumber);
-
-
-    } catch (err){
-      console.log(err);
-    }
-   console.log("end2");
-
-  };
+  const getWorkbooks =
+    (publisher: string, sortType: string, pageNum: number, category: string) =>
+    async () => {
+      console.log("start2");
+      try {
+        const res = await workbookService.getWorkbook(
+          publisher,
+          sorted,
+          currentPage,
+          category
+        );
+        //res 가 없어서 현재 error
+        // setResult(res.data.workbooks);
+        // setResultCnt(res.data.resultNumber);
+      } catch (err) {
+        console.log(err);
+      }
+      console.log("end2");
+    };
 
   // case 1) 최초 1회 실행
-  const getWorkList = (publisher : string, sortType: string, pageNum: number, category: string) => async () => {
-    console.log("start2");
-    try {
-      const res = await service.getWorkbookList();
-      // res가 없어서 에러 일단 주석
-      // setResult(res.data.workbooks);
-      // setResultCnt(res.data.resultNumber);
-      // setBookContents(res.data);
-
-
-    } catch (err){
-      console.log(err);
-    }
-    console.log("end2");
-
-  };
-
+  const getWorkList =
+    (publisher: string, sortType: string, pageNum: number, category: string) =>
+    async () => {
+      console.log("start2");
+      try {
+        const res = await workbookService.getWorkbookList();
+        // res가 없어서 에러 일단 주석
+        // setResult(res.data.workbooks);
+        // setResultCnt(res.data.resultNumber);
+        // setBookContents(res.data);
+      } catch (err) {
+        console.log(err);
+      }
+      console.log("end2");
+    };
 
   //기타 변수
   const [postsPerPage, setPostsPerPage] = React.useState<number>(3 * 3); //한페이지에 보여질 책의 수
 
-
-
-  useEffect(()=>{
-
+  useEffect(() => {
     /*
      출판사/카테고리 (왼쪽 문제집리스트를 변경한 경우 페이지를 1로 디폴트로 설정 후 api얻음)
      */
     setCurrentPage(1);
-  getWorkbooks(publisher, sorted, currentPage, category);
+    getWorkbooks(publisher, sorted, currentPage, category);
+  }, [publisher, category]);
 
-  },[publisher,category])
-
-
-  useEffect(()=>{
-
+  useEffect(() => {
     /*
     정렬 방법이나 페이지가 변경된 경우에 페이지를 1로 변경하지 않음
      */
     getWorkbooks(publisher, sorted, currentPage, category);
-
-  },[sorted,currentPage])
-
+  }, [sorted, currentPage]);
 
   return (
     <div>
@@ -206,11 +195,15 @@ export default function BookPage(props: { sections: any }) {
             </FormControl>
           </div>
 
-          <WorkbookSidebar lists={bookContents} onPublisherClick={selectPublisher} onCategoryClick={selectCategory}/>
+          <WorkbookSidebar
+            lists={bookContents}
+            onPublisherClick={selectPublisher}
+            onCategoryClick={selectCategory}
+          />
 
           <div className="item">
             <Paper>
-              <BookImgList posts={result}/>
+              <BookImgList posts={result} />
             </Paper>
           </div>
           <div className="item"></div>
@@ -228,14 +221,14 @@ export default function BookPage(props: { sections: any }) {
         </div>
       </Container>
       <Footer
-          title="Footer"
-          description="Something here to give the footer a purpose!"
+        title="Footer"
+        description="Something here to give the footer a purpose!"
       />
     </div>
   );
 }
 
-const itemData:bookItem[] = [
+const itemData: bookItem[] = [
   {
     workbookId: "01-01-00001",
     title: "Breakfast",
@@ -310,7 +303,7 @@ const itemData:bookItem[] = [
   },
 ];
 
-const bookInfo:bookContent[] = [
+const bookInfo: bookContent[] = [
   {
     publisher: "EBS",
     categories: ["수능완성", "수능특강"],
@@ -334,5 +327,3 @@ const bookInfo:bookContent[] = [
     id: 2,
   },
 ];
-
-
