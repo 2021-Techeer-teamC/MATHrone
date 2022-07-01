@@ -35,7 +35,7 @@ public class Problem {
     private String problemImg;
 
     @Column(name = "level_of_diff")
-    private String levelOfDiff;
+    private int levelOfDiff;
 
     public String getProblemId() {
         return problemId;
@@ -57,7 +57,7 @@ public class Problem {
         return problemImg;
     }
 
-    public String getLevelOfDiff() {
+    public int getLevelOfDiff() {
         return levelOfDiff;
     }
 }
