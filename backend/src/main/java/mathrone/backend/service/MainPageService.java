@@ -1,7 +1,10 @@
 package mathrone.backend.service;
 
+import mathrone.backend.controller.dto.RecentTryDto;
 import mathrone.backend.domain.*;
+import mathrone.backend.repository.ChapterRepository;
 import mathrone.backend.repository.LevelRepository;
+import mathrone.backend.repository.ProblemRepository;
 import mathrone.backend.repository.UserWorkbookRelRepository;
 import mathrone.backend.repository.WorkBookRepository;
 import mathrone.backend.repository.WorkbookLevelRepository;
@@ -16,11 +19,20 @@ public class MainPageService {
     private final WorkBookRepository workBookRepository;
     private final WorkbookLevelRepository workbookLevelRepository;
     private final LevelRepository levelRepository;
-    public MainPageService(UserWorkbookRelRepository workBookRelRepository, WorkBookRepository workBookRepository, WorkbookLevelRepository workbookLevelRepository, LevelRepository levelRepository) {
+    private final ProblemRepository problemRepository;
+    private final ChapterRepository chapterRepository;
+
+    public MainPageService(UserWorkbookRelRepository workBookRelRepository,
+            WorkBookRepository workBookRepository, WorkbookLevelRepository workbookLevelRepository,
+            LevelRepository levelRepository,
+            ProblemRepository problemRepository,
+            ChapterRepository chapterRepository) {
         this.workBookRelRepository = workBookRelRepository;
         this.workBookRepository = workBookRepository;
         this.workbookLevelRepository = workbookLevelRepository;
         this.levelRepository = levelRepository;
+        this.problemRepository = problemRepository;
+        this.chapterRepository = chapterRepository;
     }
 
     public List<userWorkbookData> getTryingBook(int userId){
@@ -96,5 +108,20 @@ public class MainPageService {
 
     }
 
-
+    public List<RecentTryDto> getRecentTry(){
+        List<Problem> problemList = problemRepository.findByRecentTry(); // 최근 푼 10개 가져옴
+        List<RecentTryDto> recentTryProblems = new ArrayList<RecentTryDto>();
+        for(Problem problem: problemList){
+            RecentTryDto recentTry = RecentTryDto.builder()
+                    .problemId(problem.getProblemId())
+                    .problemNum(problem.getProblemNum())
+                    .workbookTitle(workBookRepository.findByWorkbookId(problem.getChapterId()).getTitle())
+                    .level(problem.getLevelOfDiff())
+                    .subject(chapterRepository.findByChapterId(problem.getChapterId()).get().getSubject())
+                    .chapter(chapterRepository.findByChapterId(problem.getChapterId()).get().getChapter())
+                    .build();
+            recentTryProblems.add(recentTry);
+        }
+        return recentTryProblems;
+    }
 }
