@@ -21,6 +21,11 @@ interface problemData {
     category: boolean;
 }
 
+interface myAnswerData {
+    problemSolveList: problemData[];
+    userId: any;
+}
+
 // const probData: problemData[] = [
 //     {
 //         problem_id: "01-01-00001",
@@ -208,8 +213,12 @@ const AnswerSheet = (props: { propsdata: problemData[] }) => {
     };
 
     const submitAnswer = (inputs: any) => async () => {
+        const postData: myAnswerData = {
+            problemSolveList: inputs,
+            userId: localStorage.getItem('userId'),
+        }      //console.log(postData);
         try{
-            const res = await grading.postAnswer(inputs);
+            const res = await grading.postAnswer(postData);
             window.location.href = "/result";
 
             return res;
