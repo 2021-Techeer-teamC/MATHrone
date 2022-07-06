@@ -44,16 +44,6 @@ public class WorkBookInfo {
 
     private String category;
 
-    public CarouselResponseDto toCarousel(){
-        return CarouselResponseDto.builder()
-                .workbookId(this.workbookId)
-                .category(this.category)
-                .year(this.year)
-                .img(this.profileImg)
-                .intro(this.title + "과 함께")
-                .build();
-    }
-
     public String getWorkbookId() {
         return workbookId;
     }

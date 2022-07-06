@@ -12,17 +12,17 @@ import javax.persistence.Column;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-//@Builder(builderMethodName = "CarouselResponseDtoBuilder")
 public class CarouselResponseDto {
 
-    @Column(name = "workbook_id")
     private String workbookId;
 
-    private short year;
+    private String workbookTitle;
 
-    private String img;
+    private Short year;
 
-    private String category;
+    private Short month;
+
+    private String profileImg;
 
     private String intro;
 

@@ -4,6 +4,7 @@ import mathrone.backend.controller.dto.CarouselResponseDto;
 import mathrone.backend.domain.*;
 import mathrone.backend.repository.LevelRepository;
 import mathrone.backend.repository.UserWorkbookRelRepository;
+import mathrone.backend.repository.WorkBookRecommendRepository;
 import mathrone.backend.repository.WorkBookRepository;
 import mathrone.backend.repository.WorkbookLevelRepository;
 import org.springframework.stereotype.Service;
@@ -17,11 +18,16 @@ public class MainPageService {
     private final UserWorkbookRelRepository workBookRelRepository;
     private final WorkBookRepository workBookRepository;
     private final WorkbookLevelRepository workbookLevelRepository;
+    private final WorkBookRecommendRepository workBookRecommendRepository;
     private final LevelRepository levelRepository;
-    public MainPageService(UserWorkbookRelRepository workBookRelRepository, WorkBookRepository workBookRepository, WorkbookLevelRepository workbookLevelRepository, LevelRepository levelRepository) {
+    public MainPageService(UserWorkbookRelRepository workBookRelRepository,
+        WorkBookRepository workBookRepository, WorkbookLevelRepository workbookLevelRepository,
+        WorkBookRecommendRepository workBookRecommendRepository,
+        LevelRepository levelRepository) {
         this.workBookRelRepository = workBookRelRepository;
         this.workBookRepository = workBookRepository;
         this.workbookLevelRepository = workbookLevelRepository;
+        this.workBookRecommendRepository = workBookRecommendRepository;
         this.levelRepository = levelRepository;
     }
 
@@ -53,11 +59,21 @@ public class MainPageService {
     }
 
     public List<CarouselResponseDto> getCarousel() {
-        List<WorkBookInfo> booklist = workBookRepository.findAll();
-        List<CarouselResponseDto> listToCarousel = new LinkedList<>();
-        while(!booklist.isEmpty())
-            listToCarousel.add(booklist.remove(0).toCarousel());
-        return listToCarousel;
+        List<WorkbookRecommend> workbookRecommendList = workBookRecommendRepository.findAll();
+        List<CarouselResponseDto> carouselResponseDtoList = new LinkedList<>();
+        for (WorkbookRecommend workbookRecommend : workbookRecommendList){
+            WorkBookInfo workBookInfo = workBookRepository.findByWorkbookId(
+                workbookRecommend.getWorkbookId());
+            carouselResponseDtoList.add(CarouselResponseDto.builder()
+                .workbookId(workBookInfo.getWorkbookId())
+                .workbookTitle(workBookInfo.getTitle())
+                .month(workBookInfo.getMonth())
+                .year(workBookInfo.getYear())
+                .profileImg(workBookInfo.getProfileImg())
+                .intro(workbookRecommend.getIntro())
+                .build());
+        }
+        return carouselResponseDtoList;
     }
 
     public List<userWorkbookData> getStarBook(int userId){
