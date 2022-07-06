@@ -4,11 +4,9 @@ import {
   BrowserRouter as Router,
   Routes,
   Route,
-  Redirect,
 } from "react-router-dom";
 
-import CssBaseline from "@mui/material/CssBaseline";
-import { createTheme, ThemeProvider } from "@mui/material/styles";
+import { createTheme } from "@mui/material/styles";
 import InfoPage from "./Pages/InfoPage";
 import Books from "./Pages/Books";
 import BookDetail from "./Pages/BookDetail";
@@ -30,8 +28,6 @@ function App() {
   return (
     <Router>
       <div className="App">
-        <ThemeProvider theme={theme}>
-          <CssBaseline />
           <Routes>
             <Route path="/" exact element={<Main sections={sections}/>} />
             <Route path="/signin" exact element={<SignIn/>} />
@@ -43,7 +39,6 @@ function App() {
             <Route path="/problemdetail" exact element={<ProblemDetail sections={sections}/>} /> {/*임시 테스트용*/}
             <Route path="/result" exact element={<Result sections={sections}/>} /> {/*임시 테스트용*/}
           </Routes>
-        </ThemeProvider>
       </div>
     </Router>
   );
