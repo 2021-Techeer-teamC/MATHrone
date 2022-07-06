@@ -4,7 +4,7 @@ import Header from "../Components/Header";
 import ProbImg from "../Components/ProbImg";
 import AnswerSheet from "../Components/AnswerSheet";
 import { Box } from "@mui/system";
-import { Grid } from "@mui/material";
+import { Container, Grid, Typography } from "@mui/material";
 
 interface problemData {
     problem_id: string;
@@ -15,7 +15,12 @@ interface problemData {
     category: boolean;
 }
 
-export default function ProblemDetail (props: { sections: any; }) {
+type WorkbookDetailProps = {
+    name: string;   // 해당 문제집의 이름
+    sections: any;
+};
+
+export default function ProblemDetail ({ name, sections}: WorkbookDetailProps) {
     const [data, setProbDatas] = React.useState([...probData]);
     const [num, setNum] = React.useState(1);
 
@@ -27,8 +32,11 @@ export default function ProblemDetail (props: { sections: any; }) {
   
     return (
         <Box>
-            <Header title="MATHrone" sections={props.sections}/>
-            <Grid container spacing={0}>
+            <Header title="MATHrone" sections={sections}/>
+            <Container style={{ alignItems: "center", justifyContent: "center", height:100}}>
+                <Typography variant="h4" component="div" color="text.secondary">{name}</Typography>
+            </Container>
+            <Grid container spacing={0} margin={5}>
                 <Grid item xs={2}>
                     <AnswerSheet propsdata = {data}/>
                 </Grid>    
