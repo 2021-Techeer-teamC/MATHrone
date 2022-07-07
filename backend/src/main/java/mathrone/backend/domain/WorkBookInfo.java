@@ -2,6 +2,7 @@ package mathrone.backend.domain;
 import com.sun.istack.NotNull;
 import com.vladmihalcea.hibernate.type.array.IntArrayType;
 import lombok.NoArgsConstructor;
+import mathrone.backend.controller.dto.CarouselResponseDto;
 import org.hibernate.annotations.Type;
 import org.hibernate.annotations.TypeDef;
 
