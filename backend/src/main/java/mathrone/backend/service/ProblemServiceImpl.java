@@ -16,7 +16,6 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class ProblemServiceImpl implements ProblemService{
     private final ProblemRepository problemRepository;
-    private final SolutionRepository solutionRepository;
 
     @Override
     public Problem findProblembyId(String problemId) {
@@ -28,19 +27,4 @@ public class ProblemServiceImpl implements ProblemService{
         return problemRepository.findByWorkbookIdAndChapterId(workbookId, chapterId);
     }
 
-    public List<ProblemGradeResponseDto> gradeProblem(ProblemGradeRequestDto problemGradeRequestDtoList) {
-        List<ProblemGradeResponseDto> problemGradeResponseDtoList = new ArrayList<ProblemGradeResponseDto>();
-        List<ProblemGradeRequestDto.problemSolve> list = problemGradeRequestDtoList.getProblemSolveList();
-        for (ProblemGradeRequestDto.problemSolve problem : list){
-            Solution solutionProblem = solutionRepository.findSolutionByProblemId(problem.getProblemId());
-            boolean isCorrect = false;
-            if (solutionProblem.getAnswer() == problem.getSolution())
-                isCorrect = true;
-            problemGradeResponseDtoList.add(ProblemGradeResponseDto.builder()
-                .problemId(problem.getProblemId())
-                .solution(problem.getSolution())
-                .answer(isCorrect).build());
-        }
-        return problemGradeResponseDtoList;
-    }
 }

@@ -30,9 +30,4 @@ public class ProblemController {
         @RequestParam(value="chapterId") String chapterId){
         return problemServiceImpl.findProblem(workbookId,chapterId);
     }
-
-    @PostMapping("/detail-page/grade")
-    public List<ProblemGradeResponseDto> problemGrade(@RequestBody ProblemGradeRequestDto problemGradeRequestDtoList){
-        return problemServiceImpl.gradeProblem(problemGradeRequestDtoList);
-    }
 }

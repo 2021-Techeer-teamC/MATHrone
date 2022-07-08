@@ -12,7 +12,7 @@ import lombok.Setter;
 @Setter
 public class ProblemGradeRequestDto {
     private int userId;
-    private List<problemSolve> problemSolveList;
+    private List<problemSolve> answerSubmitList;
 
     @Getter
     public static class problemSolve{
