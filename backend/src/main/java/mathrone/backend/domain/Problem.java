@@ -2,7 +2,11 @@ package mathrone.backend.domain;
 
 import com.sun.istack.NotNull;
 import com.vladmihalcea.hibernate.type.array.IntArrayType;
+import java.util.LinkedList;
+import java.util.List;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.hibernate.annotations.TypeDef;
 
 import javax.persistence.*;
@@ -11,6 +15,8 @@ import javax.persistence.*;
 @Entity
 @Table(name = "problem")
 @TypeDef(name = "int-array", typeClass = IntArrayType.class)
+@Getter
+@Setter
 public class Problem {
 
     @Id
@@ -36,6 +42,10 @@ public class Problem {
 
     @Column(name = "level_of_diff")
     private int levelOfDiff;
+
+//    @OneToMany(mappedBy = "problem", cascade = CascadeType.ALL, orphanRemoval = true) //영속화 설정
+//    private List<ProblemTry> problemTryList = new LinkedList<>();   // null 에러 방지
+
 
     public String getProblemId() {
         return problemId;

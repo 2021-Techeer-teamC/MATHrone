@@ -2,6 +2,8 @@ package mathrone.backend.domain;
 
 import com.sun.istack.NotNull;
 import com.vladmihalcea.hibernate.type.array.IntArrayType;
+import java.util.LinkedList;
+import java.util.List;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -46,6 +48,9 @@ public class UserInfo {
     private String userImg;
   
     private String role;
+
+//    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)  //영속화 설정
+//    private List<ProblemTry> problemTryList = new LinkedList<ProblemTry>();
 
     @Builder
     public UserInfo(String email, String password, String role, String id) {
