@@ -1,39 +1,16 @@
 import * as React from "react";
 import CssBaseline from "@mui/material/CssBaseline";
 import Container from "@mui/material/Container";
+import Typography from "@mui/material/Typography";
 
 import "./style.css";
 
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-
-import BookIcon from "@mui/icons-material/MenuBookRounded";
-import StarIcon from "@mui/icons-material/Star";
-
 import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a loader
-import { Carousel } from "react-responsive-carousel";
-
 import Header from "../../components/Header";
 import NavBar from "../../components/NavBar";
 import Footer from "../../components/Footer";
-
-import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
-
-import InfoPage from "../InfoPage.js";
-import Books from "../Books.js";
-import Rank from "../Rank.js";
-import IconButton from "@mui/material/IconButton";
 import BookSlider from "../../components/BookSlider";
-import Typography from "@mui/material/Typography";
-import Toolbar from "@mui/material/Toolbar";
-import {
-  FormControlLabel,
-  FormGroup,
-  Grid,
-  ListItem,
-  ListItemIcon,
-  ListItemText,
-} from "@mui/material";
-import List from "@mui/material/List";
 import ProbList from "../../components/ProbList";
 import MainCarousel from "../../components/MainCarousel";
 
