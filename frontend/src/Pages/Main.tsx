@@ -2,7 +2,7 @@ import * as React from "react";
 import CssBaseline from "@mui/material/CssBaseline";
 import Container from "@mui/material/Container";
 
-import "../Assets/styles/components.css";
+import "../assets/styles/components.css";
 
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 
@@ -12,17 +12,17 @@ import StarIcon from "@mui/icons-material/Star";
 import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a loader
 import { Carousel } from "react-responsive-carousel";
 
-import Header from "../Components/Header";
-import NavBar from "../Components/NavBar";
-import Footer from "../Components/Footer";
+import Header from "../components/Header";
+import NavBar from "../components/NavBar";
+import Footer from "../components/Footer";
 
 import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 
-import InfoPage from "./InfoPage";
-import Books from "./Books";
-import Rank from "./Rank";
+import InfoPage from "./InfoPage.js";
+import Books from "./Books.js";
+import Rank from "./Rank.js";
 import IconButton from "@mui/material/IconButton";
-import BookSlider from "../Components/BookSlider";
+import BookSlider from "../components/BookSlider";
 import Typography from "@mui/material/Typography";
 import Toolbar from "@mui/material/Toolbar";
 import {
@@ -34,8 +34,8 @@ import {
   ListItemText,
 } from "@mui/material";
 import List from "@mui/material/List";
-import ProbList from "../Components/ProbList";
-import MainCarousel from "../Components/MainCarousel";
+import ProbList from "../components/ProbList";
+import MainCarousel from "../components/MainCarousel";
 
 const theme = createTheme();
 

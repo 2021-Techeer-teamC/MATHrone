@@ -1,5 +1,5 @@
 import './App.css';
-import Main from './Pages/Main'
+import Main from './pages/Main'
 import {
   BrowserRouter as Router,
   Routes,
@@ -7,12 +7,12 @@ import {
 } from "react-router-dom";
 
 import { createTheme } from "@mui/material/styles";
-import InfoPage from "./Pages/InfoPage";
-import Books from "./Pages/Books";
-import BookDetail from "./Pages/BookDetail";
-import Rank from "./Pages/Rank";
-import SignIn from "./Pages/User/SignIn";
-import SignUp from "./Pages/User/SignUp";
+import InfoPage from "./pages/InfoPage.js";
+import Books from "./pages/Books.tsx";
+import BookDetail from "./pages/BookDetail";
+import Rank from "./pages/Rank.tsx";
+import SignIn from "./pages/User/SignIn.tsx";
+import SignUp from "./pages/User/SignUp.tsx";
 
 const theme = createTheme();
 

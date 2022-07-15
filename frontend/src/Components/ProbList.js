@@ -5,10 +5,10 @@ import List from "@mui/material/List";
 import Level3 from "@mui/icons-material/Filter3";
 import Level1 from "@mui/icons-material/Filter1";
 import Level2 from "@mui/icons-material/Filter2";
-import Gold from "../Assets/image/gold-medal.png";
-import Silver from "../Assets/image/silver-medal.png";
-import Bronze from "../Assets/image/bronze-medal.png";
-import Pencil from "../Assets/image/pencil.png";
+import Gold from "../assets/image/gold-medal.png";
+import Silver from "../assets/image/silver-medal.png";
+import Bronze from "../assets/image/bronze-medal.png";
+import Pencil from "../assets/image/pencil.png";
 
 import Link from "@mui/material/Link";
 

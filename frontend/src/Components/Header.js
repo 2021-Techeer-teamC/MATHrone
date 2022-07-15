@@ -7,8 +7,8 @@ import LinkM from "@mui/material/Link";
 import { Link } from "react-router-dom";
 import { styled } from '@mui/material/styles';
 import { grey, teal } from '@mui/material/colors';
-import Logo from '../Components/Logo';
-import "../Assets/styles/components.css"
+import Logo from './Logo.tsx';
+import "../assets/styles/components.css"
 
 const RegisterButton = styled(Button)(({ theme }) => ({
   width: '90px',
