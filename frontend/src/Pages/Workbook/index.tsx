@@ -1,13 +1,5 @@
 import * as React from "react";
 import axios, { AxiosResponse } from "axios";
-import List from "@mui/material/List";
-import ListItemButton from "@mui/material/ListItemButton";
-import ListItemIcon from "@mui/material/ListItemIcon";
-import ListItemText from "@mui/material/ListItemText";
-import Collapse from "@mui/material/Collapse";
-import ExpandLess from "@mui/icons-material/ExpandLess";
-import ExpandMore from "@mui/icons-material/ExpandMore";
-import StarBorder from "@mui/icons-material/StarBorder";
 import Paper from "@mui/material/Paper";
 import Container from "@mui/material/Container";
 import FormControl from "@mui/material/FormControl";
@@ -24,7 +16,6 @@ import bookItem from "../../types/bookItem";
 import bookContent from "../../types/bookContent";
 import Header from "../../components/Header.js";
 import NavBar from "../../components/NavBar.js";
-import { ThemeProvider } from "@mui/material/styles";
 import Footer from "../../components/Footer.js";
 
 import WorkbookSidebar from "../../components/WorkbookSidebar.js";
