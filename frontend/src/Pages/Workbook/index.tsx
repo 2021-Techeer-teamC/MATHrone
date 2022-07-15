@@ -13,8 +13,8 @@ import WorkbookSidebar from "./components/WorkbookSidebar.js";
 import workbookService from "../../services/workbookService";
 import bookItem from "../../types/bookItem";
 import bookContent from "../../types/bookContent";
-import "../../App.css";
-//import "./style.css";
+//import "../../App.css";
+import "./style.css";
 
 export default function BookPage(props: { sections: any }) {
   //책 토글 관련
@@ -161,11 +161,11 @@ export default function BookPage(props: { sections: any }) {
       <NavBar sections={props.sections} />
       <SearchBar></SearchBar>
       <Container>
-        <div className="container">
-          <div className="item" />
-          <div className="item">
-            <span style={{ minWidth: 120, float: "left" }}>
-              {category == "all" ? publisher : category}({resultCnt})
+        <div className="container sorting-div">
+          <div className="dummy-div" />
+          <div>
+            <span className="count-span">
+              {category === "all" ? publisher : category}({resultCnt})
             </span>
             <FormControl sx={{ minWidth: 120, float: "right" }}>
               <NativeSelect
@@ -188,16 +188,13 @@ export default function BookPage(props: { sections: any }) {
             onCategoryClick={selectCategory}
           />
 
-          <div className="item">
+          <div>
             <Paper>
               <BookImgList posts={result} />
             </Paper>
           </div>
-          <div className="item"></div>
-          <div
-            className="item"
-            style={{ display: "flex", justifyContent: "center" }}
-          >
+          <div className="dummy-div"></div>
+          <div className="pagination-div">
             <Pagination
               count={Math.ceil(resultCnt / postsPerPage)}
               defaultPage={1}
