@@ -1,24 +1,20 @@
-import * as React from "react";
-import axios, { AxiosResponse } from "axios";
+import React, { useEffect } from "react";
 import Paper from "@mui/material/Paper";
 import Container from "@mui/material/Container";
 import FormControl from "@mui/material/FormControl";
 import NativeSelect from "@mui/material/NativeSelect";
 import Pagination from "@mui/material/Pagination";
-
 import SearchBar from "../../components/SearchBar";
-import "../../App.css";
 import BookImgList from "../../components/BookImgList";
-import { useEffect } from "react";
-
-import workbookService from "../../services/workbookService";
-import bookItem from "../../types/bookItem";
-import bookContent from "../../types/bookContent";
 import Header from "../../components/Header.js";
 import NavBar from "../../components/NavBar.js";
 import Footer from "../../components/Footer.js";
-
-import WorkbookSidebar from "../../components/WorkbookSidebar.js";
+import WorkbookSidebar from "./components/WorkbookSidebar.js";
+import workbookService from "../../services/workbookService";
+import bookItem from "../../types/bookItem";
+import bookContent from "../../types/bookContent";
+import "../../App.css";
+//import "./style.css";
 
 export default function BookPage(props: { sections: any }) {
   //책 토글 관련
