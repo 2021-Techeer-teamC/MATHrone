@@ -18,8 +18,8 @@ import {
 } from "@mui/material";
 import { green } from "@mui/material/colors";
 
-import Header from "../components/Header.js";
-import NavBar from "../components/NavBar.js";
+import Header from "../../components/Header.js";
+import NavBar from "../../components/NavBar.js";
 import { useParams } from "react-router-dom";
 
 type WorkbookDetailProps = {

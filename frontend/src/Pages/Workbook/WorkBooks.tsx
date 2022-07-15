@@ -14,20 +14,20 @@ import FormControl from "@mui/material/FormControl";
 import NativeSelect from "@mui/material/NativeSelect";
 import Pagination from "@mui/material/Pagination";
 
-import SearchBar from "../components/SearchBar";
-import "../App.css";
-import BookImgList from "../components/BookImgList";
+import SearchBar from "../../components/SearchBar";
+import "../../App.css";
+import BookImgList from "../../components/BookImgList";
 import { useEffect } from "react";
 
-import workbookService from "../services/workbookService";
-import bookItem from "../types/bookItem";
-import bookContent from "../types/bookContent";
-import Header from "../components/Header.js";
-import NavBar from "../components/NavBar.js";
+import workbookService from "../../services/workbookService";
+import bookItem from "../../types/bookItem";
+import bookContent from "../../types/bookContent";
+import Header from "../../components/Header.js";
+import NavBar from "../../components/NavBar.js";
 import { ThemeProvider } from "@mui/material/styles";
-import Footer from "../components/Footer.js";
+import Footer from "../../components/Footer.js";
 
-import WorkbookSidebar from "../components/WorkbookSidebar.js";
+import WorkbookSidebar from "../../components/WorkbookSidebar.js";
 
 export default function BookPage(props: { sections: any }) {
   //책 토글 관련

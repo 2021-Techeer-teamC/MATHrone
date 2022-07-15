@@ -8,8 +8,8 @@ import {
 
 import { createTheme } from "@mui/material/styles";
 import InfoPage from "./pages/InfoPage.js";
-import Books from "./pages/Books.tsx";
-import BookDetail from "./pages/BookDetail";
+import Books from "./pages/Workbook/WorkBooks.tsx";
+import BookDetail from "./pages/WorkbookDetail/WorkbookBookDetail";
 import Rank from "./pages/Rank.tsx";
 import SignIn from "./pages/User/SignIn.tsx";
 import SignUp from "./pages/User/SignUp.tsx";
