@@ -1,0 +1,32 @@
+.main-div {
+  display: grid;
+  grid-template-areas:
+    "main-carousel main-carousel"
+    "try-carousel try-carousel"
+    "star-carousel star-carousel"
+    "most-try-prob recommend-prob";
+}
+
+.main-carousel {
+  grid-area: main-carousel;
+  align-items: "center" !important;
+  justify-content: "center" !important;
+}
+
+.try-carousel {
+  grid-area: try-carousel;
+  padding-top: 30px;
+}
+
+.star-carousel {
+  grid-area: star-carousel;
+  padding-top: 30px;
+}
+
+.most-try-prob {
+  grid-area: most-try-prob;
+}
+
+.recommend-prob {
+  grid-area: recommend-prob;
+}

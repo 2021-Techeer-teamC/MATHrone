@@ -2,7 +2,7 @@ import * as React from "react";
 import CssBaseline from "@mui/material/CssBaseline";
 import Container from "@mui/material/Container";
 
-import "../assets/styles/components.css";
+import "./style.css";
 
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 
@@ -12,17 +12,17 @@ import StarIcon from "@mui/icons-material/Star";
 import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a loader
 import { Carousel } from "react-responsive-carousel";
 
-import Header from "../components/Header";
-import NavBar from "../components/NavBar";
-import Footer from "../components/Footer";
+import Header from "../../components/Header";
+import NavBar from "../../components/NavBar";
+import Footer from "../../components/Footer";
 
 import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 
-import InfoPage from "./InfoPage.js";
-import Books from "./Books.js";
-import Rank from "./Rank.js";
+import InfoPage from "../InfoPage.js";
+import Books from "../Books.js";
+import Rank from "../Rank.js";
 import IconButton from "@mui/material/IconButton";
-import BookSlider from "../components/BookSlider";
+import BookSlider from "../../components/BookSlider";
 import Typography from "@mui/material/Typography";
 import Toolbar from "@mui/material/Toolbar";
 import {
@@ -34,8 +34,8 @@ import {
   ListItemText,
 } from "@mui/material";
 import List from "@mui/material/List";
-import ProbList from "../components/ProbList";
-import MainCarousel from "../components/MainCarousel";
+import ProbList from "../../components/ProbList";
+import MainCarousel from "../../components/MainCarousel";
 
 const theme = createTheme();
 
@@ -54,17 +54,11 @@ export default function Main(props: { sections: any }) {
       <NavBar sections={props.sections} />
       <CssBaseline />
       <Container maxWidth="lg">
-        <main className="main2">
-          <div
-            className="carousel"
-            style={{
-              alignItems: "center",
-              justifyContent: "center",
-            }}
-          >
+        <main className="main-div">
+          <div className="main-carousel">
             <MainCarousel posts={addData} />
           </div>
-          <div className="slider" style={{ paddingTop: "30px" }}>
+          <div className="try-carousel">
             <Typography
               component="h2"
               variant="h5"
@@ -75,11 +69,11 @@ export default function Main(props: { sections: any }) {
               fontFamily="NotoSans-Bold"
               padding="5px"
             >
-              {"  시도 중인 문제집"}
+              {"시도 중인 문제집"}
             </Typography>
             <BookSlider posts={itemData} />
           </div>
-          <div className="slider2" style={{ paddingTop: "30px" }}>
+          <div className="star-carousel">
             <Typography
               component="h2"
               variant="h5"
@@ -90,15 +84,15 @@ export default function Main(props: { sections: any }) {
               fontFamily="NotoSans-Bold"
               padding="5px"
             >
-              {"  즐겨 찾기"}
+              {"즐겨 찾기"}
             </Typography>
 
             <BookSlider posts={itemData} />
           </div>
-          <div className="probA">
+          <div className="most-try-prob">
             <ProbList data={tryData} title={"오늘 가장 많이 시도한 문제"} />
           </div>
-          <div className="probB">
+          <div className="recommend-prob">
             <ProbList data={recData} title={"추천 문제"} />
           </div>
         </main>
