@@ -1,5 +1,5 @@
-import bookItem from "../Types/bookItem";
-import bookContent from "../Types/bookContent";
+import bookItem from "../types/bookItem";
+import bookContent from "../types/bookContent";
 import axios from "axios";
 
 

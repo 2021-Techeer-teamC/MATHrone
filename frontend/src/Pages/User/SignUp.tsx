@@ -11,8 +11,8 @@ import {
 } from "@mui/material/";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import Logo from "../../components/Logo";
-import { SignUpDiv } from "./style";
-import userService from "../../Services/userService";
+import { SignUpDiv } from "./style.js";
+import userService from "../../services/userService";
 
 export default function SignUP() {
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {

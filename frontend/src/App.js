@@ -11,8 +11,8 @@ import InfoPage from "./pages/InfoPage.js";
 import Books from "./pages/Books.tsx";
 import BookDetail from "./pages/BookDetail";
 import Rank from "./pages/Rank.tsx";
-import SignIn from "./pages/User/SignIn.tsx";
-import SignUp from "./pages/User/SignUp.tsx";
+import SignIn from "./pages/user/SignIn.tsx";
+import SignUp from "./pages/user/SignUp.tsx";
 
 const theme = createTheme();
 

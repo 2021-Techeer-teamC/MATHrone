@@ -19,9 +19,9 @@ import "../App.css";
 import BookImgList from "../components/BookImgList";
 import { useEffect } from "react";
 
-import workbookService from "../Services/workbookService";
-import bookItem from "../Types/bookItem";
-import bookContent from "../Types/bookContent";
+import workbookService from "../services/workbookService";
+import bookItem from "../types/bookItem";
+import bookContent from "../types/bookContent";
 import Header from "../components/Header.js";
 import NavBar from "../components/NavBar.js";
 import { ThemeProvider } from "@mui/material/styles";

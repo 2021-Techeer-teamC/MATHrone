@@ -12,8 +12,8 @@ import Grid from "@mui/material/Grid";
 import LogoIcon from "../../components/Logo";
 import Typography from "@mui/material/Typography";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-import { SignInDiv } from "./style";
-import userService from "../../Services/userService";
+import { SignInDiv } from "./style.js";
+import userService from "../../services/userService";
 
 const theme = createTheme();
 
