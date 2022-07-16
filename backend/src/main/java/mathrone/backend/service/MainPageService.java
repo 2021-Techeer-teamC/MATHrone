@@ -7,6 +7,7 @@ import mathrone.backend.domain.*;
 import mathrone.backend.repository.ChapterRepository;
 import mathrone.backend.repository.LevelRepository;
 import mathrone.backend.repository.ProblemRepository;
+import mathrone.backend.repository.ProblemTryRespository;
 import mathrone.backend.repository.UserWorkbookRelRepository;
 import mathrone.backend.repository.WorkBookRecommendRepository;
 import mathrone.backend.repository.WorkBookRepository;
@@ -26,11 +27,14 @@ public class MainPageService {
     private final LevelRepository levelRepository;
     private final ProblemRepository problemRepository;
     private final ChapterRepository chapterRepository;
+    private final ProblemTryRespository problemTryRespository;
 
     public MainPageService(UserWorkbookRelRepository workBookRelRepository,
             WorkBookRepository workBookRepository, WorkbookLevelRepository workbookLevelRepository,
-            WorkBookRecommendRepository workBookRecommendRepository, LevelRepository levelRepository,
-            ProblemRepository problemRepository, ChapterRepository chapterRepository) {
+            WorkBookRecommendRepository workBookRecommendRepository,
+            LevelRepository levelRepository,
+            ProblemRepository problemRepository, ChapterRepository chapterRepository,
+            ProblemTryRespository problemTryRespository) {
 
         this.workBookRelRepository = workBookRelRepository;
         this.workBookRepository = workBookRepository;
@@ -39,6 +43,7 @@ public class MainPageService {
         this.levelRepository = levelRepository;
         this.problemRepository = problemRepository;
         this.chapterRepository = chapterRepository;
+        this.problemTryRespository = problemTryRespository;
     }
 
     public List<userWorkbookData> getTryingBook(int userId){
@@ -132,9 +137,10 @@ public class MainPageService {
     }
     
     public List<RecentTryDto> getRecentTry(){
-        List<Problem> problemList = problemRepository.findByRecentTry(); // 최근 푼 10개 가져옴
+        List<ProblemTry> problemList = problemTryRespository.findDistinctTop10(); // 최근 푼 10개 가져옴
         List<RecentTryDto> recentTryProblems = new ArrayList<RecentTryDto>();
-        for(Problem problem: problemList){
+        for(int i = 0; i < 10; i++){
+            Problem problem = problemList.get(i).getProblem();
             RecentTryDto recentTry = RecentTryDto.builder()
                     .problemId(problem.getProblemId())
                     .problemNum(problem.getProblemNum())
