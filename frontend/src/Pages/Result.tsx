@@ -5,6 +5,7 @@ import Card from '@mui/material/Card';
 import { Grid, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from "@mui/material";
 import Chart from "../Components/Chart";
 import Footer from "../Components/Footer";
+import { useLocation } from "react-router-dom";
 
 interface answerData {
     problem_id: string;
@@ -22,147 +23,14 @@ let count: number;
 let correct: number;
 let wrong: number;
 
-const answerData: answerData[] = [
-    {
-        problem_id: "01-01-00001",
-        my_answer: 1,
-        answer: 1,
-    },
-    {
-        problem_id: "01-01-00002",
-        my_answer: 2,
-        answer: 1,
-    },
-    {
-        problem_id: "01-01-00003",
-        my_answer: 3,
-        answer: 3,
-    }, {
-        problem_id: "01-01-00001",
-        my_answer: 1,
-        answer: 1,
-    },
-    {
-        problem_id: "01-01-00002",
-        my_answer: 2,
-        answer: 1,
-    },
-    {
-        problem_id: "01-01-00003",
-        my_answer: 3,
-        answer: 3,
-    }, {
-        problem_id: "01-01-00001",
-        my_answer: 1,
-        answer: 1,
-    },
-    {
-        problem_id: "01-01-00002",
-        my_answer: 2,
-        answer: 1,
-    },
-    {
-        problem_id: "01-01-00003",
-        my_answer: 3,
-        answer: 3,
-    }, {
-        problem_id: "01-01-00001",
-        my_answer: 1,
-        answer: 1,
-    },
-    {
-        problem_id: "01-01-00002",
-        my_answer: 2,
-        answer: 1,
-    },
-    {
-        problem_id: "01-01-00003",
-        my_answer: 3,
-        answer: 3,
-    }, {
-        problem_id: "01-01-00001",
-        my_answer: 1,
-        answer: 1,
-    },
-    {
-        problem_id: "01-01-00002",
-        my_answer: 2,
-        answer: 1,
-    },
-    {
-        problem_id: "01-01-00003",
-        my_answer: 3,
-        answer: 3,
-    }, {
-        problem_id: "01-01-00001",
-        my_answer: 1,
-        answer: 1,
-    },
-    {
-        problem_id: "01-01-00002",
-        my_answer: 2,
-        answer: 1,
-    },
-    {
-        problem_id: "01-01-00003",
-        my_answer: 3,
-        answer: 3,
-    }, {
-        problem_id: "01-01-00001",
-        my_answer: 1,
-        answer: 1,
-    },
-    {
-        problem_id: "01-01-00002",
-        my_answer: 2,
-        answer: 1,
-    },
-    {
-        problem_id: "01-01-00003",
-        my_answer: 3,
-        answer: 3,
-    }, {
-        problem_id: "01-01-00001",
-        my_answer: 1,
-        answer: 1,
-    },
-    {
-        problem_id: "01-01-00002",
-        my_answer: 2,
-        answer: 1,
-    },
-    {
-        problem_id: "01-01-00003",
-        my_answer: 3,
-        answer: 3,
-    },
-    {
-        problem_id: "01-01-00002",
-        my_answer: 2,
-        answer: 1,
-    },
-    {
-        problem_id: "01-01-00003",
-        my_answer: 3,
-        answer: 3,
-    },
-    {
-        problem_id: "01-01-00002",
-        my_answer: 2,
-        answer: 1,
-    },
-    {
-        problem_id: "01-01-00003",
-        my_answer: 3,
-        answer: 3,
-    },
-]
 
 export default function Result(props: { sections: any; }) {
     count = 0;
     correct = 0;
     wrong = 0;
 
+    const location = useLocation();
+    const answerData = location.state.model_id;
     answerData.map((answerData: answerData) => { answerData.my_answer === answerData.answer ? correct++ : wrong++ })
 
 
@@ -192,7 +60,7 @@ export default function Result(props: { sections: any; }) {
                                         <TableCell align="center" padding='none'> 결 과 </TableCell>
                                     </TableRow>
                                 </TableHead>
-                                <TableBody>
+                            <TableBody>
                                     {answerData.map((answerData: answerData) =>
                                     (
                                         <TableRow key={answerData.problem_id}>
