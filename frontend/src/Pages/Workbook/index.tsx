@@ -13,7 +13,6 @@ import WorkbookSidebar from "./components/WorkbookSidebar.js";
 import workbookService from "../../services/workbookService";
 import bookItem from "../../types/bookItem";
 import bookContent from "../../types/bookContent";
-//import "../../App.css";
 import "./style.css";
 
 export default function BookPage(props: { sections: any }) {
