@@ -6,12 +6,13 @@ import { Container } from "@mui/material";
 import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 import { useEffect } from "react";
-import "../App.css";
-import RankList from "../components/RankList";
-import Header from "../components/Header";
-import NavBar from "../components/NavBar";
-import Footer from "../components/Footer";
-import Trophy from "../assets/image/trophy.png";
+import "./style.css";
+//import "../../App.css";
+import RankList from "../../components/RankList";
+import Header from "../../components/Header";
+import NavBar from "../../components/NavBar";
+import Footer from "../../components/Footer";
+import Trophy from "../../assets/image/trophy.png";
 
 interface rankData {
   user_name: string;
@@ -61,7 +62,7 @@ export default function Rankpage(props: { sections: any }) {
           </Box>
         </Box>
 
-        <Card style={{ backgroundColor: "WhiteSmoke" }} sx={{ p: 1 }}>
+        <Card className="rank-div-card" sx={{ p: 1 }}>
           <Card
             elevation={5}
             sx={{
@@ -74,7 +75,7 @@ export default function Rankpage(props: { sections: any }) {
               pl: 5,
             }}
           >
-            <div className="rankContainer">
+            <div className="rank-div-header">
               <Typography variant="body1" component="p">
                 랭킹
               </Typography>
