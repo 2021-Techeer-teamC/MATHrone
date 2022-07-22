@@ -1,7 +1,7 @@
 import * as React from "react";
+import { useParams } from "react-router-dom";
 import ExpandLess from "@mui/icons-material/ExpandLess";
 import ExpandMore from "@mui/icons-material/ExpandMore";
-
 import {
   Grid,
   Paper,
@@ -17,10 +17,9 @@ import {
   LinearProgress,
 } from "@mui/material";
 import { green } from "@mui/material/colors";
-
 import Header from "../../components/Header.js";
 import NavBar from "../../components/NavBar.js";
-import { useParams } from "react-router-dom";
+import "./style.css";
 
 type WorkbookDetailProps = {
   name: string;
@@ -42,23 +41,15 @@ export default function BookDetail({ name, sections }: WorkbookDetailProps) {
       <Header title="MATHrone" sections={sections} />
       <NavBar sections={sections} />
       <div>
-        <Card
-          sx={{ display: "flex" }}
-          style={{
-            alignItems: "center",
-            justifyContent: "center",
-            backgroundColor: "#E2E2E2",
-            width: "100%",
-          }}
-        >
+        <Card className="detail-card-div" sx={{ display: "flex" }}>
           <CardMedia
-            style={{ marginRight: "20px" }}
+            className="detail-img"
             component="img"
             sx={{ width: "250px", borderRadius: 2, boxShadow: 7 }}
             image="https://storage.googleapis.com/mathrone-bucket/thumbnail/sample_workbook_thumnail.png"
             alt="workbook thumbnail"
           />
-          <CardContent style={{ textAlign: "left" }} sx={{ width: "50%" }}>
+          <CardContent className="detail-content" sx={{ width: "50%" }}>
             {params.id}
             <Typography
               sx={{ fontSize: 14 }}
@@ -67,15 +58,15 @@ export default function BookDetail({ name, sections }: WorkbookDetailProps) {
             >
               수학 - 고등학교 3학년
             </Typography>
-            <Typography variant="h4" component="div" color="text.secondary">
+            <Typography variant="h5" component="div" color="text.secondary">
               {/*name*/}
               2022학년도 수능 연계교재 수능완성
             </Typography>
             <LinearProgress
+              className="detail-progress-bar"
               variant="determinate"
               value={40}
               color="success"
-              style={{ borderRadius: "10px", height: "8px" }}
             ></LinearProgress>
             <Typography sx={{ mb: 1.5 }} color="text.secondary">
               EBS
@@ -101,7 +92,7 @@ export default function BookDetail({ name, sections }: WorkbookDetailProps) {
             <Typography variant="body2">
               # 수학1 #수학2 #미적분
               <br />
-              <span style={{ color: "gray" }}>난이도 : 보통(1283)</span>
+              <span className="detail-difficulty">난이도 : 보통(1283)</span>
             </Typography>
             <hr></hr>
             <Grid container>
@@ -123,8 +114,8 @@ export default function BookDetail({ name, sections }: WorkbookDetailProps) {
             </Grid>
           </CardContent>
         </Card>
-        <div style={{ backgroundColor: "white" }}>
-          <Paper style={{ width: "80%", margin: "auto" }} elevation={24}>
+        <div className="detail-chapter-div">
+          <Paper className="detail-chapter-paper" elevation={24}>
             <ListItemButton onClick={handleClick}>
               <ListItemText primary="수학1" />
               {open ? <ExpandLess /> : <ExpandMore />}
