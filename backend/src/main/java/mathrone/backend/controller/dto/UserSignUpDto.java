@@ -13,12 +13,10 @@ public class UserSignUpDto {
     private String email;
     private String password;
     private String id;
-    private String nickname;
 
     public UserInfo toUser(PasswordEncoder passwordEncoder){
         return UserInfo.builder()
                 .id(id)
-                .nickname(nickname)
                 .email(email)
                 .password(passwordEncoder.encode(password))
                 .role("ROLE_USER")
