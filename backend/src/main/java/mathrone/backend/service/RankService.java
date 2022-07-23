@@ -39,17 +39,17 @@ public class RankService {
         return arrayNode;
     }
 
-    public ObjectNode getMyRank(Integer user_id){ // 리더보드에 필요한 나의 rank 조회
+    public ObjectNode getMyRank(Integer userId){ // 리더보드에 필요한 나의 rank 조회
         ObjectMapper mapper = new ObjectMapper();
         ObjectNode node = mapper.createObjectNode();
-        node.put("rank", zSetOperations.reverseRank("test", user_id.toString()) + 1);
-        node.put("score", zSetOperations.score("test", user_id.toString()));
-        node.put("try", userRepository.getTryByUserID(user_id));
+        node.put("rank", zSetOperations.reverseRank("test", userId.toString()) + 1);
+        node.put("score", zSetOperations.score("test", userId.toString()));
+        node.put("try", userRepository.getTryByUserID(userId));
         return node;
     }
 
-    public void setRank(/*nickname*/){ // 문제를 풀었을 시에 스코어를 올려주는 용도
-        zSetOperations.incrementScore("rankscore", "nickname1", 1);
+    public void setRank(String id){ // 문제를 풀었을 시에 스코어를 올려주는 용도
+        zSetOperations.incrementScore("rankscore", id, 1);
         // value값에 해당하는 score에 delta값을 더해줌, value 값이 없을시 자동 추가
     }
 }
