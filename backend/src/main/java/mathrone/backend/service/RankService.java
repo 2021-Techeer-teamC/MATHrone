@@ -3,7 +3,7 @@ package mathrone.backend.service;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
-import mathrone.backend.repository.UserInfoRepository;
+import mathrone.backend.repository.UserRepository;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.ZSetOperations;
 import org.springframework.stereotype.Service;
@@ -16,11 +16,11 @@ import java.util.Set;
 public class RankService {
 
     private final ZSetOperations<String, String> zSetOperations;
-    private final UserInfoRepository userInfoRepository;
+    private final UserRepository userRepository;
 
-    public RankService(RedisTemplate<String, String> redisTemplate, UserInfoRepository userInfoRepository) {
+    public RankService(RedisTemplate<String, String> redisTemplate, UserRepository userRepository) {
         this.zSetOperations = redisTemplate.opsForZSet();
-        this.userInfoRepository = userInfoRepository;
+        this.userRepository = userRepository;
     }
 
     public ArrayNode getAllRank(){ // 리더보드에 필요한 rank 데이터 조회
@@ -33,7 +33,7 @@ public class RankService {
             int temp = Integer.parseInt(str.getValue());
             node.put("user_id", temp);
             node.put("score", str.getScore());
-            node.put("try", userInfoRepository.getTryByUserID(temp));
+            node.put("try", userRepository.getTryByUserID(temp));
             arrayNode.add(node);
         } // 해당 유저가 시도한 문제 수를 포함한 JSON 형식 다시 생성
         return arrayNode;
@@ -44,7 +44,7 @@ public class RankService {
         ObjectNode node = mapper.createObjectNode();
         node.put("rank", zSetOperations.reverseRank("test", user_id.toString()) + 1);
         node.put("score", zSetOperations.score("test", user_id.toString()));
-        node.put("try", userInfoRepository.getTryByUserID(user_id));
+        node.put("try", userRepository.getTryByUserID(user_id));
         return node;
     }
 
