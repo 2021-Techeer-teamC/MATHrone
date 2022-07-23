@@ -8,11 +8,8 @@
     "@mui/icons-material": "^5.2.1",
     "@mui/material": "^5.2.3",
     "@mui/styled-engine-sc": "^5.1.0",
-<<<<<<< HEAD
     "@szhsin/react-menu": "^3.0.2",
-=======
     "@popperjs/core": "^2.11.4",
->>>>>>> main
     "@testing-library/jest-dom": "^5.11.4",
     "@testing-library/react": "^11.1.0",
     "@testing-library/user-event": "^12.1.10",
@@ -25,12 +22,9 @@
     "react-element-popper": "^2.1.6",
     "react-img-carousel": "2.1.1",
     "react-material-ui-carousel": "3.1.1",
-<<<<<<< HEAD
     "react-minimal-pie-chart": "^8.3.0",
-=======
     "react-popper": "^2.2.5",
     "react-popper-tooltip": "^4.3.1",
->>>>>>> main
     "react-redux": "7.2.6",
     "react-responsive-carousel": "^3.2.22",
     "react-router-dom": "^6.0.2",
