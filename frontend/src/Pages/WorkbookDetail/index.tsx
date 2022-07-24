@@ -18,7 +18,7 @@ import {
 } from "@mui/material";
 import { green } from "@mui/material/colors";
 import Header from "../../components/Header";
-import NavBar from "../../components/NavBar.js";
+import NavBar from "../../components/NavBar/index.js";
 import "./style.css";
 
 type WorkbookDetailProps = {
