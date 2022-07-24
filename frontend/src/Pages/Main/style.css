@@ -30,3 +30,47 @@
 .recommend-prob {
   grid-area: recommend-prob;
 }
+
+/* main carousel */
+.main-carousel-div {
+  padding-bottom: 60px;
+  border-bottom: 1px solid #e4e4e4;
+}
+
+.main-carousel-link {
+  position: absolute;
+  transform: translate(40%, 1200%);
+}
+
+.year-label {
+  position: absolute;
+  transform: translate(100%, 230%);
+
+  font-size: 30px;
+  text-align: center;
+
+  color: black;
+  font-family: NotoSans-Regular;
+}
+
+.title-label {
+  position: absolute;
+  transform: translate(30%, 180%);
+
+  font-size: 50px;
+  text-align: center;
+
+  color: black;
+  font-family: NotoSans-Bold;
+}
+
+.content-label {
+  position: absolute;
+  transform: translate(20%, 800%);
+
+  font-size: 20px;
+  text-align: center;
+
+  color: #434343;
+  font-family: NotoSans-Thin;
+}

@@ -2,9 +2,6 @@ import * as React from "react";
 import CssBaseline from "@mui/material/CssBaseline";
 import Container from "@mui/material/Container";
 import Typography from "@mui/material/Typography";
-
-import "./style.css";
-
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a loader
 import Header from "../../components/Header";
@@ -12,7 +9,8 @@ import NavBar from "../../components/NavBar";
 import Footer from "../../components/Footer";
 import BookSlider from "../../components/BookSlider";
 import ProbList from "../../components/ProbList";
-import MainCarousel from "../../components/MainCarousel";
+import MainCarousel from "./components/MainCarousel";
+import "./style.css";
 
 const theme = createTheme();
 
