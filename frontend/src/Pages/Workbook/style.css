@@ -52,3 +52,9 @@
 .items .item span {
   float: right;
 }
+
+/* SearchBar */
+.searchbar-div {
+  margin: 20px;
+  padding: 20px;
+}

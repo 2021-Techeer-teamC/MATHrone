@@ -4,7 +4,7 @@ import Container from "@mui/material/Container";
 import FormControl from "@mui/material/FormControl";
 import NativeSelect from "@mui/material/NativeSelect";
 import Pagination from "@mui/material/Pagination";
-import SearchBar from "../../components/SearchBar";
+import SearchBar from "./components/SearchBar";
 import BookImgList from "../../components/BookImgList";
 import Header from "../../components/Header";
 import NavBar from "../../components/NavBar/index.js";
