@@ -8,7 +8,7 @@ import SearchBar from "../../components/SearchBar";
 import BookImgList from "../../components/BookImgList";
 import Header from "../../components/Header";
 import NavBar from "../../components/NavBar/index.js";
-import Footer from "../../components/Footer.js";
+import Footer from "../../components/Footer/index.js";
 import WorkbookSidebar from "./components/WorkbookSidebar.js";
 import workbookService from "../../services/workbookService";
 import bookItem from "../../types/bookItem";

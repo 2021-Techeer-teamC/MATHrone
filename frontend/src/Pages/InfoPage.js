@@ -1,7 +1,7 @@
 
 import Header from "../components/Header/index.js";
 import NavBar from "../components/NavBar/index.js";
-import Footer from "../components/Footer.js";
+import Footer from "../components/Footer/index.js";
 
 export default function InfoPage(props) {  
   return (
