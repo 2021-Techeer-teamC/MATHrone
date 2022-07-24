@@ -6,7 +6,7 @@ import NativeSelect from "@mui/material/NativeSelect";
 import Pagination from "@mui/material/Pagination";
 import SearchBar from "../../components/SearchBar";
 import BookImgList from "../../components/BookImgList";
-import Header from "../../components/Header.js";
+import Header from "../../components/Header";
 import NavBar from "../../components/NavBar.js";
 import Footer from "../../components/Footer.js";
 import WorkbookSidebar from "./components/WorkbookSidebar.js";

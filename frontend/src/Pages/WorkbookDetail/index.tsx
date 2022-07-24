@@ -17,7 +17,7 @@ import {
   LinearProgress,
 } from "@mui/material";
 import { green } from "@mui/material/colors";
-import Header from "../../components/Header.js";
+import Header from "../../components/Header";
 import NavBar from "../../components/NavBar.js";
 import "./style.css";
 

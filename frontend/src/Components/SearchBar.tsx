@@ -6,7 +6,7 @@ import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 import SearchIcon from "@mui/icons-material/Search";
 import IconButton from "@mui/material/IconButton";
-import Header from "./Header.js";
+import Header from "./Header/index.js";
 
 function SearchBar() {
   return (
