@@ -5,7 +5,7 @@ import Button from "@mui/material/Button";
 import { Link } from "react-router-dom";
 import { styled } from '@mui/material/styles';
 import { grey, teal } from '@mui/material/colors';
-import Logo from '../Logo.tsx';
+import Logo from '../Logo/index.tsx';
 import "../../assets/styles/components.css";
 import "./style.css";
 
