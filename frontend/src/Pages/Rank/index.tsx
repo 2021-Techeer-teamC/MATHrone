@@ -7,11 +7,10 @@ import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 import { useEffect } from "react";
 import "./style.css";
-//import "../../App.css";
-import RankList from "../../components/RankList";
 import Header from "../../components/Header";
 import NavBar from "../../components/NavBar";
 import Footer from "../../components/Footer";
+import RankList from "./components/RankList";
 import Trophy from "../../assets/image/trophy.png";
 
 interface rankData {

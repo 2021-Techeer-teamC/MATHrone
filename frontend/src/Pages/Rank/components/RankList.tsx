@@ -4,9 +4,9 @@ import Typography from "@mui/material/Typography";
 import { debug } from "console";
 import { Container } from "@mui/material";
 import CardMedia from "@mui/material/CardMedia";
-import Gold from "../assets/image/gold-medal.png";
-import Silver from "../assets/image/silver-medal.png";
-import Bronze from "../assets/image/bronze-medal.png";
+import Gold from "../../../assets/image/gold-medal.png";
+import Silver from "../../../assets/image/silver-medal.png";
+import Bronze from "../../../assets/image/bronze-medal.png";
 
 interface rankData {
   user_name: string;
