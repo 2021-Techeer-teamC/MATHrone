@@ -16,10 +16,10 @@ const theme = createTheme();
 
 export default function Main(props: { sections: any }) {
   //화면 크기
-  const size = {
-    width: window.innerWidth || document.body.clientWidth,
-    height: window.innerHeight || document.body.clientHeight,
-  };
+  // const size = {
+  //   width: window.innerWidth || document.body.clientWidth,
+  //   height: window.innerHeight || document.body.clientHeight,
+  // };
 
   //시도 중인 문제집
 

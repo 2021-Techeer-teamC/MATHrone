@@ -3,7 +3,6 @@ import { Carousel } from "react-responsive-carousel";
 import Link from "@mui/material/Link";
 
 const MainCarousel = ({ posts }) => {
-  const preventDefault = (event) => event.preventDefault();
 
   return (
     <div>

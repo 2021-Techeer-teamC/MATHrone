@@ -3,7 +3,6 @@ import IconButton from "@mui/material/IconButton";
 import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import Rating from "@mui/material/Rating";
-import styled from "styled-components";
 import { useEffect } from "react";
 import Pencil from "../../../assets/image/pencil.png";
 

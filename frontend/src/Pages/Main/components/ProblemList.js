@@ -31,7 +31,7 @@ const ProbList = ({ data, title }) => {
               {"더보기"}
             </Link>
           </div>
-          {data.length != 0 ? (
+          {data.length !== 0 ? (
             <List>
               {data.slice(0, 10).map((item) => (
                 <ListItem>

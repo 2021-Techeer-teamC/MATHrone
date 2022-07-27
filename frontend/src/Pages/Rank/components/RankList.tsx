@@ -1,7 +1,6 @@
 import * as React from "react";
 import Card from "@mui/material/Card";
 import Typography from "@mui/material/Typography";
-import { debug } from "console";
 import { Container } from "@mui/material";
 import CardMedia from "@mui/material/CardMedia";
 import Gold from "../../../assets/image/gold-medal.png";
@@ -26,7 +25,7 @@ interface data {
 
 const Medal = (rank: data) => {
   // 순위에 따라서 메달 이미지 변경
-  if (rank.rank - 1 == 1)
+  if (rank.rank - 1 === 1)
     return (
       <CardMedia
         component="img"

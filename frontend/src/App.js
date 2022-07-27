@@ -6,15 +6,12 @@ import {
   Route,
 } from "react-router-dom";
 
-import { createTheme } from "@mui/material/styles";
 import InfoPage from "./pages/InfoPage.js";
 import Books from "./pages/Workbook/index.tsx";
 import BookDetail from "./pages/WorkbookDetail";
 import Rank from "./pages/Rank/index.tsx";
 import SignIn from "./pages/User/SignIn.tsx";
 import SignUp from "./pages/User/SignUp.tsx";
-
-const theme = createTheme();
 
 const sections = [
   { title: "소개", url: "/info" },
