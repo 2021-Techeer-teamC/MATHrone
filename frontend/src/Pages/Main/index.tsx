@@ -8,7 +8,7 @@ import Header from "../../components/Header";
 import NavBar from "../../components/NavBar";
 import Footer from "../../components/Footer";
 import WorkbookSlider from "./components/WorkbookSlider";
-import ProbList from "../../components/ProbList";
+import ProblemList from "./components/ProblemList";
 import MainCarousel from "./components/MainCarousel";
 import "./style.css";
 
@@ -65,10 +65,10 @@ export default function Main(props: { sections: any }) {
             <WorkbookSlider posts={itemData} />
           </div>
           <div className="most-try-prob">
-            <ProbList data={tryData} title={"오늘 가장 많이 시도한 문제"} />
+            <ProblemList data={tryData} title={"오늘 가장 많이 시도한 문제"} />
           </div>
           <div className="recommend-prob">
-            <ProbList data={recData} title={"추천 문제"} />
+            <ProblemList data={recData} title={"추천 문제"} />
           </div>
         </main>
       </Container>

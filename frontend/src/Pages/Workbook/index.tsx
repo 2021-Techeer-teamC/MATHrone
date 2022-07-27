@@ -5,7 +5,7 @@ import FormControl from "@mui/material/FormControl";
 import NativeSelect from "@mui/material/NativeSelect";
 import Pagination from "@mui/material/Pagination";
 import SearchBar from "./components/SearchBar";
-import BookImgList from "../../components/BookImgList";
+import WorkbookImgList from "./components/WorkbookImgList";
 import Header from "../../components/Header";
 import NavBar from "../../components/NavBar/index.js";
 import Footer from "../../components/Footer/index.js";
@@ -189,7 +189,7 @@ export default function BookPage(props: { sections: any }) {
 
           <div>
             <Paper>
-              <BookImgList posts={result} />
+              <WorkbookImgList posts={result} />
             </Paper>
           </div>
           <div className="dummy-div"></div>
