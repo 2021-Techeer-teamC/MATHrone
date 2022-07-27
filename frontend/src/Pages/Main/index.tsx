@@ -7,7 +7,7 @@ import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a lo
 import Header from "../../components/Header";
 import NavBar from "../../components/NavBar";
 import Footer from "../../components/Footer";
-import BookSlider from "../../components/BookSlider";
+import WorkbookSlider from "./components/WorkbookSlider";
 import ProbList from "../../components/ProbList";
 import MainCarousel from "./components/MainCarousel";
 import "./style.css";
@@ -46,7 +46,7 @@ export default function Main(props: { sections: any }) {
             >
               {"시도 중인 문제집"}
             </Typography>
-            <BookSlider posts={itemData} />
+            <WorkbookSlider posts={itemData} />
           </div>
           <div className="star-carousel">
             <Typography
@@ -62,7 +62,7 @@ export default function Main(props: { sections: any }) {
               {"즐겨 찾기"}
             </Typography>
 
-            <BookSlider posts={itemData} />
+            <WorkbookSlider posts={itemData} />
           </div>
           <div className="most-try-prob">
             <ProbList data={tryData} title={"오늘 가장 많이 시도한 문제"} />
