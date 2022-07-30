@@ -41,7 +41,11 @@ public class Problem {
     private String problemImg;
 
     @Column(name = "level_of_diff")
-    private String levelOfDiff;
+    private int levelOfDiff;
+
+//    @OneToMany(mappedBy = "problem", cascade = CascadeType.ALL, orphanRemoval = true) //영속화 설정
+//    private List<ProblemTry> problemTryList = new LinkedList<>();   // null 에러 방지
+
 
 //    @OneToMany(mappedBy = "problem", cascade = CascadeType.ALL, orphanRemoval = true) //영속화 설정
 //    private List<ProblemTry> problemTryList = new LinkedList<>();   // null 에러 방지
@@ -67,7 +71,7 @@ public class Problem {
         return problemImg;
     }
 
-    public String getLevelOfDiff() {
+    public int getLevelOfDiff() {
         return levelOfDiff;
     }
 }

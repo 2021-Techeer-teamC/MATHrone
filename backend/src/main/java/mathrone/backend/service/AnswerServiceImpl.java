@@ -69,5 +69,4 @@ public class AnswerServiceImpl implements AnswerService {
         }
         return problemGradeResponseDtoList;
     }
-
 }
