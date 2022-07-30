@@ -1,25 +1,50 @@
 import * as React from "react";
 import CssBaseline from "@mui/material/CssBaseline";
 import Container from "@mui/material/Container";
-import Typography from "@mui/material/Typography";
+
+import "../Assets/styles/components.css";
+
 import { createTheme, ThemeProvider } from "@mui/material/styles";
+
+import BookIcon from "@mui/icons-material/MenuBookRounded";
+import StarIcon from "@mui/icons-material/Star";
+
 import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a loader
-import Header from "../../components/Header";
-import NavBar from "../../components/NavBar";
-import Footer from "../../components/Footer";
-import WorkbookSlider from "./components/WorkbookSlider";
-import ProblemList from "./components/ProblemList";
-import MainCarousel from "./components/MainCarousel";
-import "./style.css";
+import { Carousel } from "react-responsive-carousel";
+
+import Header from "../Components/Header";
+import NavBar from "../Components/NavBar";
+import Footer from "../Components/Footer";
+
+import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
+
+import InfoPage from "./InfoPage";
+import Books from "./Books";
+import Rank from "./Rank";
+import IconButton from "@mui/material/IconButton";
+import BookSlider from "../Components/BookSlider";
+import Typography from "@mui/material/Typography";
+import Toolbar from "@mui/material/Toolbar";
+import {
+  FormControlLabel,
+  FormGroup,
+  Grid,
+  ListItem,
+  ListItemIcon,
+  ListItemText,
+} from "@mui/material";
+import List from "@mui/material/List";
+import ProbList from "../Components/ProbList";
+import MainCarousel from "../Components/MainCarousel";
 
 const theme = createTheme();
 
 export default function Main(props: { sections: any }) {
   //화면 크기
-  // const size = {
-  //   width: window.innerWidth || document.body.clientWidth,
-  //   height: window.innerHeight || document.body.clientHeight,
-  // };
+  const size = {
+    width: window.innerWidth || document.body.clientWidth,
+    height: window.innerHeight || document.body.clientHeight,
+  };
 
   //시도 중인 문제집
 
@@ -29,11 +54,17 @@ export default function Main(props: { sections: any }) {
       <NavBar sections={props.sections} />
       <CssBaseline />
       <Container maxWidth="lg">
-        <main className="main-div">
-          <div className="main-carousel">
+        <main className="main2">
+          <div
+            className="carousel"
+            style={{
+              alignItems: "center",
+              justifyContent: "center",
+            }}
+          >
             <MainCarousel posts={addData} />
           </div>
-          <div className="try-carousel">
+          <div className="slider" style={{ paddingTop: "30px" }}>
             <Typography
               component="h2"
               variant="h5"
@@ -44,11 +75,11 @@ export default function Main(props: { sections: any }) {
               fontFamily="NotoSans-Bold"
               padding="5px"
             >
-              {"시도 중인 문제집"}
+              {"  시도 중인 문제집"}
             </Typography>
-            <WorkbookSlider posts={itemData} />
+            <BookSlider posts={itemData} />
           </div>
-          <div className="star-carousel">
+          <div className="slider2" style={{ paddingTop: "30px" }}>
             <Typography
               component="h2"
               variant="h5"
@@ -59,16 +90,16 @@ export default function Main(props: { sections: any }) {
               fontFamily="NotoSans-Bold"
               padding="5px"
             >
-              {"즐겨 찾기"}
+              {"  즐겨 찾기"}
             </Typography>
 
-            <WorkbookSlider posts={itemData} />
+            <BookSlider posts={itemData} />
           </div>
-          <div className="most-try-prob">
-            <ProblemList data={tryData} title={"오늘 가장 많이 시도한 문제"} />
+          <div className="probA">
+            <ProbList data={tryData} title={"오늘 가장 많이 시도한 문제"} />
           </div>
-          <div className="recommend-prob">
-            <ProblemList data={recData} title={"추천 문제"} />
+          <div className="probB">
+            <ProbList data={recData} title={"추천 문제"} />
           </div>
         </main>
       </Container>

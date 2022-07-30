@@ -3,7 +3,8 @@ import { Link } from "react-router-dom";
 import ImageList from "@mui/material/ImageList";
 import ImageListItem from "@mui/material/ImageListItem";
 import ImageListItemBar from "@mui/material/ImageListItemBar";
-import bookItem from "../../../types/bookItem";
+import Paper from "@mui/material/Paper";
+import bookItem from "../Types/bookItem";
 
 //props로 전달받은 값들
 type BookListProps = {
