@@ -1,19 +1,33 @@
-import React, { useEffect } from "react";
+import * as React from "react";
+import axios, { AxiosResponse } from "axios";
+import List from "@mui/material/List";
+import ListItemButton from "@mui/material/ListItemButton";
+import ListItemIcon from "@mui/material/ListItemIcon";
+import ListItemText from "@mui/material/ListItemText";
+import Collapse from "@mui/material/Collapse";
+import ExpandLess from "@mui/icons-material/ExpandLess";
+import ExpandMore from "@mui/icons-material/ExpandMore";
+import StarBorder from "@mui/icons-material/StarBorder";
 import Paper from "@mui/material/Paper";
 import Container from "@mui/material/Container";
 import FormControl from "@mui/material/FormControl";
 import NativeSelect from "@mui/material/NativeSelect";
 import Pagination from "@mui/material/Pagination";
-import SearchBar from "./components/SearchBar";
-import WorkbookImgList from "./components/WorkbookImgList";
-import Header from "../../components/Header";
-import NavBar from "../../components/NavBar/index.js";
-import Footer from "../../components/Footer/index.js";
-import WorkbookSidebar from "./components/WorkbookSidebar.js";
-import workbookService from "../../services/workbookService";
-import bookItem from "../../types/bookItem";
-import bookContent from "../../types/bookContent";
-import "./style.css";
+
+import SearchBar from "../Components/SearchBar";
+import "../App.css";
+import BookImgList from "../Components/BookImgList";
+import { useEffect } from "react";
+
+import workbookService from "../Services/workbookService";
+import bookItem from "../Types/bookItem";
+import bookContent from "../Types/bookContent";
+import Header from "../Components/Header";
+import NavBar from "../Components/NavBar";
+import { ThemeProvider } from "@mui/material/styles";
+import Footer from "../Components/Footer";
+
+import WorkbookSidebar from "../Components/WorkbookSidebar";
 
 export default function BookPage(props: { sections: any }) {
   //책 토글 관련
@@ -160,11 +174,11 @@ export default function BookPage(props: { sections: any }) {
       <NavBar sections={props.sections} />
       <SearchBar></SearchBar>
       <Container>
-        <div className="container sorting-div">
-          <div className="dummy-div" />
-          <div>
-            <span className="count-span">
-              {category === "all" ? publisher : category}({resultCnt})
+        <div className="container">
+          <div className="item" />
+          <div className="item">
+            <span style={{ minWidth: 120, float: "left" }}>
+              {category == "all" ? publisher : category}({resultCnt})
             </span>
             <FormControl sx={{ minWidth: 120, float: "right" }}>
               <NativeSelect
@@ -187,13 +201,16 @@ export default function BookPage(props: { sections: any }) {
             onCategoryClick={selectCategory}
           />
 
-          <div>
+          <div className="item">
             <Paper>
-              <WorkbookImgList posts={result} />
+              <BookImgList posts={result} />
             </Paper>
           </div>
-          <div className="dummy-div"></div>
-          <div className="pagination-div">
+          <div className="item"></div>
+          <div
+            className="item"
+            style={{ display: "flex", justifyContent: "center" }}
+          >
             <Pagination
               count={Math.ceil(resultCnt / postsPerPage)}
               defaultPage={1}

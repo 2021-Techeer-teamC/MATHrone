@@ -1,17 +1,18 @@
-import * as React from "react";
-import Box from "@mui/material/Box";
-import Card from "@mui/material/Card";
-import Typography from "@mui/material/Typography";
-import { Container } from "@mui/material";
-import CardContent from "@mui/material/CardContent";
-import CardMedia from "@mui/material/CardMedia";
+import * as React from 'react';
+import Box from '@mui/material/Box';
+import Card from '@mui/material/Card';
+import Typography from '@mui/material/Typography';
+import { Container } from '@mui/material';
+import CardContent from '@mui/material/CardContent';
+import CardMedia from '@mui/material/CardMedia';
 import { useEffect } from "react";
-import "./style.css";
-import Header from "../../components/Header";
-import NavBar from "../../components/NavBar";
-import Footer from "../../components/Footer";
-import RankList from "./components/RankList";
-import Trophy from "../../assets/image/trophy.png";
+import "../App.css";
+import RankList from '../Components/RankList';
+import Header from "../Components/Header";
+import NavBar from "../Components/NavBar";
+import Footer from "../Components/Footer";
+import Trophy from "../Assets/image/trophy.png";
+
 
 interface rankData {
   user_name: string;
@@ -24,7 +25,7 @@ interface rankData {
 //   url: string;
 // }
 
-export default function Rankpage(props: { sections: any }) {
+export default function Rankpage(props: { sections: any; }) {
   const [rankDatas, setRankDatas] = React.useState([...rankData]);
   const [res, setRes] = React.useState([...rankDatas]);
 
@@ -35,9 +36,10 @@ export default function Rankpage(props: { sections: any }) {
     //   setResult(rankDatas);
     // 랭크데이터 받아오기
     setRes(rankDatas);
-  }, []);
+  }, [])
 
   return (
+
     <div>
       <Header title="MATHrone" sections={props.sections} />
       <NavBar sections={props.sections} />
@@ -51,34 +53,26 @@ export default function Rankpage(props: { sections: any }) {
                 image={Trophy}
                 alt="Live from space album cover"
               />
-              <Typography variant="h4">Ranking</Typography>
+              <Typography variant="h4">
+                Ranking
+              </Typography>
             </Box>
             <CardContent>
-              <Typography variant="h6" component="div" align="left">
+              <Typography variant="h6" component="div" align='left'>
                 맞은 문제 별 전체 순위
               </Typography>
             </CardContent>
           </Box>
         </Box>
 
-        <Card className="rank-div-card" sx={{ p: 1 }}>
-          <Card
-            elevation={5}
-            sx={{
-              display: "flex",
-              flexDirection: "column",
-              pb: 2,
-              pt: 2,
-              mb: 3,
-              pr: 5,
-              pl: 5,
-            }}
-          >
-            <div className="rank-div-header">
+        <Card style={{ backgroundColor: 'WhiteSmoke' }} sx={{ p: 1 }}>
+          <Card elevation={5} sx={{ display: 'flex', flexDirection: 'column', pb: 2, pt: 2, mb: 3, pr: 5, pl: 5 }}>
+            <div className="rankContainer">
               <Typography variant="body1" component="p">
                 랭킹
               </Typography>
-              <Typography variant="body1" component="p"></Typography>
+              <Typography variant="body1" component="p">
+              </Typography>
               <Typography variant="body1" component="p">
                 유저 닉네임
               </Typography>
@@ -94,18 +88,7 @@ export default function Rankpage(props: { sections: any }) {
           <RankList posts={res} />
         </Card>
 
-        <Card
-          variant="outlined"
-          sx={{
-            display: "grid",
-            gridTemplateColumns: "0.5fr 0.5fr 3fr 1fr 1fr",
-            mt: 2,
-            pt: 3,
-            pb: 3,
-            pl: 5,
-            pr: 6,
-          }}
-        >
+        <Card variant="outlined" sx={{ display: 'grid', gridTemplateColumns: '0.5fr 0.5fr 3fr 1fr 1fr', mt: 2, pt: 3, pb: 3, pl: 5, pr: 6 }}>
           <Typography variant="body1" component="p">
             10000
           </Typography>
@@ -124,6 +107,7 @@ export default function Rankpage(props: { sections: any }) {
           title="Footer"
           description="Something here to give the footer a purpose!"
         />
+
       </Container>
     </div>
   );
