@@ -15,6 +15,7 @@ import mathrone.backend.repository.ProblemRepository;
 import mathrone.backend.repository.ProblemTryRespository;
 import mathrone.backend.repository.SolutionRepository;
 import mathrone.backend.repository.UserRepository;
+import mathrone.backend.util.TokenProviderUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -26,13 +27,22 @@ public class AnswerServiceImpl implements AnswerService {
     private final ProblemRepository problemRepository;
     private final UserRepository userRepository;
     private final ProblemTryRespository problemTryRespository;
+    private final TokenProviderUtil tokenProviderUtil;
 
     @Transactional
     public List<ProblemGradeResponseDto> gradeProblem(
-        ProblemGradeRequestDto problemGradeRequestDtoList) {
+        ProblemGradeRequestDto problemGradeRequestDtoList, String accessToken) {
+
+        if(!tokenProviderUtil.validateToken(accessToken)){
+            throw new RuntimeException("Access Token 이 유효하지 않습니다.");
+        }
+
+        String userId = tokenProviderUtil.getAuthentication(accessToken).getName();
+
         List<ProblemGradeResponseDto> problemGradeResponseDtoList = new ArrayList<>();
         List<ProblemGradeRequestDto.problemSolve> list = problemGradeRequestDtoList.getAnswerSubmitList();
-        UserInfo user = userRepository.findById(problemGradeRequestDtoList.getUserId()).get();
+
+        UserInfo user = userRepository.findById(Integer.parseInt(userId)).get();
 
         for (ProblemGradeRequestDto.problemSolve problem : list) {
             Solution solutionProblem = solutionRepository.findSolutionByProblemId(
