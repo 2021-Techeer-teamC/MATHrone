@@ -12,7 +12,7 @@ import mathrone.backend.domain.ProblemTry;
 import mathrone.backend.domain.Solution;
 import mathrone.backend.domain.UserInfo;
 import mathrone.backend.repository.ProblemRepository;
-import mathrone.backend.repository.ProblemTryRespository;
+import mathrone.backend.repository.ProblemTryRepository;
 import mathrone.backend.repository.SolutionRepository;
 import mathrone.backend.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,50 +25,48 @@ public class AnswerServiceImpl implements AnswerService {
     private final SolutionRepository solutionRepository;
     private final ProblemRepository problemRepository;
     private final UserRepository userRepository;
-    private final ProblemTryRespository problemTryRespository;
+    private final ProblemTryRepository problemTryRepository;
 
     @Transactional
     public List<ProblemGradeResponseDto> gradeProblem(
-        ProblemGradeRequestDto problemGradeRequestDtoList) {
+            ProblemGradeRequestDto problemGradeRequestDtoList) {
         List<ProblemGradeResponseDto> problemGradeResponseDtoList = new ArrayList<>();
         List<ProblemGradeRequestDto.problemSolve> list = problemGradeRequestDtoList.getAnswerSubmitList();
         UserInfo user = userRepository.findById(problemGradeRequestDtoList.getUserId()).get();
 
         for (ProblemGradeRequestDto.problemSolve problem : list) {
             Solution solutionProblem = solutionRepository.findSolutionByProblemId(
-                problem.getProblemId());
+                    problem.getProblemId());
             Problem registedProblem = problemRepository.findByProblemId(problem.getProblemId());
             boolean isCorrect = false;
             if (solutionProblem.getAnswer() == problem.getSolution()) {
                 isCorrect = true;
             }
 
-            Optional<ProblemTry> registedProblemTry = problemTryRespository.findAllByProblemAndUser(registedProblem,
-                user);
-            if (registedProblemTry.isPresent()){
+            Optional<ProblemTry> registedProblemTry = problemTryRepository.findAllByProblemAndUser(registedProblem,
+                    user);
+            if (registedProblemTry.isPresent()) {
                 ProblemTry problemTry = registedProblemTry.get();
                 problemTry.setIscorrect(isCorrect);
                 problemTry.setAnswerSubmitted(problem.getSolution());
             } else {
                 ProblemTry problemTry = ProblemTry.builder()
-                    .answerSubmitted(problem.getSolution())
-                    .iscorrect(isCorrect)
-                    .user(user)
-                    .problem(registedProblem)
-                    .build();
+                        .answerSubmitted(problem.getSolution())
+                        .iscorrect(isCorrect)
+                        .user(user)
+                        .problem(registedProblem)
+                        .build();
 
-//                user.getProblemTryList().add(problemTry);
-//                registedProblem.getProblemTryList().add(problemTry);
-                problemTryRespository.save(problemTry);
+                // user.getProblemTryList().add(problemTry);
+                // registedProblem.getProblemTryList().add(problemTry);
+                problemTryRepository.save(problemTry);
             }
 
             problemGradeResponseDtoList.add(ProblemGradeResponseDto.builder()
-                .problemId(problem.getProblemId())
-                .solution(problem.getSolution())
-                .answer(isCorrect).build());
+                    .problemId(problem.getProblemId())
+                    .solution(problem.getSolution())
+                    .answer(isCorrect).build());
         }
         return problemGradeResponseDtoList;
     }
-
-
 }
