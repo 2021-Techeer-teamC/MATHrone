@@ -1,13 +1,21 @@
 package mathrone.backend.service;
 
+
+import mathrone.backend.controller.dto.RecentTryDto;
+import mathrone.backend.controller.dto.CarouselResponseDto;
 import mathrone.backend.domain.*;
+import mathrone.backend.repository.ChapterRepository;
 import mathrone.backend.repository.LevelRepository;
+import mathrone.backend.repository.ProblemRepository;
+import mathrone.backend.repository.ProblemTryRespository;
 import mathrone.backend.repository.UserWorkbookRelRepository;
+import mathrone.backend.repository.WorkBookRecommendRepository;
 import mathrone.backend.repository.WorkBookRepository;
 import mathrone.backend.repository.WorkbookLevelRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 @Service
@@ -15,12 +23,27 @@ public class MainPageService {
     private final UserWorkbookRelRepository workBookRelRepository;
     private final WorkBookRepository workBookRepository;
     private final WorkbookLevelRepository workbookLevelRepository;
+    private final WorkBookRecommendRepository workBookRecommendRepository;
     private final LevelRepository levelRepository;
-    public MainPageService(UserWorkbookRelRepository workBookRelRepository, WorkBookRepository workBookRepository, WorkbookLevelRepository workbookLevelRepository, LevelRepository levelRepository) {
+    private final ProblemRepository problemRepository;
+    private final ChapterRepository chapterRepository;
+    private final ProblemTryRespository problemTryRespository;
+
+    public MainPageService(UserWorkbookRelRepository workBookRelRepository,
+            WorkBookRepository workBookRepository, WorkbookLevelRepository workbookLevelRepository,
+            WorkBookRecommendRepository workBookRecommendRepository,
+            LevelRepository levelRepository,
+            ProblemRepository problemRepository, ChapterRepository chapterRepository,
+            ProblemTryRespository problemTryRespository) {
+
         this.workBookRelRepository = workBookRelRepository;
         this.workBookRepository = workBookRepository;
         this.workbookLevelRepository = workbookLevelRepository;
+        this.workBookRecommendRepository = workBookRecommendRepository;
         this.levelRepository = levelRepository;
+        this.problemRepository = problemRepository;
+        this.chapterRepository = chapterRepository;
+        this.problemTryRespository = problemTryRespository;
     }
 
     public List<userWorkbookData> getTryingBook(int userId){
@@ -50,6 +73,23 @@ public class MainPageService {
         return result;
     }
 
+    public List<CarouselResponseDto> getCarousel() {
+        List<WorkbookRecommend> workbookRecommendList = workBookRecommendRepository.findAll();
+        List<CarouselResponseDto> carouselResponseDtoList = new LinkedList<>();
+        for (WorkbookRecommend workbookRecommend : workbookRecommendList){
+            WorkBookInfo workBookInfo = workBookRepository.findByWorkbookId(
+                workbookRecommend.getWorkbookId());
+            carouselResponseDtoList.add(CarouselResponseDto.builder()
+                .workbookId(workBookInfo.getWorkbookId())
+                .workbookTitle(workBookInfo.getTitle())
+                .month(workBookInfo.getMonth())
+                .year(workBookInfo.getYear())
+                .profileImg(workBookInfo.getProfileImg())
+                .intro(workbookRecommend.getIntro())
+                .build());
+        }
+        return carouselResponseDtoList;
+    }
 
     public List<userWorkbookData> getStarBook(int userId){
         List<userWorkbookData> result = new ArrayList<userWorkbookData>();
@@ -95,6 +135,22 @@ public class MainPageService {
         else return "3";
 
     }
-
-
+    
+    public List<RecentTryDto> getRecentTry(){
+        List<ProblemTry> problemList = problemTryRespository.findDistinctTop10(); // 최근 푼 10개 가져옴
+        List<RecentTryDto> recentTryProblems = new ArrayList<RecentTryDto>();
+        for(int i = 0; i < 10; i++){
+            Problem problem = problemList.get(i).getProblem();
+            RecentTryDto recentTry = RecentTryDto.builder()
+                    .problemId(problem.getProblemId())
+                    .problemNum(problem.getProblemNum())
+                    .workbookTitle(workBookRepository.findByWorkbookId(problem.getChapterId()).getTitle())
+                    .level(problem.getLevelOfDiff())
+                    .subject(chapterRepository.findByChapterId(problem.getChapterId()).get().getSubject())
+                    .chapter(chapterRepository.findByChapterId(problem.getChapterId()).get().getChapter())
+                    .build();
+            recentTryProblems.add(recentTry);
+        }
+        return recentTryProblems;
+    }
 }
