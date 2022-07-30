@@ -1,7 +1,6 @@
 
 import ElementPopper from "react-element-popper";
 import "react-element-popper/build/element_popper.css";
-import "../Assets/styles/Workbooksidebar.css";
 
 import React, { useEffect, useRef, useState } from "react";
 

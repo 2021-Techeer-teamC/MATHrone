@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import {
   Button,
   CssBaseline,
@@ -10,9 +10,9 @@ import {
   Container,
 } from "@mui/material/";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-import Logo from "../../Components/Logo";
-import { SignUpDiv } from "./style.js";
-import userService from "../../Services/userService";
+import Logo from "../../components/Logo";
+import { SignUpDiv } from "./style";
+import userService from "../../services/userService";
 
 export default function SignUP() {
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
