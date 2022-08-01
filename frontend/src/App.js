@@ -1,20 +1,17 @@
 import './App.css';
-import Main from './Pages/Main'
+import Main from './pages/Main'
 import {
   BrowserRouter as Router,
   Routes,
   Route,
 } from "react-router-dom";
 
-import { createTheme } from "@mui/material/styles";
-import InfoPage from "./Pages/InfoPage";
-import Books from "./Pages/Books";
-import BookDetail from "./Pages/BookDetail";
-import Rank from "./Pages/Rank";
-import SignIn from "./Pages/User/SignIn";
-import SignUp from "./Pages/User/SignUp";
-
-const theme = createTheme();
+import InfoPage from "./pages/InfoPage.js";
+import Books from "./pages/Workbook/index.tsx";
+import BookDetail from "./pages/WorkbookDetail";
+import Rank from "./pages/Rank/index.tsx";
+import SignIn from "./pages/User/SignIn.tsx";
+import SignUp from "./pages/User/SignUp.tsx";
 
 const sections = [
   { title: "소개", url: "/info" },

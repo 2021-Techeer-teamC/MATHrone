@@ -1,4 +1,4 @@
-import {signInUserItem, signUpUserItem} from "../Types/userItem";
+import {signInUserItem, signUpUserItem} from "../types/userItem";
 import axios from "axios";
 
 class UserService{

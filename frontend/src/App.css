@@ -43,11 +43,6 @@
   grid-template-rows: 0.1fr 5fr 0.1fr;
 }
 
-.rankContainer {
-  display: grid;
-  grid-template-columns: 0.5fr 0.5fr 3fr 1fr 1fr;
-}
-
 .main {
   display: grid;
   grid-template-rows: 2fr 1fr 1fr 1fr;
@@ -55,58 +50,29 @@
   justify-content: center;
 }
 
-.main2 {
-  display: grid;
-  grid-template-areas:
-    "carousel carousel"
-    "slider slider"
-    "slider2 slider2"
-    "probA probB";
-}
-
-.carousel {
-  grid-area: carousel;
-}
-
-.slider {
-  grid-area: slider;
-}
-
-.slider2 {
-  grid-area: slider2;
-}
-
-.probA {
-  grid-area: probA;
-}
-
-.probB {
-  grid-area: probB;
-}
-
 /*FONT*/
 
 @font-face {
   font-family: "NotoSans-Black";
-  src: url("./Assets/font/NotoSansKR-Black.otf");
+  src: url("./assets/font/NotoSansKR-Black.otf");
 }
 @font-face {
   font-family: "NotoSans-Bold";
-  src: url("./Assets/font/NotoSansKR-Bold.otf");
+  src: url("./assets/font/NotoSansKR-Bold.otf");
 }
 @font-face {
   font-family: "NotoSans-Light";
-  src: url("./Assets/font/NotoSansKR-Light.otf");
+  src: url("./assets/font/NotoSansKR-Light.otf");
 }
 @font-face {
   font-family: "NotoSans-Medium";
-  src: url("./Assets/font/NotoSansKR-Medium.otf");
+  src: url("./assets/font/NotoSansKR-Medium.otf");
 }
 @font-face {
   font-family: "NotoSans-Regular";
-  src: url("./Assets/font/NotoSansKR-Regular.otf");
+  src: url("./assets/font/NotoSansKR-Regular.otf");
 }
 @font-face {
   font-family: "NotoSans-Thin";
-  src: url("./Assets/font/NotoSansKR-Thin.otf");
+  src: url("./assets/font/NotoSansKR-Thin.otf");
 }
