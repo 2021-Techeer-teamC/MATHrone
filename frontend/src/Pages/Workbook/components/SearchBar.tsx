@@ -6,11 +6,10 @@ import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 import SearchIcon from "@mui/icons-material/Search";
 import IconButton from "@mui/material/IconButton";
-import Header from "./Header";
 
 function SearchBar() {
   return (
-    <div style={{ margin: 20, padding: 20 }}>
+    <div className="searchbar-div">
       <Box
         component="form"
         sx={{
