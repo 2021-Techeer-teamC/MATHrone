@@ -24,37 +24,18 @@ public class ProfileService {
     //userId를 받아와서 전송
     public UserProfile getProfile(Integer userId){
 
-        System.out.println(1);
+        //유저 정보 받아오기
+        UserInfo userinfo = userInfoRepository.findByUserId(userId);
+        //랭크 정보 받아오기
+        ObjectNode node = getMyRank(userId);
 
-        UserInfo userinfo = userInfoRepository.findByUserId(userId); //getById가 대체 뭔데 없는데 지혼자 생성됏는지...
-        System.out.println(2);
-//        ObjectNode node = getMyRank(userId);
-        System.out.println(3);
-//        UserRank r = new UserRank(userId,node.findValue("rank").toString(), node.findValue("score").toString(), node.findValue("try").toString());
-        System.out.println(4);
-//        System.out.println(r);
-//        System.out.println(node);
-        System.out.println(userinfo);
+        //랭크 정보를 DTO에 담기
+        UserRank r = new UserRank(node.findValue("rank").toString(), node.findValue("score").toString(), node.findValue("try").toString());
 
-//        this.userId = userId;
-//        this.id = id;
-//        this.password = password;
-//        this.profileImg = profileImg;
-//        this.exp = exp;
-//        this.premium = premium;
-//        this.email = email;
-//        this.phoneNum = phoneNum;
-//        this.userImg = userImg;
-//        this.role = role;
-//        this.rankInfo = rankInfo;e
-
-
+        //최종 Profile 생성
         UserProfile res = new UserProfile(userinfo.getUserId(), userinfo.getId(), userinfo.getPassword(), userinfo.getProfileImg(),userinfo.getExp(),
-                userinfo.isPremium(),userinfo.getEmail(), userinfo.getPhoneNum(), userinfo.getUserImg(),userinfo.getRole()
-                );
-        System.out.println(5);
-        System.out.println(res);
-
+                userinfo.isPremium(),userinfo.getEmail(), userinfo.getPhoneNum(), userinfo.getUserImg(),userinfo.getRole(),r);
+        
         return res;
     }
 
