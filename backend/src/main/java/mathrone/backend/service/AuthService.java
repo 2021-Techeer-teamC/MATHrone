@@ -5,6 +5,7 @@ import mathrone.backend.controller.dto.*;
 import mathrone.backend.domain.token.LogoutAccessToken;
 import mathrone.backend.domain.token.RefreshToken;
 import mathrone.backend.domain.UserInfo;
+import mathrone.backend.repository.UserInfoRepository;
 import mathrone.backend.repository.tokenRepository.LogoutAccessTokenRedisRepository;
 import mathrone.backend.util.TokenProviderUtil;
 import mathrone.backend.repository.tokenRepository.RefreshTokenRedisRepository;
@@ -24,7 +25,7 @@ import java.util.List;
 public class AuthService {
 
     private final AuthenticationManagerBuilder authenticationManagerBuilder;
-    private final UserRepository userRepository;
+    private final UserInfoRepository userinfoRepository;
     private final PasswordEncoder passwordEncoder;
     private final TokenProviderUtil tokenProviderUtil;
     private final RefreshTokenRepository refreshTokenRepository;
@@ -33,20 +34,20 @@ public class AuthService {
 
     @Transactional
     public UserResponseDto signup(UserSignUpDto userSignUpDto){
-        if (userRepository.existsByEmail(userSignUpDto.getEmail())){
+        if (userinfoRepository.existsByEmail(userSignUpDto.getEmail())){
             throw new RuntimeException("이미 가입된 유저입니다.");
         }
         UserInfo newUser = userSignUpDto.toUser(passwordEncoder);
-        return UserResponseDto.of(userRepository.save(newUser));
+        return UserResponseDto.of(userinfoRepository.save(newUser));
     }
 
     @Transactional
     public void deleteUser(String email) {
-        userRepository.deleteByEmail(email);
+        userinfoRepository.deleteByEmail(email);
     }
 
     public List<UserInfo> allUser() {
-        return userRepository.findAll();
+        return userinfoRepository.findAll();
     }
 
     @Transactional
