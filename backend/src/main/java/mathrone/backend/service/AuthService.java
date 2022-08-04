@@ -10,7 +10,6 @@ import mathrone.backend.repository.tokenRepository.LogoutAccessTokenRedisReposit
 import mathrone.backend.util.TokenProviderUtil;
 import mathrone.backend.repository.tokenRepository.RefreshTokenRedisRepository;
 import mathrone.backend.repository.tokenRepository.RefreshTokenRepository;
-import mathrone.backend.repository.UserRepository;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.core.Authentication;

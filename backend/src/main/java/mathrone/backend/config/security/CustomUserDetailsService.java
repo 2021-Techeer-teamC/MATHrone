@@ -2,7 +2,7 @@ package mathrone.backend.config.security;
 
 import lombok.RequiredArgsConstructor;
 import mathrone.backend.domain.UserInfo;
-import mathrone.backend.repository.UserRepository;
+import mathrone.backend.repository.UserInfoRepository;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -19,7 +19,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class CustomUserDetailsService implements UserDetailsService {
 
-    private final UserRepository userRepository;
+    private final UserInfoRepository userRepository;
 
     @Override
 //    @Cacheable(value = CacheKey.USER, key = "#email", unless = "#result == null")
