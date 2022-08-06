@@ -14,7 +14,7 @@ import SignIn from "./pages/User/SignIn.tsx";
 import SignUp from "./pages/User/SignUp.tsx";
 
 const sections = [
-  { title: "소개", url: "/info" },
+  { title: "사이트 소개", url: "/info" },
   { title: "교재", url: "/books" },
   { title: "랭킹", url: "/rank" },
 ];
