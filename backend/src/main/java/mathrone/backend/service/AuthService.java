@@ -140,4 +140,21 @@ public class AuthService {
         List<RefreshToken> list = refreshTokenRepository.findAll();
         return list;
     }
+
+
+    @Transactional
+    public String getUserIdFromAT(TokenRequestDto tokenRequestDto) {
+        // 1. access token 유효성 검사
+        if (!tokenProviderUtil.validateToken(tokenRequestDto.getAccessToken())) {
+            throw new RuntimeException("Access Token 이 유효하지 않습니다.");
+        }
+        String accessToken = tokenRequestDto.getAccessToken();
+
+        // 2. access token으로부터 user id 가져오기 (email x)
+        String userId = tokenProviderUtil.getAuthentication(accessToken).getName();
+
+        return userId;
+
+    }
+
 }
