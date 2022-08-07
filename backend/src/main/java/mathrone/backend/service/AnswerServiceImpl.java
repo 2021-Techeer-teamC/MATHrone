@@ -14,7 +14,7 @@ import mathrone.backend.domain.UserInfo;
 import mathrone.backend.repository.ProblemRepository;
 import mathrone.backend.repository.ProblemTryRepository;
 import mathrone.backend.repository.SolutionRepository;
-import mathrone.backend.repository.UserRepository;
+import mathrone.backend.repository.UserInfoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -24,7 +24,7 @@ public class AnswerServiceImpl implements AnswerService {
 
     private final SolutionRepository solutionRepository;
     private final ProblemRepository problemRepository;
-    private final UserRepository userRepository;
+    private final UserInfoRepository userInfoRepository;
     private final ProblemTryRepository problemTryRepository;
 
     @Transactional
@@ -32,7 +32,7 @@ public class AnswerServiceImpl implements AnswerService {
             ProblemGradeRequestDto problemGradeRequestDtoList) {
         List<ProblemGradeResponseDto> problemGradeResponseDtoList = new ArrayList<>();
         List<ProblemGradeRequestDto.problemSolve> list = problemGradeRequestDtoList.getAnswerSubmitList();
-        UserInfo user = userRepository.findById(problemGradeRequestDtoList.getUserId()).get();
+        UserInfo user = userInfoRepository.findByUserId(problemGradeRequestDtoList.getUserId());
 
         for (ProblemGradeRequestDto.problemSolve problem : list) {
             Solution solutionProblem = solutionRepository.findSolutionByProblemId(
