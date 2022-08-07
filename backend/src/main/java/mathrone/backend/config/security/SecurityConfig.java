@@ -35,7 +35,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             "/main/**",
             "/user/**",
             "/problem/**",
-            "/answer/**"
+            "/answer/**",
             "/rank/**",
             "/profile/**",
     };
