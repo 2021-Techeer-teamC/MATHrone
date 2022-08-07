@@ -5,11 +5,11 @@ import mathrone.backend.controller.dto.*;
 import mathrone.backend.domain.token.LogoutAccessToken;
 import mathrone.backend.domain.token.RefreshToken;
 import mathrone.backend.domain.UserInfo;
+import mathrone.backend.repository.UserInfoRepository;
 import mathrone.backend.repository.tokenRepository.LogoutAccessTokenRedisRepository;
 import mathrone.backend.util.TokenProviderUtil;
 import mathrone.backend.repository.tokenRepository.RefreshTokenRedisRepository;
 import mathrone.backend.repository.tokenRepository.RefreshTokenRepository;
-import mathrone.backend.repository.UserRepository;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.core.Authentication;
@@ -24,7 +24,7 @@ import java.util.List;
 public class AuthService {
 
     private final AuthenticationManagerBuilder authenticationManagerBuilder;
-    private final UserRepository userRepository;
+    private final UserInfoRepository userinfoRepository;
     private final PasswordEncoder passwordEncoder;
     private final TokenProviderUtil tokenProviderUtil;
     private final RefreshTokenRepository refreshTokenRepository;
@@ -33,20 +33,20 @@ public class AuthService {
 
     @Transactional
     public UserResponseDto signup(UserSignUpDto userSignUpDto){
-        if (userRepository.existsByEmail(userSignUpDto.getEmail())){
+        if (userinfoRepository.existsByEmail(userSignUpDto.getEmail())){
             throw new RuntimeException("이미 가입된 유저입니다.");
         }
         UserInfo newUser = userSignUpDto.toUser(passwordEncoder);
-        return UserResponseDto.of(userRepository.save(newUser));
+        return UserResponseDto.of(userinfoRepository.save(newUser));
     }
 
     @Transactional
     public void deleteUser(String email) {
-        userRepository.deleteByEmail(email);
+        userinfoRepository.deleteByEmail(email);
     }
 
     public List<UserInfo> allUser() {
-        return userRepository.findAll();
+        return userinfoRepository.findAll();
     }
 
     @Transactional
@@ -140,4 +140,21 @@ public class AuthService {
         List<RefreshToken> list = refreshTokenRepository.findAll();
         return list;
     }
+
+
+    @Transactional
+    public String getUserIdFromAT(TokenRequestDto tokenRequestDto) {
+        // 1. access token 유효성 검사
+        if (!tokenProviderUtil.validateToken(tokenRequestDto.getAccessToken())) {
+            throw new RuntimeException("Access Token 이 유효하지 않습니다.");
+        }
+        String accessToken = tokenRequestDto.getAccessToken();
+
+        // 2. access token으로부터 user id 가져오기 (email x)
+        String userId = tokenProviderUtil.getAuthentication(accessToken).getName();
+
+        return userId;
+
+    }
+
 }
