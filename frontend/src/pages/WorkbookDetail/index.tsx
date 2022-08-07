@@ -20,6 +20,7 @@ import { green } from "@mui/material/colors";
 import Header from "../../components/Header";
 import NavBar from "../../components/NavBar/index.js";
 import "./style.css";
+import { ArrowLeftTwoTone } from "@mui/icons-material";
 
 type WorkbookDetailProps = {
   name: string;
@@ -34,6 +35,11 @@ export default function BookDetail({ name, sections }: WorkbookDetailProps) {
 
   const handleClick = () => {
     setOpen(!open);
+  };
+
+  const handleChapterClick = (chapterId: string) => {
+    const workbookId = params.id;
+    window.location.href = `/problem/${workbookId}/${chapterId}`;
   };
 
   return (
@@ -122,13 +128,22 @@ export default function BookDetail({ name, sections }: WorkbookDetailProps) {
             </ListItemButton>
             <Collapse in={open} timeout="auto" unmountOnExit>
               <List component="div" disablePadding>
-                <ListItemButton sx={{ pl: 6 }}>
+                <ListItemButton
+                  sx={{ pl: 6 }}
+                  onClick={() => handleChapterClick("0101")}
+                >
                   <ListItemText primary="지수함수와 로그함수" />
                 </ListItemButton>
-                <ListItemButton sx={{ pl: 6 }}>
+                <ListItemButton
+                  sx={{ pl: 6 }}
+                  onClick={() => handleChapterClick("0102")}
+                >
                   <ListItemText primary="삼각함수" />
                 </ListItemButton>
-                <ListItemButton sx={{ pl: 6 }}>
+                <ListItemButton
+                  sx={{ pl: 6 }}
+                  onClick={() => handleChapterClick("0103")}
+                >
                   <ListItemText primary="수열" />
                 </ListItemButton>
               </List>
@@ -140,13 +155,22 @@ export default function BookDetail({ name, sections }: WorkbookDetailProps) {
             </ListItemButton>
             <Collapse in={open} timeout="auto" unmountOnExit>
               <List component="div" disablePadding>
-                <ListItemButton sx={{ pl: 6 }}>
+                <ListItemButton
+                  sx={{ pl: 6 }}
+                  onClick={() => handleChapterClick("0201")}
+                >
                   <ListItemText primary="함수의 극한과 연속" />
                 </ListItemButton>
-                <ListItemButton sx={{ pl: 6 }}>
+                <ListItemButton
+                  sx={{ pl: 6 }}
+                  onClick={() => handleChapterClick("0202")}
+                >
                   <ListItemText primary="다항함수의 미분법" />
                 </ListItemButton>
-                <ListItemButton sx={{ pl: 6 }}>
+                <ListItemButton
+                  sx={{ pl: 6 }}
+                  onClick={() => handleChapterClick("0203")}
+                >
                   <ListItemText primary="다항함수의 적분법" />
                 </ListItemButton>
               </List>
@@ -158,10 +182,16 @@ export default function BookDetail({ name, sections }: WorkbookDetailProps) {
             </ListItemButton>
             <Collapse in={open} timeout="auto" unmountOnExit>
               <List component="div" disablePadding>
-                <ListItemButton sx={{ pl: 6 }}>
+                <ListItemButton
+                  sx={{ pl: 6 }}
+                  onClick={() => handleChapterClick("0301")}
+                >
                   <ListItemText primary="수열의 극한" />
                 </ListItemButton>
-                <ListItemButton sx={{ pl: 6 }}>
+                <ListItemButton
+                  sx={{ pl: 6 }}
+                  onClick={() => handleChapterClick("0302")}
+                >
                   <ListItemText primary="미분법" />
                 </ListItemButton>
               </List>

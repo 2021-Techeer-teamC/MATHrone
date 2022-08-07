@@ -33,7 +33,7 @@ function App() {
             <Route path="/books" exact element={<Books sections={sections}/>} />
             <Route path="/books/:id" element={<BookDetail sections={sections}/>} />
             <Route path="/rank" exact element={<Rank sections={sections}/>} />
-            <Route path="/problemdetail" exact element={<ProblemDetail sections={sections}/>} /> {/*임시 테스트용*/}
+            <Route path="/problem/:workbookId/:chapterId" element={<ProblemDetail sections={sections}/>} /> {/*임시 테스트용*/}
             <Route path="/result" exact element={<Result sections={sections}/>} /> {/*임시 테스트용*/}
           </Routes>
       </div>
